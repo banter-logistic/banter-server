@@ -2,6 +2,11 @@
   "name": "banter-server",
   "workspaces": [
     "admin",
-    "web"
-  ]
+    "web",
+    "lib"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w web",
+    "serverDev": "node api-server"
+  }
 }
