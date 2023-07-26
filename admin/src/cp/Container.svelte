@@ -1,0 +1,1 @@
+<div class="p-6 rounded-lg bg-base-100"><slot/></div>
