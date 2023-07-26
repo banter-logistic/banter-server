@@ -7,7 +7,6 @@ declare global {
 		export const TracingSchema: typeof _db.TracingSchema
 		export const Barang_ManifestSchema: typeof _db.Barang_ManifestSchema
 		export const ManifestSchema: typeof _db.ManifestSchema
-		export const KurirSchema: typeof _db.KurirSchema
 		export const PosSchema: typeof _db.PosSchema
 		export const CounterSchema: typeof _db.CounterSchema
 		export const DriverSchema: typeof _db.DriverSchema
@@ -19,7 +18,6 @@ declare global {
 		export type TracingSchema = Zod.infer<typeof TracingSchema>
 		export type Barang_ManifestSchema = Zod.infer<typeof Barang_ManifestSchema>
 		export type ManifestSchema = Zod.infer<typeof ManifestSchema>
-		export type KurirSchema = Zod.infer<typeof KurirSchema>
 		export type PosSchema = Zod.infer<typeof PosSchema>
 		export type CounterSchema = Zod.infer<typeof CounterSchema>
 		export type DriverSchema = Zod.infer<typeof DriverSchema>
