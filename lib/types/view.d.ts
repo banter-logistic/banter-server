@@ -5,6 +5,8 @@ declare global {
     export const BarangInsert: typeof _view.BarangInsert
 		export const Barang_DetailInsert: typeof _view.Barang_DetailInsert
 		export const TracingInsert: typeof _view.TracingInsert
+		export const UserInsert: typeof _view.UserInsert
+		export const CustomerInsert: typeof _view.CustomerInsert
 		export const ManifestInsert: typeof _view.ManifestInsert
 		export const Barang_ManifestInsert: typeof _view.Barang_ManifestInsert
 		export const BarangDisplay: typeof _view.BarangDisplay
@@ -15,6 +17,8 @@ declare global {
     export type BarangInsert = typeof BarangInsert
 		export type Barang_DetailInsert = typeof Barang_DetailInsert
 		export type TracingInsert = typeof TracingInsert
+		export type UserInsert = typeof UserInsert
+		export type CustomerInsert = typeof CustomerInsert
 		export type ManifestInsert = typeof ManifestInsert
 		export type Barang_ManifestInsert = typeof Barang_ManifestInsert
 		export type BarangDisplay = typeof BarangDisplay

@@ -12,6 +12,7 @@ declare global {
 		export const DriverSchema: typeof _db.DriverSchema
 		export const UserSchema: typeof _db.UserSchema
 		export const SessionSchema: typeof _db.SessionSchema
+		export const CustomerSchema: typeof _db.CustomerSchema
     
     export type BarangSchema = Zod.infer<typeof BarangSchema>
 		export type Barang_DetailSchema = Zod.infer<typeof Barang_DetailSchema>
@@ -23,5 +24,6 @@ declare global {
 		export type DriverSchema = Zod.infer<typeof DriverSchema>
 		export type UserSchema = Zod.infer<typeof UserSchema>
 		export type SessionSchema = Zod.infer<typeof SessionSchema>
+		export type CustomerSchema = Zod.infer<typeof CustomerSchema>
   }
 }
