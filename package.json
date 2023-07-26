@@ -1,6 +1,7 @@
 {
   "name": "banter-server",
   "workspaces": [
+    "api-server",
     "admin",
     "web",
     "lib"
