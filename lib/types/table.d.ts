@@ -1,4 +1,4 @@
-import * as _db from '../schema/database'
+import * as _db from '../schema/database.t'
 
 type TableName<T extends string> = T extends `${infer Prefix}Schema` ? Lowercase<Prefix> : never;
 
@@ -17,6 +17,7 @@ type methods<T extends Zod.AnyZodObject> = {
     })
     => string,
   insert: ( count?: number ) => string,
+  schema: ( keys: Partial<{ [P in keyof Zod.infer<T>]: true }>, prefix?: string ) => string
 }
 
 declare global {
