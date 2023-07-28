@@ -1,0 +1,17 @@
+{
+  "name": "devtool",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "chokidar": "^3.5.3"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "node . --watch",
+    "build": "node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
