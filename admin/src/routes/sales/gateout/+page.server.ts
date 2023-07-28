@@ -1,6 +1,6 @@
 import type { Actions } from "@sveltejs/kit";
-import { Api } from "lib/handler/api";
-import type { GatewayOut } from "lib/handler/schema";
+import { Api } from "lib/api";
+// import type { GatewayOut } from "lib/types/";
 import { Err, None, safeParseInt } from "lib/util";
 
 export const actions: Actions = {
@@ -11,7 +11,7 @@ export const actions: Actions = {
     const tipe = data.get('tipe')
     const no_resi = []
     const ent = data.entries()
-    
+    console.log(data.get('driver'))
     if (!subjek.success || !tipe)
       return None('Kesalahan data, coba lagi')
     
@@ -26,8 +26,9 @@ export const actions: Actions = {
       
       no_resi.push(val.data)
     }
-    if (no_resi.length == 0) None('Kesalahan no resi data, coba lagi')
+    if (no_resi.length == 0) 
+      return None('Kesalahan no resi data, coba lagi')
     
-    return await Api.GatewayOut({ subjek: subjek.data, no_resi, tipe: tipe as any },false)
+    return await Api.Gateway.GatewayOut({ driver_id: subjek.data, no_resi })
   }
 };

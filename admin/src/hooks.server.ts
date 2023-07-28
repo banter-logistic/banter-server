@@ -1,8 +1,7 @@
 import { redirect, type Handle } from "@sveltejs/kit";
-import { Api } from "$lib/api";
 
 const protectedUrl = {
-  counter: '/counter',
+  sales: '/sales',
   driver: '/driver',
   kurir: '/kurir',
 }
@@ -12,29 +11,39 @@ const noAuthUrl = [ '/auth','/test' ]
 export const handle = (async ({ event, resolve }) => {
   console.log("SERVER HOOK")
   
-  const cookie = event.cookies.get('sessionId')
-  const valid = cookie ? await Api.Auth.Session({ cookie }) : null
+  const cookie = event.cookies.get('session_id')
   
-  if (valid && valid.success === false) {
-    console.log(valid)
-    return new Response('Terjadi Kesalahan, coba lagi')
-  }
+  if (!cookie)
+    checkAuth(event.url)
   
-  const session = valid?.success == true && valid?.data
+  // const valid = cookie ? await Api.Auth.GetSession({ cookie }) : null
   
-  if (noAuthUrl.find( url => event.url.pathname.startsWith(url)) || event.url.pathname == '/') { }
-  else {
-    if (!session) throw redirect(303, '/')
+  // if (valid && valid.success === false) {
+  //   console.error(valid)
+  //   return new Response('Terjadi Kesalahan, coba lagi, ' + valid.error.message)
+  // }
+  
+  // const session = valid?.success == true && valid?.data
+  
+  // if (noAuthUrl.find( url => event.url.pathname.startsWith(url)) || event.url.pathname == '/') { }
+  // else {
+  //   if (!cookie) throw redirect(303, '/')
     
     // if user visit incorrect page with the auth type
-    const url = Object.entries(protectedUrl).find( ([authType,url]) =>
-      session.type == authType && event.url.pathname.startsWith(url)
-    )
+    // const url = Object.entries(protectedUrl).find( ([authType,url]) =>
+    //   session.tipe == authType && event.url.pathname.startsWith(url)
+    // )
     
-    if (!url) throw redirect(303, '/' + session.type)
+    // if (!url) throw redirect(303, '/' + session.tipe)
     
-    event.locals.auth = { type: session.type, username: session.username, subjek: session.subjek }
-  }
+    // event.locals.auth = { tipe: session.tipe, subjek: session.subjek }
+  // }
+  
+  // const ent = Object.entries(protectedUrl)
+  // for (let i = 0;i < ent.length;i++) {
+  //   if (!cookie && event.url.pathname.startsWith(ent[i][1]))
+  //     throw redirect(302, '/')
+  // }
   
   return await resolve(event);
 }) satisfies Handle;
@@ -46,9 +55,22 @@ export const handle = (async ({ event, resolve }) => {
 
 import type { HandleServerError } from '@sveltejs/kit';
 
-export const handleError = (({ error, event }) => {
+export const handleError = (({ error }) => {
+  console.log('[HANDLE ERR]')
+  console.error(error);
+  console.log('[/HANDLE ERR]')
   return {
     message: JSON.stringify(error),
     code: (error as any).code ?? 'UNKNOWN'
   };
 }) satisfies HandleServerError;
+
+
+function checkAuth(url: URL) {
+  const ent = Object.values(protectedUrl)
+  
+  for (const u of ent) {
+    if (url.password.startsWith(u))
+      throw redirect(302, '/')
+  }
+}

@@ -1,7 +1,6 @@
 import type { Actions } from "@sveltejs/kit";
-import { Api } from "lib/handler/api";
-import type { TracingList } from "lib/handler/schema";
-import { Err, safeParseInt } from "lib/help";
+import { Api } from "lib/api";
+import { Err, safeParseInt } from "lib/util";
 
 
 export const actions: Actions = {
@@ -10,9 +9,9 @@ export const actions: Actions = {
     const valid = safeParseInt(body.get('id'))
     
     if (!valid.success) {
-      return Err<typeof TracingList["Output"]>()
+      return Err()
     }
     
-    return await Api.TracingList({ barang_id: valid.data }, false )
+    return await Api.Tracing.TracingList({ barang_id: valid.data })
   }
 };

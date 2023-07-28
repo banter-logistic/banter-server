@@ -1,12 +1,10 @@
-
-
-
 <script lang=ts>
   import { enhance } from "$app/forms";
-  import type { ActionData } from "./$types";
+  import type { ActionData, PageServerData } from "./$types";
   import { Form, Unwrap } from "cp"
 
   export let form: ActionData
+  export let data: PageServerData
 </script>
 
 <div class="min-h-screen grid place-items-center bg-base-300">
@@ -31,6 +29,11 @@
         <button class="btn btn-primary no-animation flex-grow">Login</button>
       </div>
       
+      {#if data.msg}
+        <div>
+          {data.msg}
+        </div>
+      {/if}
       <Form {form} let:form>
         <div class="font-bold px-4 pb-4">
           <Unwrap result={form.result} let:data>

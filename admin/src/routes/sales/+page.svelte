@@ -10,12 +10,13 @@
 <section class="grid md:grid-cols-1 lg:grid-cols-2 gap-4 max-w-[90vw] m-auto">
   <div>
     <Container>
-      Something
+      <h1 class="font-bold text-2xl">{data.session.nama_pos}</h1>
+      <div>{data.session.alamat}</div>
     </Container>
   </div>
   
   <Container>  
-    <h1 class="text-2xl font-bold">Counter {"<counter>"}</h1>
+    <h1 class="text-2xl font-bold">Sales {data.session.nama}</h1>
 
     <Unwrap result={data.queries} let:data>
       <div class="overflow-x-auto my-4">

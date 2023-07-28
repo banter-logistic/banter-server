@@ -5,6 +5,7 @@
   import { Form, Debug, Unwrap, Container } from "cp";
 
   let search: number
+  let schema: db.TracingSchema
   export let form: ActionData
 </script>
 
@@ -17,7 +18,6 @@
   
   <Form {form} let:form>
     <Unwrap result={form} let:data>
-      {@const _ = console.log(data)}
       <Container>
         <div class="flex flex-col w-full lg:flex-row">
           

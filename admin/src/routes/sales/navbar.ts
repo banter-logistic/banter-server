@@ -1,4 +1,4 @@
-export const p = "/counter"
+export const p = "/sales"
 export const navMenu = {
   "Home": "/",
   "Tambah": "/insert",

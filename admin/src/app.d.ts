@@ -2,12 +2,10 @@
 declare global {
 	namespace App {
 		// interface Error {}
-		interface Locals {
-			auth: Pick<Zod.infer<typeof import("lib/schema/database").UserSchema>,'username'|'type'|'subjek'>
-		}
-		interface PageData {
-			auth: Locals['auth']
-		}
+		// interface Locals {
+		// 	auth: Pick<Zod.infer<typeof import("lib/schema/database").UserSchema>,'tipe'|'subjek'>
+		// }
+		// interface PageData {}
 		// interface Platform {}
 	}
 }

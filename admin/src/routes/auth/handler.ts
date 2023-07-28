@@ -1,13 +1,13 @@
 import { redirect, type Action } from "@sveltejs/kit";
-import { Api } from "$lib/api";
+import { Api } from "lib/api";
 
 export const logout: Action = async ({ cookies }) => {
-  const sessionId = cookies.get('sessionId')
+  const session_id = cookies.get('session_idd')
   
-  if (!sessionId) throw redirect(303, '/')
+  if (!session_id) throw redirect(303, '/')
   
-  await Api.Auth.Logout({ sessionId })
-  cookies.delete('sessionId')
+  await Api.Auth.Logout({ session_id })
+  cookies.delete('session_id')
   throw redirect(303, '/')
 }
 
@@ -24,7 +24,7 @@ export const login: Action = async ({ request, cookies }) => {
   
   const session = result.data
   
-  cookies.set('sessionId',session.sessionId)
+  cookies.set('session_id',session.session_id)
   
-  throw redirect(303,'/' + session.type)
+  throw redirect(303,'/' + session.tipe)
 }

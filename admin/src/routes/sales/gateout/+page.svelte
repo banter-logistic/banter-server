@@ -5,7 +5,7 @@
   import { getProm } from "cp/fetch";
   import { Unarray, Fetch, Unwrap, Form, Container } from "cp";
   import type { DriverSchema } from "lib/schema/database.js";
-    import type { ActionData } from "./$types.js";
+  import type { ActionData } from "./$types.js";
   
   const prom = getProm<Result<Zod.infer<typeof DriverSchema>>>('')
   let driver_id = ''
@@ -52,15 +52,11 @@
       </div>
     </svelte:fragment>
   </Fetch>
-  <!-- <div class="w-full join">
-    <input class="input input-bordered input-lg flex-1 join-item" type="number" bind:value={driver_id} required placeholder="driver id" bind:this={search}>
-    <button class="btn btn-primary btn-lg join-item no-animation" disabled={isNaN(parseInt(driver_id))} bind:this={search_btn} on:click={()=>prom.fetch('',{ q: driver_id })}>Cari</button>
-  </div> -->
   
   <Form {form} let:form>
     <Container>
       <Unwrap result={form} let:data>
-        Manifest id: {data.manifest.id}
+        Manifest id: {data.manifest.manifest_id}
       </Unwrap>
     </Container>
   </Form>
@@ -93,7 +89,7 @@
           <button class="btn btn-primary" disabled>Submit</button>
           <svelte:fragment slot="resolved" let:result>
             <Unwrap {result} let:data>
-              <input type="hidden" name="driver" value={data.id}>
+              <input type="hidden" name="driver" value={data.driver_id}>
               <input type="hidden" name="tipe" bind:value={tipe}>
               <button class="btn btn-primary">Submit</button>
             </Unwrap>

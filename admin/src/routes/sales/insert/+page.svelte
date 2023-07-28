@@ -8,8 +8,8 @@
   
   // const prom = getProm
   
-  let inn: IApi.BarangInsert['Input']
-  let res: Result<IApi.BarangInsert['Output']>
+  let inn: any//api.BarangInsert['Input']
+  let res: any//Result<IApi.BarangInsert['Output']>
 </script>
 
 <div class="grid grid-cols-1 gap-4">
@@ -72,7 +72,7 @@
     <button class="btn btn-primary" on:click={e=>{
       const data = $store
       data.barang_details = data.barang_details.slice(0,data.alamat.total_koli)
-      data.counter_id = $page.data.auth.subjek
+      data.counter_id = $page.data.session.pos_id
       console.log(data)
       fetch(data)
     }}>Submit</button>
