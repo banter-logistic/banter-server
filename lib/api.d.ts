@@ -35,6 +35,92 @@ export const Api: {
 		FinishBarang: (i: zf<typeof _Tracing['FinishBarang']['Input']>) => Promise<Result<zf<typeof _Tracing['FinishBarang']['Output']>>>
 	},
 	User: {
-		GetDriver: (i: zf<typeof _User['GetDriver']['Input']>) => Promise<Result<zf<typeof _User['GetDriver']['Output']>>>
+		GetDriver: (i: zf<typeof _User['GetDriver']['Input']>) => Promise<Result<zf<typeof _User['GetDriver']['Output']>>>,
+		GetSales: (i: zf<typeof _User['GetSales']['Input']>) => Promise<Result<zf<typeof _User['GetSales']['Output']>>>
 	}
+}
+
+declare global {
+  namespace api {
+    namespace Auth {
+			namespace Login {
+        type Input = zf<typeof _Auth['Login']['Input']>
+        type Output = zf<typeof _Auth['Login']['Output']>
+      }
+			namespace Logout {
+        type Input = zf<typeof _Auth['Logout']['Input']>
+        type Output = zf<typeof _Auth['Logout']['Output']>
+      }
+			namespace GetSession {
+        type Input = zf<typeof _Auth['GetSession']['Input']>
+        type Output = zf<typeof _Auth['GetSession']['Output']>
+      }
+			namespace GetSalesSession {
+        type Input = zf<typeof _Auth['GetSalesSession']['Input']>
+        type Output = zf<typeof _Auth['GetSalesSession']['Output']>
+      }
+			namespace CustomerLogin {
+        type Input = zf<typeof _Auth['CustomerLogin']['Input']>
+        type Output = zf<typeof _Auth['CustomerLogin']['Output']>
+      }
+			namespace GetCustomerSession {
+        type Input = zf<typeof _Auth['GetCustomerSession']['Input']>
+        type Output = zf<typeof _Auth['GetCustomerSession']['Output']>
+      }
+			namespace CustomerRegister {
+        type Input = zf<typeof _Auth['CustomerRegister']['Input']>
+        type Output = zf<typeof _Auth['CustomerRegister']['Output']>
+      }
+		}
+		namespace Barang {
+			namespace BarangCounterList {
+        type Input = zf<typeof _Barang['BarangCounterList']['Input']>
+        type Output = zf<typeof _Barang['BarangCounterList']['Output']>
+      }
+			namespace BarangInsert {
+        type Input = zf<typeof _Barang['BarangInsert']['Input']>
+        type Output = zf<typeof _Barang['BarangInsert']['Output']>
+      }
+		}
+		namespace Gateway {
+			namespace GatewayOut {
+        type Input = zf<typeof _Gateway['GatewayOut']['Input']>
+        type Output = zf<typeof _Gateway['GatewayOut']['Output']>
+      }
+			namespace GatewayIn {
+        type Input = zf<typeof _Gateway['GatewayIn']['Input']>
+        type Output = zf<typeof _Gateway['GatewayIn']['Output']>
+      }
+		}
+		namespace Manifest {
+			namespace GetManifest {
+        type Input = zf<typeof _Manifest['GetManifest']['Input']>
+        type Output = zf<typeof _Manifest['GetManifest']['Output']>
+      }
+			namespace ManifestById {
+        type Input = zf<typeof _Manifest['ManifestById']['Input']>
+        type Output = zf<typeof _Manifest['ManifestById']['Output']>
+      }
+		}
+		namespace Tracing {
+			namespace TracingList {
+        type Input = zf<typeof _Tracing['TracingList']['Input']>
+        type Output = zf<typeof _Tracing['TracingList']['Output']>
+      }
+			namespace FinishBarang {
+        type Input = zf<typeof _Tracing['FinishBarang']['Input']>
+        type Output = zf<typeof _Tracing['FinishBarang']['Output']>
+      }
+		}
+		namespace User {
+			namespace GetDriver {
+        type Input = zf<typeof _User['GetDriver']['Input']>
+        type Output = zf<typeof _User['GetDriver']['Output']>
+      }
+			namespace GetSales {
+        type Input = zf<typeof _User['GetSales']['Input']>
+        type Output = zf<typeof _User['GetSales']['Output']>
+      }
+		}
+  }
 }

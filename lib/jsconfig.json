@@ -8,7 +8,7 @@
     "strictFunctionTypes": true
   },
   "include": [
-    "types/d/ts",
+    "./**/*",
     "./**/*.d.ts",
     "./**/*.js"
   ],

@@ -1,18 +1,16 @@
-
-
-
 <script lang=ts>
   import { Fetch, Unwrap, Form, Container } from "cp"
   import type { ActionData } from "./$types";
   import { enhance } from "$app/forms";
-  import type { ManifestQuery } from "lib/handler/schema";
   
-  let schema: Result<Zod.infer<typeof ManifestQuery['Output']>>
+  let schema: Result<api.Manifest.GetManifest.Output>
   
   export let form: ActionData
   let manifest_id: string
   let search_btn
   let search
+  
+  export let data
 </script>
 
 <div class="grid grid-cols-1 gap-4">
@@ -22,12 +20,12 @@
     
     <svelte:fragment slot="resolved" let:result>
       
-      <Unwrap {result} let:data>
+      <Unwrap {result} let:data={manifestData}>
         <Container>
-          Manifest id {data.manifest.id}
+          Manifest id {manifestData.manifest.manifest_id}
         </Container>
         <Container>
-          Driver {data.driver.nama}, {data.driver.plat_nomor}
+          Driver {manifestData.driver.nama}, {manifestData.driver.plat_nomor}
         </Container>
         <Container>
           <form method="post" class="overflow-x-auto" use:enhance>
@@ -41,7 +39,7 @@
                 </tr>
               </thead>
               <tbody>
-                {#each data.barang as d (d.no_resi)}
+                {#each manifestData.barang as d (d.no_resi)}
                 <tr>
                   <td>{d.no_resi}</td>
                   <td>{d.kota}</td>
@@ -51,8 +49,8 @@
                 {/each}
               </tbody>
             </table>
-            <input type="hidden" name="pos_id" value={1}>
-            <input type="hidden" name="manifest_id" value={data.manifest.id}>
+            <input type="hidden" name="pos_id" value={data.session.pos_id}>
+            <input type="hidden" name="manifest_id" value={manifestData.manifest.manifest_id}>
             <button class="btn btn-primary">Submit</button>
           </form>
         </Container>

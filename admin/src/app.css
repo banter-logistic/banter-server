@@ -15,3 +15,7 @@ input[type="number"]::-moz-outer-spin-button {
   appearance: none;
   margin: 0;
 }
+
+.container {
+  @apply bg-base-200 p-4 rounded-md
+}

@@ -44,7 +44,6 @@ const tableData = []
 
 for (let i = 0;i < tables.length;i++) {
   const table = tables[i].Tables_in_banter
-  
   /** @type {any} */
   const [fields] = await conn.query('show columns from ' + table)
   tableData.push({ name: table, fields })
@@ -52,17 +51,41 @@ for (let i = 0;i < tables.length;i++) {
 
 import { writeFile } from "fs/promises";
 
+
+
+
 const content = tableData.map( table => `\
 export const ${cpTable(table.name)}Schema = z.object({
-${table.fields.map( field => `\
-  ${field.Field}: ${sqlToZod(field.Type)}`
+${table.fields.map( field => 
+  `\t${field.Field}: ${sqlToZod(field.Type)}`
   ).join(',\n')}
 })
 `).join('\n');
 
-writeFile('lib/schema/database.js',content)
+writeFile('lib/schema/database.js',`\
+/* auto generated */\n
+${content}`)
+console.log('writing lib/schema/database.js')
+
+
+
+const insertSchema = tableData.map( table => `\
+export const ${cpTable(table.name)}Insert = z.object({
+${table.fields.map( field =>
+  typeToZod(field) ? `\t${field.Field}: ${sqlToZod(field.Type)},` : ''
+  ).join('\n')}
+})
+`).join('\n');
+
+writeFile('lib/schema/insert.js',`\
+/* auto generated */\n
+${insertSchema}`)
+console.log('writing lib/schema/insert.js')
 
 conn.end()
+
+
+
 
 /** @type {(i: string) => string} */
 function cpTable(name) {
@@ -80,4 +103,9 @@ function sqlToZod(field) {
   if (!found) throw new Error('No match ' + field)
   
   return found[1]
+}
+
+/** @type {(i:field) => boolean} */
+function typeToZod(f) {
+  return f.Default == null && f.Extra == ''
 }

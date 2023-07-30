@@ -1,49 +1,62 @@
 import { redirect, type Handle } from "@sveltejs/kit";
+import { Api } from "lib/api";
 
-const protectedUrl = {
+const userTipeRoute: {[x:string]:string} = {
+  admin: '/admin',
   sales: '/sales',
   driver: '/driver',
-  kurir: '/kurir',
+  kurir: '/driver',
 }
 
-const noAuthUrl = [ '/auth','/test' ]
-// @TODO, make system that automate url that need auth, optional, or not at all
+// all route protected by default
+const noAuth = [ '/auth','/test' ]
+
 export const handle = (async ({ event, resolve }) => {
-  console.log("SERVER HOOK")
+  console.log("SERVER HOOK,", event.url.pathname) 
+  if (inNonProtectedRoute(event.url)) { return await resolve(event); }
   
   const cookie = event.cookies.get('session_id')
+  const valid = cookie ? await Api.Auth.GetSession({ cookie }) : null
   
-  if (!cookie)
-    checkAuth(event.url)
+  if (valid && valid.success === false) {
+    console.log('[SERVER ERR]')
+    console.error(valid)
+    console.log('[/SERVER ERR]')
+    return new Response('Terjadi Kesalahan, coba lagi\nps: Server Hook')
+  }
   
-  // const valid = cookie ? await Api.Auth.GetSession({ cookie }) : null
+  if (valid && valid.success === null) {
+    event.cookies.delete('session_id')
+    event.cookies.set('msg','sesi berakhir, login kembali')
+    console.log('[HOOKS] redirect cause invalid cookie')
+    throw redirect(303, '/')
+  }
   
-  // if (valid && valid.success === false) {
-  //   console.error(valid)
-  //   return new Response('Terjadi Kesalahan, coba lagi, ' + valid.error.message)
-  // }
+  if (!valid) {
+    // if in protected route, but no cookie
+    event.cookies.set('msg','anda harus login')
+    console.log('[HOOKS] redirect cause no cookie')
+    throw redirect(303, '/')
+  }
   
-  // const session = valid?.success == true && valid?.data
+  // if in protected route and have cookie
+  const session = valid.data
   
-  // if (noAuthUrl.find( url => event.url.pathname.startsWith(url)) || event.url.pathname == '/') { }
-  // else {
-  //   if (!cookie) throw redirect(303, '/')
-    
-    // if user visit incorrect page with the auth type
-    // const url = Object.entries(protectedUrl).find( ([authType,url]) =>
-    //   session.tipe == authType && event.url.pathname.startsWith(url)
-    // )
-    
-    // if (!url) throw redirect(303, '/' + session.tipe)
-    
-    // event.locals.auth = { tipe: session.tipe, subjek: session.subjek }
-  // }
+  // user tipe invalid
+  if ( !Object.hasOwn(userTipeRoute, session.tipe) ) {
+    event.cookies.set('msg',`user ${session.tipe} tidak valid`)
+    console.log('[HOOKS] redirect cause invalid user tipe')
+    throw redirect(303, '/')
+  }
   
-  // const ent = Object.entries(protectedUrl)
-  // for (let i = 0;i < ent.length;i++) {
-  //   if (!cookie && event.url.pathname.startsWith(ent[i][1]))
-  //     throw redirect(302, '/')
-  // }
+  // if user not in the right route
+  const url = userTipeRoute[session.tipe]
+  if (!event.url.pathname.startsWith(url)) {
+    console.log('[HOOKS] redirect to the correct route')
+    throw redirect(303, url)
+  }
+  
+  event.locals.auth = session
   
   return await resolve(event);
 }) satisfies Handle;
@@ -65,12 +78,19 @@ export const handleError = (({ error }) => {
   };
 }) satisfies HandleServerError;
 
-
-function checkAuth(url: URL) {
-  const ent = Object.values(protectedUrl)
+/**
+ * if no auth, throw redirect
+ * @param url 
+ */
+function inNonProtectedRoute(url: URL) {
+  const ent = Object.values(noAuth)
+  
+  if (url.pathname == '/') return true
   
   for (const u of ent) {
-    if (url.password.startsWith(u))
-      throw redirect(302, '/')
+    if (url.pathname.startsWith(u)) return true
   }
+  
+  return false
+  // throw redirect(302, '/?to=' + url.pathname + url.search)
 }

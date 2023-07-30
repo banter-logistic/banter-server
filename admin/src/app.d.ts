@@ -1,10 +1,11 @@
-/// <reference path="../../lib/types.d.ts"/>
+/// <reference path="../../lib/index.d.ts"/>
+
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {
-		// 	auth: Pick<Zod.infer<typeof import("lib/schema/database").UserSchema>,'tipe'|'subjek'>
-		// }
+		interface Locals {
+			auth: api.Auth.GetSession.Output
+		}
 		// interface PageData {}
 		// interface Platform {}
 	}

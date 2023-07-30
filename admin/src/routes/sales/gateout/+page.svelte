@@ -4,11 +4,11 @@
   import { enhance } from "$app/forms";
   import { getProm } from "cp/fetch";
   import { Unarray, Fetch, Unwrap, Form, Container } from "cp";
-  import type { DriverSchema } from "lib/schema/database.js";
   import type { ActionData } from "./$types.js";
   
-  const prom = getProm<Result<Zod.infer<typeof DriverSchema>>>('')
+  const prom = getProm<Result<db.DriverSchema>>('')
   let driver_id = ''
+  let sc: Result<db.DriverSchema>
   
   let search: any
   let tipe: any
@@ -33,7 +33,7 @@
 
 <div class="grid grid-cols-1 gap-4">
   
-  <Fetch {prom}>
+  <Fetch schema={sc} {prom}>
     <div class="w-full join">
       <input class="input input-bordered input-lg flex-1 join-item" type="number" bind:value={driver_id} required placeholder="driver id" bind:this={search}>
       <select name="tipe" class="input input-base input-bordered input-lg join-item" bind:value={tipe} required>
@@ -46,7 +46,9 @@
     <svelte:fragment slot="resolved" let:result let:reset>
       <div class="join w-full">
         <Unwrap {result} let:data>
-          <div class="bg-base-100 p-4 flex-1 join-item">Driver {data.nama}, {data.plat_nomor}</div>
+          <div class="bg-base-100 p-4 flex-1 join-item grid place-items-center">
+            <div class="inset-0">Driver {data.nama}, {data.plat_nomor}</div>
+          </div>
         </Unwrap>
         <button class="btn btn-primary btn-lg join-item no-animation" bind:this={reset_btn} on:click={reset}>Reset</button>
       </div>

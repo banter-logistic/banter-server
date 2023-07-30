@@ -1,3 +1,4 @@
+/* auto generated */
 import * as _db from "../schema/database.js"
 
 declare global {

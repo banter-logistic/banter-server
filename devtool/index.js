@@ -1,26 +1,16 @@
-import { build } from "./lib.js";
+import { readdir } from "fs/promises";
+const [,,vs] = process.argv
+const args = vs?.split(',') ?? ['all']
 
-const views = (vars)=>`\
-import * as _view from "../schema/view.js"
 
-declare global {
-  namespace view {
-    ${vars.map(v=> `export const ${v}: typeof _view.${v}` ).join('\n\t\t')}
-    
-    ${vars.map(v=> `export type ${v} = typeof ${v}` ).join('\n\t\t')}
+for (const arg of args) {
+  if (arg == 'all') {
+    const dirs = await readdir('devtool/handler','utf-8')
+    for (const dir of dirs) {
+      await import('devtool/handler/' + dir)
+    }
+    break
   }
-}`;
-
-const db = (vars)=>`\
-import * as _db from "../schema/database.js"
-
-declare global {
-  namespace db {
-    ${vars.map(v=> `export const ${v}: typeof _db.${v}` ).join('\n\t\t')}
-    
-    ${vars.map(v=> `export type ${v} = Zod.infer<typeof ${v}>` ).join('\n\t\t')}
-  }
-}`
-
-build('lib/schema/view.js','lib/types/view.d.ts',views);
-build('lib/schema/database.js','lib/types/db.d.ts',db);
+  
+  import('./handler/' + arg + '.js')
+}

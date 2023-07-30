@@ -3,11 +3,16 @@ import { writable } from "svelte/store";
 
 export function getProm<In,Out>(link: string) {
   const s = writable<FetchEvent<Out>>({ type: 'idle' })
+  const abort = { abort: () => {} }
   
   return {
     store: s,
+    abort,
     fetch: (body: In, query?: object) => {
-      s.set({ type: 'loading' })
+      s.update( e=> {
+        e.type = 'loading'
+        return e
+      })
       
       const ctr = new AbortController()
       let target = link
@@ -20,7 +25,7 @@ export function getProm<In,Out>(link: string) {
         })
       }
       
-      fetch(target, { 
+      const pr = fetch(target, { 
         signal: ctr.signal ,
         method: "POST",
         body: JSON.stringify(body),
@@ -28,11 +33,25 @@ export function getProm<In,Out>(link: string) {
       })
         .then(e=>e.json())
         .then(data=>{
-          s.set({ type: 'resolved', data })
+          s.update( e => {
+            e.type = 'resolved'
+            // @ts-ignore
+            e.data = data
+            return e
+          })
         })
-        .catch(error=>s.set({ type: 'error', error }))
+        .catch(error=>s.update( e => {
+          e.type = 'error'
+          // @ts-ignore
+          e.error = error
+          return e
+        }))
+        .finally(()=>{
+          abort.abort = () => {}
+        })
       
-      return ctr
+      abort.abort = ctr.abort
+      return pr
     },
   }
 }

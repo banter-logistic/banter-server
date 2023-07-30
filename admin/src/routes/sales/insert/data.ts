@@ -22,7 +22,7 @@ const MAX_TOTAL_KOLI = 100
 
 const start_koli = 2
 
-export const store = writable<IApi.BarangInsert["Input"]>({
+export const store = writable<api.Barang.BarangInsert.Input>({
   alamat: {
     alamat: randKota(),
     kelurahan: randKota(),
@@ -40,11 +40,11 @@ export const store = writable<IApi.BarangInsert["Input"]>({
   barang_details: [
     {
       koli_ke: 1,
-      nama: randName()
+      nama_barang: randName()
     },
     {
       koli_ke: 2,
-      nama: randName()
+      nama_barang: randName()
     },
   ],
   counter_id: 0

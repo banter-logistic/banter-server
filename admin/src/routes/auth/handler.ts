@@ -2,7 +2,7 @@ import { redirect, type Action } from "@sveltejs/kit";
 import { Api } from "lib/api";
 
 export const logout: Action = async ({ cookies }) => {
-  const session_id = cookies.get('session_idd')
+  const session_id = cookies.get('session_id')
   
   if (!session_id) throw redirect(303, '/')
   

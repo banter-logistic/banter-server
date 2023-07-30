@@ -1,29 +1,24 @@
-import { redirect } from "@sveltejs/kit";
+import { error, redirect } from "@sveltejs/kit";
 import type { LayoutServerLoad } from "./$types";
 import { Api } from "lib/api";
 
-export const load: LayoutServerLoad = async ({ cookies }) => {
-  const cookie = cookies.get('session_id')
+export const load: LayoutServerLoad = async ({ cookies, locals: { auth } }) => {
   
-  if (!cookie)
-    throw redirect(302,'/');
-  
-  const session = await Api.Auth.GetSalesSession({ cookie })
-  
-  if (session.success == null) {
-    cookies.delete('session_id')
-    cookies.set('msg','silahkan login kembali')
-    throw redirect(302,'/');
+  if (auth.tipe != 'sales') {
+    cookies.set('msg','role anda bukan disana')
+    console.log('WRONG TIPE',auth)
+    throw redirect(303, '/')
   }
   
-  if (session.success == false) {
-    cookies.delete('session_id')
-    cookies.set('msg','server error, silahkan login kembali')
-    throw redirect(302,'/');
-  }
+  const session = await Api.User.GetSales({ sales_id: auth.user_id });
   
+  if (!session.success) {
+    // @TODO: redirect if user_id not correspond to any sales
+    throw error(500, 'tidak dapat mengambil data')
+  }
+  const queries = await Api.Barang.BarangCounterList({ pos_id: session.data.pos_id })
   return { 
-    queries: await Api.Barang.BarangCounterList({ pos_id: session.data.pos_id }),
+    queries,
     session: session.data,
   }
 };

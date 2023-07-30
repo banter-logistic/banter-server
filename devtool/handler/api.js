@@ -27,6 +27,7 @@ web_api()
 async function web_api() {
   
   await writeFile("lib/api.d.ts",`\
+/* auto generated */
 ${Object.keys(vars).map( namesp => `import * as _${namesp} from "./handler/${namesp}.js"` ).join('\n')}
 type zf<T extends Zod.Schema> = Zod.infer<T>;
 function build<T extends { Input: any, Output: any }>(url: string):
@@ -43,11 +44,27 @@ export const Api: {
     .join(",\n\t")
   }
 }
+
+declare global {
+  namespace api {
+    ${Object.entries(vars)
+      .map(
+        ([namesp, types]) =>
+          `namespace ${namesp} {\n\t\t${types
+            .map(type => `\tnamespace ${type} {
+\ \ \ \     type Input = zf<typeof _${namesp}['${type}']['Input']>
+\ \ \ \     type Output = zf<typeof _${namesp}['${type}']['Output']>
+\ \     }`).join("\n\t\t")}\n\t\t}`
+      )
+      .join("\n\t\t")
+    }
+  }
+}
 `,'utf-8');
   console.log('writing to lib/api.d.ts')
   i=0
   await writeFile("lib/api/index.js",`\
-
+/* auto generated */
 // const isBrowser = !(typeof window === 'undefined');
 const host = 'http://localhost:4040'
 

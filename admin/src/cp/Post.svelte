@@ -10,17 +10,15 @@
   schemaRes
   schemaIn
   
-  const _fetch: fetchType = (l) => abort = prom.fetch(l)
+  const _fetch: fetchType = (l) => prom.fetch(l)
   const state = prom.store
-
-  let abort: AbortController | undefined
     
   type T = $$Generic
   type In = $$Generic
   type fetchType = typeof prom.fetch
 
   interface $$Slots {
-    default: { fetch: fetchType, abort: typeof abort }
+    default: { fetch: fetchType, abort: typeof prom.abort.abort }
     error: { error: Error }
     loading: { }
     top: { }
@@ -29,7 +27,7 @@
   }
   
   onDestroy(()=>{
-    abort?.abort()
+    prom.abort.abort()
   })
 </script>
 
@@ -37,7 +35,7 @@
 
 {#if $state.type == 'idle'}
 
-<slot fetch={_fetch} {abort}/>
+<slot fetch={_fetch} abort={prom.abort.abort}/>
   
 {:else if $state.type == 'loading'}
 

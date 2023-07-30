@@ -1,11 +1,9 @@
-/// <reference path="./types/db.d.ts" />
-/// <reference path="./types/view.d.ts" />
-/// <reference path="./types/handle.d.ts" />
-/// <reference path="./types/table.d.ts" />
-/// <reference path="./types/api.d.ts" />
+///<reference path="./types/db.d.ts"/>
+///<reference path="./types/view.d.ts"/>
+
 import * as _z from "zod";
-import { envSchema } from "api-server/internal/config"
-import { Pool } from "mysql2/promise";
+import type { envSchema } from "api-server/internal/config"
+import type { Pool } from "mysql2/promise";
 
 declare global {
   const z: typeof _z.z ;

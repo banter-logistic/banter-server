@@ -1,13 +1,16 @@
-import * as h from "../util/helper.js"
+import * as h from "../util/handle.js/index.js"
 import * as dd from "../schema/database.t.js/index.js";
 
 declare global {
   namespace handle {
+    
+    /** all handles */
     export const handles: {
       schema: Parameters<typeof build>['0'],
       handle: Parameters<typeof build>['1'],
     }[]
 
+    /** create new handle */
     export const build: <T extends {
       Input: Zod.ZodType, 
       Output: Zod.ZodType, url: string 
@@ -22,13 +25,18 @@ declare global {
       ) => Promise<Result<Zod.infer<T['Output']>>>) 
     => void;
 
-    
+    /** 
+     * to sql array parameter, it need to be in order 
+     * @example exec('insert into', toSqlParam(OutSchema, { data }) )
+     */
     export const toSqlParam: <T extends Zod.AnyZodObject>(
       s: T, 
       data: Zod.infer<T>
     ) => any[]
       
+    /** create random hash, currently for session id only */
 		export const createHash: () => string
+    /** create placeholders ("?") for sql string query */
 		export const params: (n: number) => string
     
     // For another day

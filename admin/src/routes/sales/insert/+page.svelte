@@ -6,17 +6,14 @@
   import { page } from "$app/stores";
   import { invalidateAll } from "$app/navigation";
   
-  // const prom = getProm
-  
-  let inn: any//api.BarangInsert['Input']
-  let res: any//Result<IApi.BarangInsert['Output']>
+  let inn: api.Barang.BarangInsert.Input
+  let res: Result<api.Barang.BarangInsert.Output>
 </script>
 
 <div class="grid grid-cols-1 gap-4">
   <Post let:fetch schemaIn={inn} schemaRes={res}>
     
     <div slot="resolved"  let:result>
-      {@const _ = invalidateAll()}
       <Container>
         <Unwrap {result} let:data>
           Barang id {data.no_resi}
@@ -61,7 +58,7 @@
           
           <div class="form-control">
             <h2 class="font-bold">Nama</h2>
-            <input type="text" id="Nama" placeholder="Nama" class="input input-bordered input-lg" bind:value={$store.barang_details[i].nama} />
+            <input type="text" id="Nama" placeholder="Nama" class="input input-bordered input-lg" bind:value={$store.barang_details[i].nama_barang} />
           </div>
             
         </div>
@@ -74,7 +71,7 @@
       data.barang_details = data.barang_details.slice(0,data.alamat.total_koli)
       data.counter_id = $page.data.session.pos_id
       console.log(data)
-      fetch(data)
+      fetch(data).then(_=>invalidateAll())
     }}>Submit</button>
     
   </Post>
