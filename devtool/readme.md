@@ -10,13 +10,15 @@ typescript is a bit of a pain, and sveltekit auto generated types is not suit my
 2. create global type
 3. so we can use dynamic automated import with type safety
 
-## Task
+## Usage
 
-convert js file, extract all `export const`, then write index.d.ts
-to `lib/types`
+```bash
+node devtool <arg>
+```
 
-- `lib/schema/view.js` to `lib/types/view.d.ts`
-- `lib/schema/database.js` to `lib/types/db.d.ts`
+arg is the file that want to be generated  
+is a list of filename in handler separated by comma
 
-read all in handler, export zod type to declaration that
-can be used outside repository
+```bash
+node devtool db,api
+```
