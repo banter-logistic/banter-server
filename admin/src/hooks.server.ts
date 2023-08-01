@@ -9,7 +9,7 @@ const userTipeRoute: {[x:string]:string} = {
 }
 
 // all route protected by default
-const noAuth = [ '/auth','/test' ]
+const noAuth = [ '/auth','/test' ,'/qr' ]
 
 export const handle = (async ({ event, resolve }) => {
   if (inNonProtectedRoute(event.url)) { return await resolve(event); }
