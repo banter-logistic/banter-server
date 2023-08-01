@@ -12,7 +12,6 @@ const userTipeRoute: {[x:string]:string} = {
 const noAuth = [ '/auth','/test' ]
 
 export const handle = (async ({ event, resolve }) => {
-  console.log("SERVER HOOK,", event.url.pathname) 
   if (inNonProtectedRoute(event.url)) { return await resolve(event); }
   
   const cookie = event.cookies.get('session_id')
@@ -28,14 +27,12 @@ export const handle = (async ({ event, resolve }) => {
   if (valid && valid.success === null) {
     event.cookies.delete('session_id')
     event.cookies.set('msg','sesi berakhir, login kembali')
-    console.log('[HOOKS] redirect cause invalid cookie')
     throw redirect(303, '/')
   }
   
   if (!valid) {
     // if in protected route, but no cookie
     event.cookies.set('msg','anda harus login')
-    console.log('[HOOKS] redirect cause no cookie')
     throw redirect(303, '/')
   }
   
@@ -45,14 +42,12 @@ export const handle = (async ({ event, resolve }) => {
   // user tipe invalid
   if ( !Object.hasOwn(userTipeRoute, session.tipe) ) {
     event.cookies.set('msg',`user ${session.tipe} tidak valid`)
-    console.log('[HOOKS] redirect cause invalid user tipe')
     throw redirect(303, '/')
   }
   
   // if user not in the right route
   const url = userTipeRoute[session.tipe]
   if (!event.url.pathname.startsWith(url)) {
-    console.log('[HOOKS] redirect to the correct route')
     throw redirect(303, url)
   }
   

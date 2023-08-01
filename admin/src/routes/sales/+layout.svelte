@@ -38,7 +38,7 @@
 </nav>
 
 <div class="min-h-screen bg-base-300 pt-16 pb-12">
-  <div class="absolute top-0 min-h-screen grid place-items-center min-w-full text-9xl text-base-100 select-none">
+  <div class="hidden absolute top-0 min-h-screen md:grid place-items-center min-w-full text-9xl text-base-100 select-none">
     BANTER
   </div>
   <div class="relative grid place-items-center grid-cols-1 z-10">
