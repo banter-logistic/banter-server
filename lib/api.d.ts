@@ -1,3 +1,4 @@
+/* auto generated */
 import * as _Auth from "./handler/Auth.js"
 import * as _Barang from "./handler/Barang.js"
 import * as _Gateway from "./handler/Gateway.js"
@@ -28,7 +29,8 @@ export const Api: {
 	},
 	Manifest: {
 		GetManifest: (i: zf<typeof _Manifest['GetManifest']['Input']>) => Promise<Result<zf<typeof _Manifest['GetManifest']['Output']>>>,
-		ManifestById: (i: zf<typeof _Manifest['ManifestById']['Input']>) => Promise<Result<zf<typeof _Manifest['ManifestById']['Output']>>>
+		ManifestById: (i: zf<typeof _Manifest['ManifestById']['Input']>) => Promise<Result<zf<typeof _Manifest['ManifestById']['Output']>>>,
+		ListManifest: (i: zf<typeof _Manifest['ListManifest']['Input']>) => Promise<Result<zf<typeof _Manifest['ListManifest']['Output']>>>
 	},
 	Tracing: {
 		TracingList: (i: zf<typeof _Tracing['TracingList']['Input']>) => Promise<Result<zf<typeof _Tracing['TracingList']['Output']>>>,
@@ -100,6 +102,10 @@ declare global {
 			namespace ManifestById {
         type Input = zf<typeof _Manifest['ManifestById']['Input']>
         type Output = zf<typeof _Manifest['ManifestById']['Output']>
+      }
+			namespace ListManifest {
+        type Input = zf<typeof _Manifest['ListManifest']['Input']>
+        type Output = zf<typeof _Manifest['ListManifest']['Output']>
       }
 		}
 		namespace Tracing {
