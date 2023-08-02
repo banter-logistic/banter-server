@@ -61,9 +61,11 @@ declare global {
   }
 }
 `,'utf-8');
-  console.log('writing to lib/api.d.ts')
-  i=0
-  await writeFile("lib/api/index.js",`\
+console.log('writing to lib/api.d.ts')
+i=0
+
+
+await writeFile("lib/api/index.js",`\
 /* auto generated */
 // const isBrowser = !(typeof window === 'undefined');
 const host = 'http://localhost:4040'
@@ -78,7 +80,9 @@ function build(url) {
       }).then(e=>e.json())
       return result
     } catch (error) {
+      console.log('[FETCH ERROR]')
       console.error(error);
+			console.log('[/FETCH ERROR]')
       return { success: false, error: { message: 'Kesalahan Server, mohon coba beberapa saat lagi', name: 'SERVER_ERR' } }
     }
   }
@@ -95,7 +99,7 @@ export const Api = {
     .join(",\n\t")
   }
 }`,'utf-8')
-  console.log('writing to lib/api/index.js')
+console.log('writing to lib/api/index.js')
 }
 
 

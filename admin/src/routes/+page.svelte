@@ -29,7 +29,12 @@
         <button class="btn btn-primary no-animation flex-grow">Login</button>
       </div>
       
-      {#if data.msg}
+      {#if data.session}
+        <div>
+          <span>terdapat sesi: {data.session?.username}, </span>
+          <a class="link" href={data.session.target}>Masuk</a>
+        </div>
+      {:else if data.msg}
         <div>
           {data.msg}
         </div>

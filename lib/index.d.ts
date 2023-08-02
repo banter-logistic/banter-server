@@ -15,6 +15,13 @@ declare global {
   const None: <T = any>(msg?: string) => Result<T>
   const Err: <T = any>(msg?: string, name?: string) => Result<T>
   const ServerErr: <T = any>(error: any) => Result<T>
+  
+  interface Console {
+    red: (c: string) => string
+    green: (c: string) => string
+    blue: (c: string) => string
+    yellow: (c: string) => string
+  }
 
   function safeParseInt(val?: any): Result<number>
   function safeParseInt(val?: any, fallback?: number): number

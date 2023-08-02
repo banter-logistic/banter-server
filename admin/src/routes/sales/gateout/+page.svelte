@@ -47,7 +47,7 @@
       <div class="join w-full">
         <Unwrap {result} let:data>
           <div class="bg-base-100 p-4 flex-1 join-item grid place-items-center">
-            <div class="inset-0">Driver {data.nama}, {data.plat_nomor}</div>
+            <div class="inset-0">{data.tipe} {data.nama}, {data.plat_nomor}</div>
           </div>
         </Unwrap>
         <button class="btn btn-primary btn-lg join-item no-animation" bind:this={reset_btn} on:click={reset}>Reset</button>

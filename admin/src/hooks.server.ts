@@ -12,21 +12,22 @@ const userTipeRoute: {[x:string]:string} = {
 const noAuth = [ '/auth','/test' ,'/qr' ]
 
 export const handle = (async ({ event, resolve }) => {
-  if (inNonProtectedRoute(event.url)) { return await resolve(event); }
-  
   const cookie = event.cookies.get('session_id')
   const valid = cookie ? await Api.Auth.GetSession({ cookie }) : null
   
   if (valid && valid.success === false) {
-    console.log('[SERVER ERR]')
-    console.error(valid)
-    console.log('[/SERVER ERR]')
-    return new Response('Terjadi Kesalahan, coba lagi\nps: Server Hook')
+    logErr(valid.error)
+    throw new Error('Kesalahan saat mengambil sesi data',{ cause: 'FETCH_ERR' })
+  }
+  
+  if (inNonProtectedRoute(event.url)) {
+    event.locals.session = (valid?.success ? {...valid.data, tipe: userTipeRoute[valid.data.tipe]} : null) ?? undefined
+    return await resolve(event);
   }
   
   if (valid && valid.success === null) {
     event.cookies.delete('session_id')
-    event.cookies.set('msg','sesi berakhir, login kembali')
+    event.cookies.set('msg',valid.message)
     throw redirect(303, '/')
   }
   
@@ -41,7 +42,7 @@ export const handle = (async ({ event, resolve }) => {
   
   // user tipe invalid
   if ( !Object.hasOwn(userTipeRoute, session.tipe) ) {
-    event.cookies.set('msg',`user ${session.tipe} tidak valid`)
+    event.cookies.set('msg',`tidak diizinkan`)
     throw redirect(303, '/')
   }
   
@@ -62,14 +63,17 @@ export const handle = (async ({ event, resolve }) => {
 
 
 import type { HandleServerError } from '@sveltejs/kit';
+import { logErr } from "$lib";
 
+// the return are the one that user will receive
 export const handleError = (({ error }) => {
-  console.log('[HANDLE ERR]')
+  console.log('\x1b[91m[HANDLE ERR]\x1b[0m')
   console.error(error);
-  console.log('[/HANDLE ERR]')
+  console.log('\x1b[91m[/HANDLE ERR]\x1b[0m')
   return {
-    message: JSON.stringify(error),
-    code: (error as any).code ?? 'UNKNOWN'
+    message: 'Gagal memuat data',
+    code: (error as any).code ?? 'FETCH_ERR',
+    id: '1'
   };
 }) satisfies HandleServerError;
 
@@ -87,5 +91,4 @@ function inNonProtectedRoute(url: URL) {
   }
   
   return false
-  // throw redirect(302, '/?to=' + url.pathname + url.search)
 }

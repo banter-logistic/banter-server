@@ -1,5 +1,5 @@
 import { json, type RequestHandler } from "@sveltejs/kit";
-import { Api } from "$lib/api";
+import { Api } from "lib/api";
 
 export const POST: RequestHandler = async ({ request }) => {
   const data = await request.json()

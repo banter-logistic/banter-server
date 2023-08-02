@@ -2,9 +2,13 @@
 
 declare global {
 	namespace App {
-		// interface Error {}
+		interface Error {
+			code: string;
+			id?: string;
+		}
 		interface Locals {
-			auth: api.Auth.GetSession.Output
+			auth: api.Auth.GetSession.Output,
+			session?: api.Auth.GetSession.Output
 		}
 		// interface PageData {}
 		// interface Platform {}

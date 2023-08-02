@@ -1,6 +1,6 @@
 import type { Actions } from "@sveltejs/kit";
-import { logout } from "../auth/handler";
+import { logoutHandler } from "$lib/auth";
 
 export const actions: Actions = {
-  logout,
+  logout: logoutHandler,
 }

@@ -21,7 +21,7 @@
 
 <section class="grid md:grid-cols-1 lg:grid-cols-2 gap-4 max-w-[90vw] m-auto">
   <Container>
-    <div class="text-2xl font-bold">Driver {data.auth.username}</div>
+    <div class="text-2xl font-bold">{data.auth.tipe} {data.driver.nama}</div>
     <div>id: {data.auth.user_id}</div>
     <form method="post" action="?/logout">
       <button class="btn btn-primary mt-4">Logout</button>
@@ -56,6 +56,8 @@
           {/if}
           
         </div>
+      {:else}
+      <div class="font-bold text-xl">Manifest Kosong</div>
       {/each}
     </div>
   </Container>

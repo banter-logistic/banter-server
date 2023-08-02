@@ -4,6 +4,13 @@ export const dateLog = () => {
   console.log(`[${t.toUTCString().split(' ').slice(0,5).join(' ')}]`)
 }
 
+export const logErr = (error: any) => {
+  dateLog()
+  console.log('\x1b[91m[SERVER ERR]\x1b[0m')
+  console.error(error)
+  console.log('\x1b[91m[/SERVER ERR]\x1b[0m')
+}
+
 export const Ok = <T>(data: T) => {
   return { success: true, data } satisfies Result<T>
 }
