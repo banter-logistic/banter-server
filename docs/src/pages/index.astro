@@ -1,0 +1,70 @@
+---
+const logistic = [
+	{
+		main: 'ringkasan tentang logistik',
+		link: '/logistik'
+	},
+]
+
+const sk = [
+	{
+		main: 'error handling',
+		link: '/sk/error'
+	},{
+		main: 'data streaming'
+	},{
+		main: 'configurasi server dengan adapter-node'
+	},{
+		main: 'cross domain cookie behaviour',
+		link: 'https://kit.svelte.dev/docs/load#cookies'
+	},{
+		main: 'caching page via headers',
+		link: 'https://kit.svelte.dev/docs/load#headers'
+	},{
+		main: 'user feedback pada saat navigasi'
+	}
+]
+
+const web = [
+	{
+		main: 'web worker untuk qr code',
+		link: ''
+	},{
+		main: 'optimisasi gambar'
+	},{
+		main: 'print api'
+	}
+]
+---
+
+<h1>Documentasi</h1>
+
+<h2>Logistik</h2>
+
+<ul>
+	{logistic.map((data) => 
+		<li>
+			{data.link ? <a href={data.link}>{data.main}</a> : data.main}
+		</li>
+	)}
+</ul>
+
+<h2>Sveltekit</h2>
+
+<ul>
+  {sk.map((data) => 
+		<li>
+			{data.link ? <a href={data.link}>{data.main}</a> : data.main}
+		</li>
+	)}
+</ul>
+
+<h2>Web api</h2>
+
+<ul>
+	{web.map((data) => 
+		<li>
+			{data.link ? <a href={data.link}>{data.main}</a> : data.main}
+		</li>
+	)}
+</ul>
