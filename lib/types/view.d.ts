@@ -8,9 +8,9 @@ declare global {
 		export const ManifestDisplay: typeof _view.ManifestDisplay
 		export const ManifestDisplayExt: typeof _view.ManifestDisplayExt
     
-    export type BarangDisplay = typeof BarangDisplay
-		export type TracingDisplay = typeof TracingDisplay
-		export type ManifestDisplay = typeof ManifestDisplay
-		export type ManifestDisplayExt = typeof ManifestDisplayExt
+    export type BarangDisplay = Zod.infer<typeof BarangDisplay>
+		export type TracingDisplay = Zod.infer<typeof TracingDisplay>
+		export type ManifestDisplay = Zod.infer<typeof ManifestDisplay>
+		export type ManifestDisplayExt = Zod.infer<typeof ManifestDisplayExt>
   }
 }

@@ -47,7 +47,7 @@ export const store = writable<api.Barang.BarangInsert.Input>({
       nama_barang: randName()
     },
   ],
-  counter_id: 0
+  user_id: 0
 })
 
 
@@ -79,3 +79,34 @@ store.subscribe(e=>{
     })
   }
 })
+
+
+export const getTemplate = (local: any = {}): api.Barang.BarangInsert.Input => {
+  return {
+    alamat: {
+      alamat: local.alamat ?? '',
+      kelurahan: local.kelurahan ?? '',
+      kecamatan: local.kecamatan ?? '',
+      kota: local.kota ?? '',
+      provinsi: local.provinsi ?? '',
+      kodepos: rand(5),
+      pengirim: randName(),
+      penerima: randName(),
+      nohp_penerima: String(rand()),
+      berat: rand(3),
+      volume: rand(2),
+      total_koli: start_koli
+    },
+    barang_details: [
+      {
+        koli_ke: 1,
+        nama_barang: ''
+      },
+      {
+        koli_ke: 2,
+        nama_barang: randName()
+      },
+    ],
+    user_id: 0
+  }
+}

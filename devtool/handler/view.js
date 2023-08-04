@@ -8,7 +8,7 @@ declare global {
   namespace view {
     ${vars.map(v=> `export const ${v}: typeof _view.${v}` ).join('\n\t\t')}
     
-    ${vars.map(v=> `export type ${v} = typeof ${v}` ).join('\n\t\t')}
+    ${vars.map(v=> `export type ${v} = Zod.infer<typeof ${v}>` ).join('\n\t\t')}
   }
 }`;
 
