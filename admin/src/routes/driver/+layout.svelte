@@ -22,7 +22,7 @@
   </div>
 </nav>
 
-<div class="min-h-screen bg-base-300 pt-16 pb-12">
+<div class="min-h-screen bg-base-300 md:pt-16 pt-6 pb-12">
   <div class="hidden absolute top-0 min-h-screen md:grid place-items-center min-w-full text-9xl text-base-100 select-none">
     BANTER
   </div>

@@ -5,7 +5,7 @@ const userTipeRoute: {[x:string]:string} = {
   admin: '/admin',
   sales: '/sales',
   driver: '/driver',
-  kurir: '/driver',
+  kurir: '/kurir',
 }
 
 // all route protected by default

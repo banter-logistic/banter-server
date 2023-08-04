@@ -8,7 +8,7 @@
 </script>
 
 <div class="min-h-screen grid place-items-center bg-base-300">
-  <div class="card w-96 bg-base-100 max-w-90vw shadow-xl">
+  <div class="card w-96 bg-base-100 max-w-[90vw] shadow-xl">
     
     <form method="post" class="card-body" action="?/login" use:enhance>
       <h2 class="card-title text-4xl mb-4">Banter</h2>

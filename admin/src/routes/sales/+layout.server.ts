@@ -14,7 +14,9 @@ export const load: LayoutServerLoad = async ({ cookies, locals: { auth } }) => {
   
   if (!session.success) {
     // @TODO: redirect if user_id not correspond to any sales
-    throw error(500, 'tidak dapat mengambil data')
+    throw error(500, {
+      message: 'tidak dapat mengambil data', code: 'FETCH_ERR'
+    })
   }
   const queries = await Api.Barang.BarangCounterList({ pos_id: session.data.pos_id })
   return { 

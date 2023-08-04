@@ -2,4 +2,6 @@
   import "../app.css";
 </script>
 
-<slot />
+<div data-theme=light>
+  <slot />
+</div>

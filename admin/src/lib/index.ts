@@ -53,7 +53,7 @@ export const date = (date?: ConstructorParameters<DateConstructor>[0]) => {
     hari: _day[d.getDay()],
     bulan: _mon[d.getMonth()],
     tahun: d.getFullYear(),
-    display:`${_day[d.getDay()]}, ${d.getDate()} ${_mon[d.getMonth()]} ${d.getFullYear()}`,
+    display:`${_day[d.getDay()]}, ${d.getDate()}-${_mon[d.getMonth()]}-${d.getFullYear()}`,
   }
 }
 
@@ -68,7 +68,7 @@ export const date_compact = (date?: ConstructorParameters<DateConstructor>[0]) =
     hari,
     bulan,
     tahun,
-    display:`${hari}, ${tanggal} ${bulan} ${tahun}`,
+    display:`${hari}, ${tanggal}-${bulan}-${tahun}`,
   }
 }
 
