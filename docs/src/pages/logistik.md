@@ -1,4 +1,5 @@
 ---
+layout: ../layouts/Layout.astro
 title: 'Logistik'
 pubDate: 2023-08-03
 description: 'ringkasan dari pengenalan logistik'
@@ -8,8 +9,6 @@ author: 'ariaandika'
 #     alt: 'The full Astro logo.'
 tags: ["logistik", "pengertian"]
 ---
-<!-- # Logistik -->
-
 ## Tentang Logistik
 
 pengelolaan dan koordinasi dari pergerakan, penyimpanan, dan distribusi untuk barang, pelayanan, dan informasi dari origin ke konsumen.
@@ -35,7 +34,7 @@ pengoptimalan untuk *supply chain* untuk meminimalisir biaya, meningkatkan efisi
 ## Software
 
 software dalam sistem logistik didesain untuk menambah efisiensi, **meningkatkan visibilitas**, mrampingkan / memuluskan proses.
-[Lebih lanjut](./logistik/sistem.md)
+[Lebih lanjut](/logistik/sistem)
 
 tipe:
 

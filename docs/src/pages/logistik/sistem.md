@@ -1,7 +1,9 @@
-# Sistem Logistik
+---
+layout: ../../layouts/Layout.astro
+title: Sistem Logistik
+---
 
 software dalam sistem logistik didesain untuk menambah efisiensi, **meningkatkan visibilitas**, mrampingkan / memuluskan proses.
-[Lebih lanjut](./logistik/sistem.md)
 
 Integrasi dan interop antara sistem sistem.
 

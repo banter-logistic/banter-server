@@ -1,4 +1,5 @@
 ---
+import Layout from "../layouts/Layout.astro";
 const logistic = [
 	{
 		main: 'ringkasan tentang logistik',
@@ -36,35 +37,34 @@ const web = [
 	}
 ]
 ---
+<Layout title="Dokumentasi">
+	<h2>Logistik</h2>
 
-<h1>Documentasi</h1>
+	<ul>
+		{logistic.map((data) => 
+			<li>
+				{data.link ? <a href={data.link}>{data.main}</a> : data.main}
+			</li>
+		)}
+	</ul>
 
-<h2>Logistik</h2>
+	<h2>Sveltekit</h2>
 
-<ul>
-	{logistic.map((data) => 
-		<li>
-			{data.link ? <a href={data.link}>{data.main}</a> : data.main}
-		</li>
-	)}
-</ul>
+	<ul>
+		{sk.map((data) => 
+			<li>
+				{data.link ? <a href={data.link}>{data.main}</a> : data.main}
+			</li>
+		)}
+	</ul>
 
-<h2>Sveltekit</h2>
+	<h2>Web api</h2>
 
-<ul>
-  {sk.map((data) => 
-		<li>
-			{data.link ? <a href={data.link}>{data.main}</a> : data.main}
-		</li>
-	)}
-</ul>
-
-<h2>Web api</h2>
-
-<ul>
-	{web.map((data) => 
-		<li>
-			{data.link ? <a href={data.link}>{data.main}</a> : data.main}
-		</li>
-	)}
-</ul>
+	<ul>
+		{web.map((data) => 
+			<li>
+				{data.link ? <a href={data.link}>{data.main}</a> : data.main}
+			</li>
+		)}
+	</ul>
+</Layout>
