@@ -2,6 +2,7 @@
   "name": "banter-server",
   "workspaces": [
     "admin",
-    "web"
+    "web",
+    "lib"
   ]
 }
