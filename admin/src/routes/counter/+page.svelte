@@ -1,3 +1,6 @@
+<script>
+  import { cross } from "$lib/form";
+</script>
 
 
 <div class="grid grid-cols-1 w-[1024px]">
@@ -29,9 +32,9 @@
           </tbody>
         </table>
         
-        <div class="flex justify-end mt-4">
+        <form class="flex justify-end mt-4" action="/api?/logout" method="post" use:cross>
           <button class="btn primary transition">Logout</button>
-        </div>
+        </form>
         
       </div>
       

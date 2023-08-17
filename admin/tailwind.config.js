@@ -34,14 +34,16 @@ export default {
           fontWeight: '700',
           '&.primary': {
             background: colors.primary,
-            color: colors["primary-content"],
-            '&:active': {
-              background: colors['primary-active'],
-            }
+            color: colors["primary-content"]
           },
           '&:active': {
-            border: 'none'
-          }
+            background: colors['primary-active'],
+            border: 'none',
+            outline: 'none',
+          },
+          '&:disabled': {
+            background: neutral['600'],
+          },
         },
         ".card": {
           borderRadius: theme('borderRadius.xl'),
@@ -64,6 +66,9 @@ export default {
             outlineStyle: 'solid',
             outlineColor: slate[300],
             outlineOffset: '1px'
+          },
+          "&:disabled": {
+            background: neutral['300']
           }
         }
       })
