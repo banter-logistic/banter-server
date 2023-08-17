@@ -3,6 +3,7 @@
   "workspaces": [
     "admin",
     "web",
-    "lib"
+    "lib",
+    "devtool"
   ]
 }

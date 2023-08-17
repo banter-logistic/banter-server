@@ -2,6 +2,7 @@
 
 <script lang=ts>
   import { page } from "$app/stores";
+  import type { LayoutData } from "./$types";
   const routes = {
     "Home": "/counter",
     "Insert": "/counter/insert",
@@ -11,13 +12,7 @@
   
   $: selected = $page.url.pathname
   
-  import { tweened } from 'svelte/motion';
-	import { cubicOut } from 'svelte/easing';
-
-	const progress = tweened(0, {
-		duration: 400,
-		easing: cubicOut
-	});
+  export let data: LayoutData
 </script>
 
 <section class="min-h-screen bg-base" id="counter-base-layout">
@@ -25,7 +20,7 @@
               bg-white shadow-md">
     <div class="font-bold text-2xl">BANTER</div>
     <div></div>
-    <div class="text-right mr-4">Mason Ct.</div>
+    <div class="text-right mr-4">{data.user.username}</div>
   </nav>
   
   <div class="my-6"></div>

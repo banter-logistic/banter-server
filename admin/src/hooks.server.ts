@@ -33,5 +33,6 @@ export const handle: Handle = async ({ event, resolve }) => {
     throw redirect(302, '/')
   }
   
+  event.locals.user = session.data
   return await resolve(event)
 }

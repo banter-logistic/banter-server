@@ -10,7 +10,6 @@ export function cross(elem: HTMLFormElement, prop = {}): ActionReturn {
     e.preventDefault()
     
     const inputs = elem.querySelectorAll(input_element.join(', '))
-    console.log(inputs)
     
     const data = new FormData(this);
     
@@ -39,12 +38,5 @@ export function cross(elem: HTMLFormElement, prop = {}): ActionReturn {
     applyAction(result);
   })
 
-  return {
-    update(prop) {
-      console.log('UPDATE',prop)
-    },
-    destroy() {
-      
-    },
-  };
+  return {};
 }
