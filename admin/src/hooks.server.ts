@@ -1,51 +1,36 @@
 import { redirect, type Handle } from "@sveltejs/kit";
-import { zodUrlSafeParse } from "lib";
-import { readToken } from "lib/auth";
-import { SessionSchema, publicRoutes, session_key,  } from "lib/const";
 import { id_to_route } from "lib/database";
-import { pool } from "lib/database/connection";
-import type { PoolConnection } from "mysql2/promise";
 
-export class Pooling {
-  conn: PoolConnection | null = null
-  
-  async query<T = any>(sql: string, value?: any[]): Promise<T[]> {
-    if (!this.conn) {
-      this.conn = await pool.getConnection()
-    }
-    
-    const [res] = await this.conn.query(sql,value)
-    
-    return res as T[]
-  }
-}
+import { SessionSchema, publicRoutes, session_key } from "lib/const";
+import { Pooling } from "lib/util/pooling";
+import { fromQuerySafeParse } from "lib/util/query";
+import { decryptToken } from "lib/auth";
+
 
 export const handle: Handle = async ({ event, resolve }) => {
   event.locals.pool = new Pooling()
   
   const path = event.url.pathname
   
-  const cookie = event.cookies.get(session_key)
+  const token = event.cookies.get(session_key)
   
   // if in public route, proceed
   if (path == '/' || publicRoutes.find( pubRoute => path.startsWith(pubRoute) )) {
-    let session
-    if (cookie) {
-      const valid = zodUrlSafeParse(SessionSchema, readToken(cookie) )
-      session = valid.success ? valid.data : null
+    if (token) {
+      const sessionParse = fromQuerySafeParse(SessionSchema, decryptToken(token) )
+      event.locals.user = sessionParse.success ? sessionParse.data : null as any
     }
-    event.locals.user = session ?? null as any
     const res = await resolve(event)
     event.locals.pool.conn?.release()
     return res
   }
   
-  if (!cookie) {
+  if (!token) {
     event.cookies.set('msg','anda harus login')
     throw redirect(302, '/')
   }
   
-  const session = zodUrlSafeParse(SessionSchema, readToken(cookie) )
+  const session = fromQuerySafeParse(SessionSchema, decryptToken(token) )
   
   if (!session.success) {
     event.cookies.delete(session_key)

@@ -1,5 +1,5 @@
 import type { SessionSchema } from "lib/const";
-import type { Pooling } from "./hooks.server";
+import type { Pooling } from "lib/util/pooling";
 
 declare global {
 	namespace App {

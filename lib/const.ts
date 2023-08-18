@@ -1,11 +1,11 @@
-import { z, type SafeParseReturnType } from "zod";
-export const o = z.object
-export const s = z.string()
-export const i = z.number()
+import { object as o, string, number } from "zod";
+export { o }
+export const s = string()
+export const i = number()
 
 
 export const publicRoutes = [
-  '/auth','/api'
+  '/auth','/api','/temp'
 ]
 
 export const session_key = 'session_id'
