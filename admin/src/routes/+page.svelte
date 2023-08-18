@@ -23,11 +23,15 @@
       <input type="password" name="passwd" class="input" data-cross-reset required>
     </label>
     <button class="btn primary rounded-lg">Login</button>
-    {#if form}
-      {form.msg}
-    {/if}
-    {#if data.msg}
-      <span>{data.msg}</span>
+    {#if data.session}
+    <span>session tersedia, <a href={data.session} class="underline">klik disini</a></span>
+    {:else}
+      {#if form}
+      {form.message}
+      {/if}
+      {#if data.message}
+      <span>{data.message}</span>
+      {/if}
     {/if}
   </form>
   
