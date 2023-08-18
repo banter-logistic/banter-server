@@ -1,5 +1,6 @@
-import { redirect, type Handle } from "@sveltejs/kit";
+import { redirect, type Handle, type HandleServerError } from "@sveltejs/kit";
 import { id_to_route } from "lib/database";
+import "lib/util/error";
 
 import { SessionSchema, publicRoutes, session_key } from "lib/const";
 import { Pooling } from "lib/util/pooling";
@@ -48,3 +49,11 @@ export const handle: Handle = async ({ event, resolve }) => {
   event.locals.pool.conn?.release()
   return res
 }
+
+export const handleError: HandleServerError = ({ error, event }) => {
+  console.warn(error,'HANDLE_ERROR')
+  return {
+    message: 'Terjadi Kesalahan',
+    code: (error as any)?.code ?? 'UNKNOWN',
+  };
+};
