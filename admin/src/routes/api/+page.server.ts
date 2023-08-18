@@ -26,10 +26,10 @@ export const actions: Actions = {
       const [q] = await locals.pool.query<user>('select * from user where username = ?', [username])
       
       if (q && await compare(passwd, q.passwd)) {
+        user = q
+      } else {
         return fail(400, { message: 'username atau password salah', username })
       }
-      
-      user = q
     } catch (err) {
       console.error(err)
       throw error(500, { code: 'DATABASE_ERROR', message: 'Maaf, terjadi kesalahan, coba lagi nanti', username })
