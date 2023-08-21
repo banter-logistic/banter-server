@@ -1,45 +1,33 @@
 import { fail, type Actions, redirect, error } from "@sveltejs/kit";
 
-import { toQuery, fromQuerySafeParse } from "lib/util/query";
+import { toQuery } from "lib/util/query";
 import { SessionSchema, o, s, session_key } from "lib/const";
 import { id_to_route } from "lib/database";
 import { encryptToken } from "lib/auth";
 import type { user } from "lib/database/schema";
 import { compare } from "bcrypt";
+import { select } from "lib/database/util";
 
 
 export const actions: Actions = {
-  login: async ({ request, cookies, locals }) => {
-    
-    const form = await request.formData()
-    const auth = fromQuerySafeParse(o({ username: s, passwd: s }) , form)
-    
-    if (!auth.success) {
-      return fail(400, { message: 'data invalid, coba lagi' })
-    }
-    
-    const { username, passwd } = auth.data
+  login: async ({ cookies, locals: { pool, formData } }) => {
+    const { username, passwd } = await formData(o({ username: s.max(100), passwd: s.max(100) }))
     
     let user
     
-    try {
-      const [q] = await locals.pool.query<user>('select * from user where username = ?', [username])
-      
-      if (q && await compare(passwd, q.passwd)) {
-        user = q
-      } else {
-        return fail(400, { message: 'username atau password salah', username })
-      }
-    } catch (err) {
-      console.error(err)
-      throw error(500, { code: 'DATABASE_ERROR', message: 'Maaf, terjadi kesalahan, coba lagi nanti', username })
+    const [q] = await pool.query<user>(`select * from user where ${select.user('user_username')} = ?`, [username])
+    
+    if (q && await compare(passwd, q.user_passwd)) {
+      user = q
+    } else {
+      return fail(400, { message: 'username atau password salah', username })
     }
     
     // auth success
-    const token = encryptToken(toQuery({ id: user.id, username: user.username }, SessionSchema))
+    const token = encryptToken(toQuery({ id: `${user.user_kode}-${user.user_id}`, username: user.user_username }, SessionSchema))
     cookies.set(session_key, token)
     
-    throw redirect(302, id_to_route[ user.id.slice(0, 3) ])
+    throw redirect(302, id_to_route[ user.user_kode ])
   },
   logout: async ({ cookies }) => {
     cookies.delete(session_key)

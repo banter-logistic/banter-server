@@ -6,6 +6,10 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
+		alias: {
+			'cp': './src/cp/index.ts',
+			'cp/*': './src/cp/*',
+		},
 		adapter: adapter()
 	}
 };

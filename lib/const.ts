@@ -9,6 +9,7 @@ export const publicRoutes = [
 ]
 
 export const session_key = 'session_id'
+export const saltRounds = 10
 
 export const SessionSchema = o({
   id: s,

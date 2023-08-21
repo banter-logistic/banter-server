@@ -118,7 +118,8 @@
     "./server/**/*.ts",
     "./util/**/*.ts",
     "./const.ts",
-    "./index.ts"
+    "./index.ts",
+    "../admin/src/app.d.ts"
   ],
   "exclude": [
     "../node_modules/**"
