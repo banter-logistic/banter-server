@@ -1,16 +1,16 @@
 <script>
   import { cross } from "$lib/form";
   import { date } from "lib/util/date";
-  import AdminList from "cp/Div.svelte";
-  import AdminInput from "cp/Div.svelte";
+  import DriverList from "cp/Div.svelte";
+  import DriverInput from "cp/Div.svelte";
   import { enhance } from "$app/forms";
   
   export let data
   
 </script>
 
-<AdminList cls="card">
-  <h2 class="pl-2">List Admin</h2>
+<DriverList cls="card">
+  <h2 class="pl-2">List Driver</h2>
   <div class="my-6"></div>
   <table class="w-full">
     <thead class="border-b-2">
@@ -18,19 +18,31 @@
         <th>id</th>
         <th>username</th>
         <th>nama</th>
-        <th>level</th>
+        <th>nohp</th>
+        <th>kendaraan</th>
+        <th>kubikase</th>
+        <th>plat nomor</th>
         <th>dibuat</th>
       </tr>
     </thead>
     <tbody>
-      {#each data.data as adm}
+      {#each data.data as sls}
+      {@const {
+        user_id, user_username, user_nama, user_dibuat,
+        driver_nohp, driver_jenis_kendaraan, driver_kubikase, driver_plat_nomor
+      } = sls}
       <tr class="text-center border-t border-slate-100 h-10">
-        <td>{adm.user_id}</td>
-        <td>{adm.user_username}</td>
-        <td>{adm.user_nama}</td>
-        <td>{adm.admin_level}</td>
-        <td>{date(adm.user_dibuat).display}</td>
+        <td>{user_id}</td>
+        <td>{user_username}</td>
+        <td>{user_nama}</td>
+        <td>{driver_nohp}</td>
+        <td>{driver_jenis_kendaraan}</td>
+        <td>{driver_kubikase}</td>
+        <td>{driver_plat_nomor}</td>
+        <td>{date(user_dibuat).display}</td>
       </tr>
+      {:else}
+        kosong
       {/each}
       
     </tbody>
@@ -40,10 +52,10 @@
     <button class="btn primary transition">Logout</button>
   </form>
   
-</AdminList>
-
-<AdminInput cls="card">
-  <h2 class="font-bold text-2xl">Input</h2>
+</DriverList>
+  
+<DriverInput cls="card">
+  <h2 class="font-bold text-2xl">Input Driver</h2>
   <div class="my-6"></div>
   <form method="post" use:enhance class="grid grid-cols-1 gap-4">
     <input class="input primary" type="text" name="username" placeholder="username">
@@ -52,4 +64,4 @@
     <input class="input primary" type="number" value="1" name="level" placeholder="level">
     <button class="btn primary">Tambah</button>
   </form>
-</AdminInput>
+</DriverInput>

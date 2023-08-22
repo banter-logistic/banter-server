@@ -1,35 +1,37 @@
 <script>
   import { cross } from "$lib/form";
   import { date } from "lib/util/date";
-  import AdminList from "cp/Div.svelte";
-  import AdminInput from "cp/Div.svelte";
+  import PosList from "cp/Div.svelte";
+  import PosInput from "cp/Div.svelte";
   import { enhance } from "$app/forms";
+  import { displayAlamat } from "lib/database/util";
   
   export let data
   
 </script>
 
-<AdminList cls="card">
-  <h2 class="pl-2">List Admin</h2>
+
+<PosList cls="card">
+  <h2 class="pl-2">List Sales</h2>
   <div class="my-6"></div>
   <table class="w-full">
     <thead class="border-b-2">
       <tr>
         <th>id</th>
-        <th>username</th>
         <th>nama</th>
-        <th>level</th>
+        <th>tipe</th>
+        <th>alamat</th>
         <th>dibuat</th>
       </tr>
     </thead>
     <tbody>
-      {#each data.data as adm}
+      {#each data.data as pos}
       <tr class="text-center border-t border-slate-100 h-10">
-        <td>{adm.user_id}</td>
-        <td>{adm.user_username}</td>
-        <td>{adm.user_nama}</td>
-        <td>{adm.admin_level}</td>
-        <td>{date(adm.user_dibuat).display}</td>
+        <td>{pos.pos_id}</td>
+        <td>{pos.pos_nama}</td>
+        <td>{pos.pos_tipe}</td>
+        <td>{displayAlamat(pos)}</td>
+        <td>{date(pos.pos_dibuat).display}</td>
       </tr>
       {/each}
       
@@ -40,16 +42,16 @@
     <button class="btn primary transition">Logout</button>
   </form>
   
-</AdminList>
-
-<AdminInput cls="card">
-  <h2 class="font-bold text-2xl">Input</h2>
+</PosList>
+  
+<PosInput cls="card">
+  <h2 class="font-bold text-2xl">Input Sales</h2>
   <div class="my-6"></div>
   <form method="post" use:enhance class="grid grid-cols-1 gap-4">
     <input class="input primary" type="text" name="username" placeholder="username">
     <input class="input primary" type="text" name="nama" placeholder="display nama">
     <input class="input primary" type="password" name="passwd" placeholder="password">
-    <input class="input primary" type="number" value="1" name="level" placeholder="level">
+      
     <button class="btn primary">Tambah</button>
   </form>
-</AdminInput>
+</PosInput>

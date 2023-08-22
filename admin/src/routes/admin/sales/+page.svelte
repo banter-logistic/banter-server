@@ -1,36 +1,39 @@
-<script>
+<script lang=ts>
   import { cross } from "$lib/form";
   import { date } from "lib/util/date";
-  import AdminList from "cp/Div.svelte";
-  import AdminInput from "cp/Div.svelte";
+  import SalesList from "cp/Div.svelte";
+  import SalesInput from "cp/Div.svelte";
   import { enhance } from "$app/forms";
+  import type { PageData } from "./$types"
   
-  export let data
+  export let data: PageData
   
 </script>
-
-<AdminList cls="card">
-  <h2 class="pl-2">List Admin</h2>
+  
+<SalesList cls="card">
+  <h2 class="pl-2">List Sales</h2>
   <div class="my-6"></div>
   <table class="w-full">
     <thead class="border-b-2">
       <tr>
-        <th>id</th>
+        <th>Id</th>
         <th>username</th>
-        <th>nama</th>
-        <th>level</th>
-        <th>dibuat</th>
+        <th>Nama</th>
+        <th>Counter</th>
+        <th>Dibuat</th>
       </tr>
     </thead>
     <tbody>
-      {#each data.data as adm}
+      {#each data.data as sls}
+      {@const { user_id, user_username, user_nama, pos_nama, user_dibuat,  } = sls}
       <tr class="text-center border-t border-slate-100 h-10">
-        <td>{adm.user_id}</td>
-        <td>{adm.user_username}</td>
-        <td>{adm.user_nama}</td>
-        <td>{adm.admin_level}</td>
-        <td>{date(adm.user_dibuat).display}</td>
+        <td>{user_id}</td>
+        <td>{user_username}</td>
+        <td>{user_nama}</td>
+        <td>{pos_nama}</td>
+        <td>{date(user_dibuat).display}</td>
       </tr>
+      
       {/each}
       
     </tbody>
@@ -40,16 +43,23 @@
     <button class="btn primary transition">Logout</button>
   </form>
   
-</AdminList>
-
-<AdminInput cls="card">
-  <h2 class="font-bold text-2xl">Input</h2>
+</SalesList>
+  
+<SalesInput cls="card">
+  <h2 class="font-bold text-2xl">Input Sales</h2>
   <div class="my-6"></div>
   <form method="post" use:enhance class="grid grid-cols-1 gap-4">
     <input class="input primary" type="text" name="username" placeholder="username">
     <input class="input primary" type="text" name="nama" placeholder="display nama">
     <input class="input primary" type="password" name="passwd" placeholder="password">
-    <input class="input primary" type="number" value="1" name="level" placeholder="level">
+    
+    <select class="input primary" name="" id="">
+      {#each data.posList as pos}
+      <option value={pos}>{pos}</option>
+      {/each}
+    </select>
+      
     <button class="btn primary">Tambah</button>
   </form>
-</AdminInput>
+</SalesInput>
+  

@@ -1,3 +1,4 @@
+import type { alamat } from "./schema";
 
 /** draw placeholder `?` n times */
 export const ph = (i: number) => Array(i).fill('?').join(',')
@@ -29,3 +30,13 @@ export const fields = new Proxy({},{
 export const table = new Proxy({},{
   get: (_,key) => key
 }) as { [x in keyof Schema]: string }
+
+export const displayAlamat = ({ 
+  alamat_detail, 
+  alamat_kelurahan, 
+  alamat_kecamatan, 
+  alamat_kabupaten, 
+  alamat_provinsi,
+  alamat_kodepos,
+}: alamat
+) => `${alamat_detail}, ${alamat_kelurahan}, ${alamat_kecamatan}, ${alamat_kabupaten}, ${alamat_provinsi} ${alamat_kodepos}`
