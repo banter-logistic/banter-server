@@ -20,6 +20,15 @@ export const userId = {
   ADM: "ADM",
 } as const
 
+export const nameToId = {
+  pelanggan: "PLG",
+  sales: "SLS",
+  driver: "DRV",
+  kurir: "KUR",
+  operator: "OPR",
+  admin: "ADM",
+} as const
+
 export const posId = {
   WHS: "WHS",
   DSC: "DSC",

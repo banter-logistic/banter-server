@@ -7,7 +7,7 @@ import { select, displayAlamat, table as t } from "lib/database/util";
 import { error } from "@sveltejs/kit";
 import type { Pooling } from "lib/util/pooling";
 import { date } from "lib/util/date";
-import { userId } from "lib/database";
+import { userId, idToRoute, nameToId } from "lib/database";
 
 const userInput = {
   username: s,
@@ -154,24 +154,35 @@ export const actions: Actions = {
 
 
 /// LOAD
-
+const clamp0 = (i: number) => i < 0 ? 0 : i
+const dp = (i: number) => { return Array(clamp0(5 - i.toString().length)).fill('0').join('') + i.toString() }
 
 export const load: PageServerLoad = async ({ locals: { pool }, params }) => {
-  const load = (loadHandle as any)[params.user ?? 'admin']
+  const param = params.user ?? 'admin'
+  const load = (loadHandle as any)[param]
   
   if (!load) throw error(404, { code: 'NOT_FOUND', message: params.user + ' tidak ada' })
   const data = await load(pool)
   
   if (data.length != 0){
     (data as Array<any>)?.map( (e,i) => {
-      if (e.user_dibuat) {
-        e.user_dibuat = date(data[i].user_dibuat).display
+      if (e["user_dibuat"]) {
+        e["user_dibuat"] = date(e["user_dibuat"]).display
       }
+      if (e['user_id']) {
+        // @ts-ignore
+        e['user_id'] = nameToId[param] + '-' + dp(e['user_id'])
+      }
+      if (e['tipe']) {
+        // @ts-ignore
+        e['id'] = e['tipe'] + '-' + dp(e['id'])
+      }
+      
     })
   }
   return {
     data,
-    route: params.user ?? 'admin',
+    route: param,
   }
 };
 
@@ -184,7 +195,7 @@ const admin = async (pool: Pooling) => {
     ${user('user_id','user_username','user_nama','user_dibuat')},
     ${admin('admin_level')}
   from ${t.admin}
-  left join ${t.user} on ${user('user_id')} = ${admin('admin_id')}
+  left join ${t.user} on ${user('user_id')} = ${admin('admin_id')} and ${user('user_kode')} = '${userId.ADM}'
   limit 10`)
   return data
 }
@@ -199,7 +210,7 @@ const sales = async (pool: Pooling) => {
     ${user('user_id','user_username','user_nama','user_dibuat')},
     ${pos('pos_nama')}
   from ${t.sales}
-  left join ${t.user} on ${user('user_id')} = ${sales('sales_id')}
+  left join ${t.user} on ${user('user_id')} = ${sales('sales_id')} and ${user('user_kode')} = '${userId.SLS}'
   left join ${t.pos} on ${pos('pos_id')} = ${sales('sales_pos_id')}
   limit 10`)
   
@@ -217,7 +228,7 @@ const driver = async (pool: Pooling) => {
       'driver_plat_nomor')
     }
   from ${t.driver}
-  left join ${t.user} on ${user('user_id')} = ${driver('driver_id')}
+  left join ${t.user} on ${user('user_id')} = ${driver('driver_id')} and ${user('user_kode')} = '${userId.DRV}'
   where ${driver('driver_tipe')} = '${userId.DRV}'
   limit 10`)
   
@@ -235,7 +246,7 @@ const kurir = async (pool: Pooling) => {
       'driver_plat_nomor')
     }
   from ${t.driver}
-  left join ${t.user} on ${user('user_id')} = ${driver('driver_id')}
+  left join ${t.user} on ${user('user_id')} = ${driver('driver_id')} and ${user('user_kode')} = '${userId.KUR}'
   where ${driver('driver_tipe')} = '${userId.KUR}'
   limit 10`)
   
@@ -252,7 +263,7 @@ const operator = async (pool: Pooling) => {
     ${user('user_id','user_username','user_nama','user_dibuat')},
     ${pos('pos_nama','pos_tipe')}
   from ${t.operator}
-  left join ${t.user} on ${user('user_id')} = ${operator('operator_id')}
+  left join ${t.user} on ${user('user_id')} = ${operator('operator_id')} and ${user('user_kode')} = '${userId.OPR}'
   left join ${t.pos} on ${operator('operator_pos_id')} = ${pos('pos_id')}
   limit 10`)
     
@@ -299,7 +310,7 @@ const pelanggan = async (pool: Pooling) => {
     ${plg('pelanggan_nohp')},
     ${alamat()}
   from ${t.pelanggan}
-  left join ${t.user} on ${user('user_id')} = ${plg('pelanggan_id')}
+  left join ${t.user} on ${user('user_id')} = ${plg('pelanggan_id')} and ${user('user_kode')} = '${userId.PLG}'
   left join ${t.alamat} on ${alamat('alamat_id')} = ${plg('pelanggan_alamat_id')}
   limit 10
   `)
