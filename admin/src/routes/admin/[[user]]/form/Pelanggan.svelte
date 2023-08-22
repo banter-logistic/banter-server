@@ -2,11 +2,6 @@
 <script lang=ts>
   import provinsi from "../../../../provinsi.json";
   import kabupaten from "../../../../kabupaten.json";
-  const posTipe = [
-    { tipe: 'WHS', display: 'warehouse | WHS' },
-    { tipe: 'DSC', display: 'distribution center | DSC' },
-    { tipe: 'CTR', display: 'counter | CTR' },
-  ]
   
   let selectedProv: string
   
@@ -15,13 +10,10 @@
   
 </script>
 
-<input class="input primary" type="text" name="pos_nama" placeholder="nama pos" required>
-
-<select class="input primary" name="pos_tipe" required>
-  {#each posTipe as { tipe, display }}
-  <option value={tipe}>{display}</option>
-  {/each}
-</select>
+<input class="input primary" type="text" name="username" placeholder="username" required>
+<input class="input primary" type="text" name="nama" placeholder="display nama" required>
+<input class="input primary" type="password" name="passwd" placeholder="password" required>
+<input class="input primary" type="text" name="nohp" placeholder="no hp" required>
 
 <select class="input primary" name="alamat_provinsi" required bind:value={selectedProv}>
   {#each Object.values(provinsi) as prov}

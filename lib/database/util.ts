@@ -1,4 +1,5 @@
 import type { alamat } from "./schema";
+import { prop } from "../util";
 
 /** draw placeholder `?` n times */
 export const ph = (i: number) => Array(i).fill('?').join(',')
@@ -29,9 +30,7 @@ export const fields = new Proxy({},{
   }
 }) as { [x in keyof Schema]: (...i: (keyof Schema[x])[]) => string };
 
-export const table = new Proxy({},{
-  get: (_,key) => key
-}) as { [x in keyof Schema]: string }
+export const table = prop as { [x in keyof Schema]: string }
 
 export const displayAlamat = ({ 
   alamat_detail, 

@@ -1,4 +1,4 @@
-import { id_to_route } from "lib/database";
+import { idToRoute } from "lib/database";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ cookies, locals: { user } }) => {
@@ -7,7 +7,7 @@ export const load: PageServerLoad = async ({ cookies, locals: { user } }) => {
   
   if (message) cookies.delete('msg')
   
-  const session = user ? id_to_route[user.id.slice(0,3)] : null
+  const session = user ? idToRoute[user.id.slice(0,3)] : null
   
   return {
     message, session

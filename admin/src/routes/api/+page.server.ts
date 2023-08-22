@@ -1,8 +1,7 @@
-import { fail, type Actions, redirect, error } from "@sveltejs/kit";
-
+import { fail, type Actions, redirect } from "@sveltejs/kit";
 import { toQuery } from "lib/util/query";
 import { SessionSchema, o, s, session_key } from "lib/const";
-import { id_to_route } from "lib/database";
+import { idToRoute } from "lib/database";
 import { encryptToken } from "lib/auth";
 import type { user } from "lib/database/schema";
 import { compare } from "bcrypt";
@@ -27,7 +26,7 @@ export const actions: Actions = {
     const token = encryptToken(toQuery({ id: `${user.user_kode}-${user.user_id}`, username: user.user_username }, SessionSchema))
     cookies.set(session_key, token)
     
-    throw redirect(302, id_to_route[ user.user_kode ])
+    throw redirect(302, idToRoute[ user.user_kode ])
   },
   logout: async ({ cookies }) => {
     cookies.delete(session_key)

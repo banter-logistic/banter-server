@@ -1,11 +1,11 @@
 import { createPool } from "mysql2/promise";
-
+import { DBNAME, DBPASSWD, DBUSERNAME, DBSOCKET } from "$env/static/private";
 
 export const pool = createPool({
-  user: 'deuzo',
-  password: 'mariadb2017',
-  database: 'banter_db',
-  socketPath: '/var/run/mysqld/mysqld.sock',
+  user: DBUSERNAME,
+  password: DBPASSWD,
+  database: DBNAME,
+  socketPath: DBSOCKET,
   // waitForConnections: true,
   // connectionLimit: 10,
   // maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`

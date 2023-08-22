@@ -3,10 +3,11 @@ import { hash } from "bcrypt";
 import { i, o, s, saltRounds } from "lib/const";
 import type { PageServerLoad } from "./$types";
 import type * as schema from "lib/database/schema";
-import { select, displayAlamat } from "lib/database/util";
+import { select, displayAlamat, table as t } from "lib/database/util";
 import { error } from "@sveltejs/kit";
 import type { Pooling } from "lib/util/pooling";
 import { date } from "lib/util/date";
+import { userId } from "lib/database";
 
 const userInput = {
   username: s,
@@ -32,7 +33,7 @@ const driverInput = o({
   plat_nomor: s,
 })
 
-const alamatInsert = {
+const alamatInput = {
   alamat_detail: s,
   alamat_kabupaten: s,
   alamat_kecamatan: s,
@@ -42,16 +43,22 @@ const alamatInsert = {
 }
 
 const posInput = o({
-  ...alamatInsert,
+  ...alamatInput,
   pos_nama: s,
   pos_tipe: s,
 })
 
+const pelangganInput = o({
+  ...alamatInput,
+  ...userInput,
+  nohp: s,
+})
+
 const insertUser = async (
-  pool: Pooling, insertId: number, kode: string,
+  pool: Pooling, insertId: number, kode: keyof typeof userId,
   i: { nama: string, username: string, passwd: string }
 ) => {
-  await pool.insertFormat<schema.user>('user',{
+  await pool.insertFormat<schema.user>(t.user,{
     user_id: insertId,
     user_kode: kode,
     user_nama: i.nama,
@@ -63,12 +70,10 @@ const insertUser = async (
 const insertDriver = (tipe: 'DRV'|'KUR'): typeof actions[''] => 
   async ({ locals: { pool, formData } }) => {
     const {
-      jenis_kendaraan, kubikase,
-      nohp, plat_nomor, 
-      ...user
+      jenis_kendaraan, kubikase, nohp, plat_nomor, ...user
     } = await formData(driverInput)
     
-    const { insertId } = await pool.insertFormat<schema.driver>('driver',{
+    const { insertId } = await pool.insertFormat<schema.driver>(t.driver,{
       driver_jenis_kendaraan: jenis_kendaraan,
       driver_kubikase: kubikase,
       driver_nohp: nohp,
@@ -86,44 +91,57 @@ export const actions: Actions = {
     
     const { level, ...user } = await formData(adminInput)
     
-    const { insertId } = await pool.insertFormat<schema.admin>('admin',{
+    const { insertId } = await pool.insertFormat<schema.admin>(t.admin,{
       admin_level: level
     });
     
-    await insertUser(pool, insertId, 'ADM', user)
+    await insertUser(pool, insertId, userId.ADM, user)
     
     return { success: true }
   }, 
   sales: async ({ locals: { pool, formData } }) => {
     const { pos_id, ...user } = await formData(salesInput)
     
-    const { insertId } = await pool.insertFormat<schema.sales>('sales',{
+    const { insertId } = await pool.insertFormat<schema.sales>(t.sales,{
       sales_pos_id: pos_id,
     })
     
-    await insertUser(pool, insertId, 'CTR', user)
+    await insertUser(pool, insertId, userId.SLS, user)
     
     return { success: true }
   },
-  driver: insertDriver('DRV'),
-  kurir: insertDriver('KUR'),
+  driver: insertDriver(userId.DRV),
+  kurir: insertDriver(userId.KUR),
   operator: async ({ locals: { pool, formData }}) => {
     const { pos_id, ...user } = await formData(salesInput)
     
-    const { insertId } = await pool.insertFormat<schema.operator>('operator',{
+    const { insertId } = await pool.insertFormat<schema.operator>(t.operator,{
       operator_pos_id: pos_id
     })
     
-    await insertUser(pool, insertId, 'OPR', user)
+    await insertUser(pool, insertId, userId.OPR, user)
     
     return { success: true }
+  },
+  pelanggan: async ({ locals: { pool, formData } }) => {
+    const { nohp: pelanggan_nohp, nama, passwd, username, ...alamat } = await formData(pelangganInput)
+    
+    const { insertId: alamatId } = await pool.insertFormat<schema.alamat>(t.alamat,alamat)
+    
+    const { insertId } = await pool.insertFormat<schema.pelanggan>(t.pelanggan,{
+      pelanggan_alamat_id: alamatId,
+      pelanggan_nohp,
+    })
+    
+    await insertUser(pool, insertId, userId.PLG, { nama, passwd, username })
+    
   },
   pos: async ({ locals: { pool, formData } }) => {
     const { pos_nama, pos_tipe, ...alamat } = await formData(posInput)
     
-    const { insertId: alamatId } = await pool.insertFormat<schema.alamat>('alamat',alamat)
+    const { insertId: alamatId } = await pool.insertFormat<schema.alamat>(t.alamat,alamat)
     
-    await pool.insertFormat<schema.pos>('pos',{
+    await pool.insertFormat<schema.pos>(t.pos,{
       pos_alamat_id: alamatId,
       pos_nama,
       pos_tipe,
@@ -165,8 +183,8 @@ const admin = async (pool: Pooling) => {
   select 
     ${user('user_id','user_username','user_nama','user_dibuat')},
     ${admin('admin_level')}
-  from admin 
-  left join user on ${user('user_kode')} = 'ADM' and ${user('user_id')} = ${admin('admin_id')}
+  from ${t.admin}
+  left join ${t.user} on ${user('user_id')} = ${admin('admin_id')}
   limit 10`)
   return data
 }
@@ -180,9 +198,9 @@ const sales = async (pool: Pooling) => {
   select 
     ${user('user_id','user_username','user_nama','user_dibuat')},
     ${pos('pos_nama')}
-  from sales
-  left join user on ${user('user_kode')} = 'SLS' and ${user('user_id')} = ${sales('sales_id')}
-  left join pos on ${pos('pos_tipe')} = 'CTR' and ${pos('pos_id')} = ${sales('sales_pos_id')}
+  from ${t.sales}
+  left join ${t.user} on ${user('user_id')} = ${sales('sales_id')}
+  left join ${t.pos} on ${pos('pos_id')} = ${sales('sales_pos_id')}
   limit 10`)
   
   return data
@@ -198,9 +216,9 @@ const driver = async (pool: Pooling) => {
     ${driver('driver_nohp','driver_jenis_kendaraan','driver_kubikase',
       'driver_plat_nomor')
     }
-  from driver
-  left join user on ${user('user_kode')} = 'DRV'
-  where ${driver('driver_tipe')} = 'DRV'
+  from ${t.driver}
+  left join ${t.user} on ${user('user_id')} = ${driver('driver_id')}
+  where ${driver('driver_tipe')} = '${userId.DRV}'
   limit 10`)
   
   return data
@@ -212,13 +230,13 @@ const kurir = async (pool: Pooling) => {
   
   const data = await pool.query<schema.driver & schema.user>(`
   select
-    ${user('user_id','user_nama','user_username','user_dibuat')},
+    ${user('user_id','user_username','user_nama','user_dibuat')},
     ${driver('driver_nohp','driver_jenis_kendaraan','driver_kubikase',
       'driver_plat_nomor')
     }
-  from driver
-  left join user on ${user('user_kode')} = 'KUR'
-  where ${driver('driver_tipe')} = 'KUR'
+  from ${t.driver}
+  left join ${t.user} on ${user('user_id')} = ${driver('driver_id')}
+  where ${driver('driver_tipe')} = '${userId.KUR}'
   limit 10`)
   
   return data
@@ -231,12 +249,12 @@ const operator = async (pool: Pooling) => {
   
   const data = await pool.query<schema.operator & schema.user & schema.pos>(`
   select
-    ${user('user_id','user_nama','user_username','user_dibuat')},
+    ${user('user_id','user_username','user_nama','user_dibuat')},
     ${pos('pos_nama','pos_tipe')}
-    from operator
-    left join user on ${user('user_kode')} = 'OPR'
-    left join pos on ${operator('operator_pos_id')} = ${pos('pos_id')}
-    limit 10`)
+  from ${t.operator}
+  left join ${t.user} on ${user('user_id')} = ${operator('operator_id')}
+  left join ${t.pos} on ${operator('operator_pos_id')} = ${pos('pos_id')}
+  limit 10`)
     
   return data
 }
@@ -251,8 +269,8 @@ const pos = async (pool: Pooling) => {
   select
     ${posQuery},
     ${alamat()}
-  from pos
-  left join alamat on ${alamat('alamat_id')} = ${pos('pos_id')}
+  from ${t.pos}
+  left join ${t.alamat} on ${alamat('alamat_id')} = ${pos('pos_alamat_id')}
   limit 10`)
   
   data.map( (e,i) => {
@@ -270,6 +288,35 @@ const pos = async (pool: Pooling) => {
   return data as (schema.pos & schema.alamat)[]
 }
 
-const loadHandle = { admin, sales, driver, kurir, operator, pos }
+const pelanggan = async (pool: Pooling) => {
+  const plg = select.pelanggan
+  const alamat = select.alamat
+  const user = select.user
+  
+  const data = await pool.query(`
+  select
+    ${user('user_id','user_username','user_nama','user_dibuat')},
+    ${plg('pelanggan_nohp')},
+    ${alamat()}
+  from ${t.pelanggan}
+  left join ${t.user} on ${user('user_id')} = ${plg('pelanggan_id')}
+  left join ${t.alamat} on ${alamat('alamat_id')} = ${plg('pelanggan_alamat_id')}
+  limit 10
+  `)
+  
+  data.map( (e,i) => {
+    const alamat = displayAlamat(data[i])
+    for (const key in data[i]) {
+      if (key.startsWith('alamat_')) {
+        delete data[i][key]
+      }
+    }
+    data[i]["alamat"] = alamat
+  })
+  
+  return data as (schema.user & schema.alamat & schema.pelanggan)[]
+}
+
+const loadHandle = { admin, sales, driver, kurir, operator, pos, pelanggan }
 
 export type pageData = { [x in keyof typeof loadHandle]: {data: Awaited<ReturnType<typeof loadHandle[x]>>} }

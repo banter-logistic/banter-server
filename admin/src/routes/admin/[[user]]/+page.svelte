@@ -12,8 +12,6 @@
   <h2 class="pl-2">List {data.route}</h2>
   <div class="my-6"></div>
   
-  <!-- <svelte:component this={data.page} {data}></svelte:component> -->
-  
   {#if data.data.length == 0}
     <div>List Kosong</div>
   {:else} 
@@ -32,7 +30,6 @@
         {#each rows as row}
         <td>{adm[row]}</td>
         {/each}
-        <!-- <td>{date(adm.user_dibuat).display}</td> -->
       </tr>
       {/each}
       

@@ -50,11 +50,7 @@ function parseZod(str) {
   } else {
     return 'z.date()'
   }
-  
 }
-
-
-
 
 
 
@@ -76,18 +72,18 @@ const i = z.number()
   for (const table of describes) {
     
     // TYPE
-    content += `export type ${table.name} = {\n`
+    content += `export type ${table.name} = {`
     for (const field of table.fields) {
-      content += `  ${field.Field}: ${parse(field.Type)},\n`
+      content += `${field.Field}: ${parse(field.Type)},`
     }
-    content += `}\n`
+    content += `}`
     
     // ZOD
-    content += `export const ${table.name} = o({\n`
+    content += `export const ${table.name} = o({`
     for (const field of table.fields) {
-      content += `  ${field.Field}: ${parseZod(field.Type)},\n`
+      content += `${field.Field}: ${parseZod(field.Type)},`
     }
-    content += `})\n`
+    content += `})`
   }
   
   content += `export type Schema = { ${describes.map( e => `${e.name}: ${e.name}` ).join(',')} };`

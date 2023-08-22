@@ -115,11 +115,10 @@
   "include": [
     "./auth/**/*.ts",
     "./database/**/*.ts",
-    "./server/**/*.ts",
     "./util/**/*.ts",
     "./const.ts",
-    "./index.ts",
-    "../admin/src/app.d.ts"
+    "../admin/src/app.d.ts",
+    "../admin/.svelte-kit/ambient.d.ts",
   ],
   "exclude": [
     "../node_modules/**"

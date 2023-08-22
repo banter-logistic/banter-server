@@ -9,6 +9,7 @@
     "Driver": "/admin/driver",
     "Kurir": "/admin/kurir",
     "Operator": "/admin/operator",
+    "Pelanggan": "/admin/pelanggan",
     "Pos": "/admin/pos",
   }
   

@@ -1,5 +1,5 @@
 import { redirect, type Handle, type HandleServerError } from "@sveltejs/kit";
-import { id_to_route } from "lib/database";
+import { idToRoute } from "lib/database";
 import "lib/util/error";
 
 import { SessionSchema, publicRoutes, session_key } from "lib/const";
@@ -41,7 +41,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     throw redirect(302, '/')
   }
   
-  if (!path.startsWith( id_to_route[ session.data.id.slice(0,3) ] )) {
+  if (!path.startsWith( idToRoute[ session.data.id.slice(0,3) ] )) {
     event.cookies.set('msg','tidak diizinkan')
     throw redirect(302, '/')
   }
