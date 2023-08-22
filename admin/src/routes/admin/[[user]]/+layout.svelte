@@ -14,6 +14,7 @@
   
   $: selected = $page.url.pathname
   $: pageTitle = selected.replace(/(admin|\/)/g,'') || 'admin'
+  
 </script>
 
 <svelte:head>
@@ -35,9 +36,7 @@
     <div>
       <aside class="p-4 rounded-xl bg-white shadow-md flex flex-col">
         {#each Object.entries(routes) as [name,r]}
-          <a class="p-input {r == selected ? 'btn primary' : ''}"
-            href="{r}" title="{selected} : {r}"
-          >{name}</a>
+          <a class="p-input {r == selected.replace('/create','') ? 'btn primary' : ''}" href="{r}" >{name}</a>
         {/each}
         
       </aside>

@@ -9,7 +9,9 @@ export const select = new Proxy({},{
   get(_,table) {
     if (typeof table == 'string')
       return (...props: string[]) => {
-        return props.map( prop => `\`${table}\`.\`${prop}\`` ).join(',')
+        const res = props.length == 0 ? `\`${table}\`.*` :
+          props.map( prop => `\`${table}\`.\`${prop}\`` ).join(',')
+        return res
       }
     else
       throw new Error('Cannot use symbol when accessing proxy')
