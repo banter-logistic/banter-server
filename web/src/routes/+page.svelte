@@ -1,4 +1,5 @@
 <script>
+  import Blog from "./blog.svelte";
   import Productser from "./productser.svelte";
   import Valued from "./valued.svelte";
 
@@ -89,21 +90,46 @@
       <Productser />
       <div
         class="w-[11rem] h-[9rem] right-0 mt-[17rem] absolute bg-[#94FBF5] blur-[37px] object-cover -z-10"
-    />
+      />
     </div>
   </section>
 
   <!-- valued Service  -->
-  <section class="mt-[10%] flex ">
-    <img src="../Banter-image/bgval.png" alt="valuedService" class=" absolute object-cover w-full blur-[21px] -z-10">
-    <div>
-      <p>Valued Service </p>
-      <h1>Why Choose Us </h1>
-      <p>Bergabunglah dengan BANTER sekarang untuk mendapatkan manfaat dari fitur-fitur unggulan kami .</p>
+  <section class="mt-[10%]">
+    <img
+      src="../Banter-image/bgval.png"
+      alt="valuedService"
+      class=" absolute object-cover w-full h-[35rem] blur-[21px] -z-10"
+    />
+    <div class="flex gap-[2rem] justify-center pt-[8%]">
+      <div class="w-[23rem] flex flex-col gap-4">
+        <p class="text-[#14EBDE] text-2xl">Valued Service</p>
+        <h1 class="text-[#F0F4F4] text-4xl font-bold">Why Choose Us</h1>
+        <p class="text-xl text-[#F0F4F4]">
+          Bergabunglah dengan BANTER sekarang untuk mendapatkan manfaat dari
+          fitur-fitur unggulan kami .
+        </p>
+      </div>
+      <div class="grid grid-cols-2 gap-5">
+        <Valued />
+      </div>
     </div>
-    <div>
-      <Valued/>
+  </section>
+
+  <section class="mt-[15%]">
+    <div
+      class="w-[18rem] h-[15rem] flex-shrink-0 right-0 absolute bg-[#94FBF5] blur-[37px] object-cover -z-10"
+    />
+    <div class=" w-[75%] mx-auto flex flex-col gap-8 justify-center">
+      <p class="text-[#14EBDE] text-2xl">Latest News</p>
+      <div class="flex justify-between">
+        <h1 class="text-4xl font-bold text-[#2C3E50]">Latest Update</h1>
+        <button class="btn btn-info"> View More </button>
+      </div>
     </div>
 
+    <div class="flex justify-center items-center gap-8 mt-16">
+      <Blog />
+    </div>
   </section>
 </body>

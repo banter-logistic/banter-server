@@ -1,10 +1,40 @@
 <script>
-    let value =[
-        {title:'Pengiriman Tepat Waktu ' , img:'/1.svg' ,desc:'komitmen kami adalah pengiriman  tepat Waktu ' }
-        {title:'Pantauan Real-time ' , img:'/1.svg' ,desc:'Layanan Pantauan Real-time kami memungkinkan Anda untuk mengawasi perjalanan barang Anda dengan akurat dan tepat ' }
-        {title:'Pengemasan dan Labeling' , img:'/1.svg' ,desc:'komitmen kami adalah pengiriman  tepat Waktu ' }
-        {title:'Layanan Pelanggan 24/7 ' , img:'/1.svg' ,desc:'komitmen kami adalah pengiriman  tepat Waktu ' }
-    ]
+  let value = [
+    {
+      id: 1,
+      title: "Pengiriman Tepat Waktu ",
+      img: "/1.svg",
+      desc: "komitmen kami adalah pengiriman  tepat Waktu ",
+    },
+    {
+      id: 2,
+      title: "Pantauan Real-time ",
+      img: "/2.svg",
+      desc: "Mengawasi Langsung Perjalanan Barang Anda dengan Akurat dan Tepat. ",
+    },
+    {
+      id: 3,
+      title: "Pengemasan dan Labeling",
+      img: "/3.svg",
+      desc: " Menjamin Keamanan dan Keteraturan Pengiriman. ",
+    },
+    {
+      id: 4,
+      title: "Layanan Pelanggan 24/7 ",
+      img: "/4.svg",
+      desc: " Kami Tersedia Setiap Saat untuk Menjawab Pertanyaan dan Menangani Kebutuhan Anda. ",
+    },
+  ];
 </script>
 
-<img src={value[0].img} alt="">
+{#each value as vl (vl.id)}
+  <div class="flex gap-8  bg-white/30 shadow-md backdrop-blur-xl rounded-xl w-[26rem] h-[10rem] px-4">
+    <div class="flex items-center justify-center  ">
+      <img src={vl.img} alt="" />
+    </div>
+    <div class="flex flex-col gap-4  justify-center ">
+      <h1 class="text-[#2C3E50]  text-2xl font-bold">{vl.title}</h1>
+      <p class="text-lg text-[#79797C]">{vl.desc}</p>
+    </div>
+  </div>
+{/each}
