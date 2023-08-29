@@ -1,5 +1,7 @@
 <script lang=ts>
   import { page } from "$app/stores";
+  import { Navbar } from "cp/common";
+  import { capital } from "lib/util";
   
   const username = 'admin username'
   
@@ -14,40 +16,31 @@
   }
   
   $: selected = $page.url.pathname
-  $: pageTitle = selected.replace(/(admin|\/)/g,'') || 'admin'
+  $: title = capital(selected.replace(/(admin|\/)/g,'') || 'admin')
+  
+  $: isSelect = (r: string) => r == selected.replace('/create','') ? 'btn primary' : ''
   
 </script>
 
 <svelte:head>
-  <title>{pageTitle}</title>
+  <title>{title}</title>
 </svelte:head>
 
-<section class="min-h-screen bg-base" id="counter-base-layout">
-  <nav class="grid grid-cols-3 p-4 w-full sticky
-              bg-white shadow-md">
-    <div class="font-bold text-2xl">BANTER</div>
-    <div></div>
-    <div class="text-right mr-4">{username}</div>
-  </nav>
+<Navbar {username}/>
+
+<section class="mt-12 px-6 stack-1-6 [grid-template-columns:240px_1fr]">
   
-  <div class="my-6"></div>
+  <div>
+    <aside class="card p-4 stack">
+      {#each Object.entries(routes) as [name,r] (name)}
+        <a class="p-input {isSelect(r)}" href="{r}" >{name}</a>
+      {/each}
+    </aside>
+  </div>
   
-  <section class="px-6 grid gap-6" style="grid-template-columns: 240px 1fr;">
-    
-    <div>
-      <aside class="p-4 rounded-xl bg-white shadow-md flex flex-col">
-        {#each Object.entries(routes) as [name,r]}
-          <a class="p-input {r == selected.replace('/create','') ? 'btn primary' : ''}" href="{r}" >{name}</a>
-        {/each}
-        
-      </aside>
-    </div>
-    
-    <div class="grid grid-cols-1 gap-4">
-      <slot/>
-      <div class="block my-96">&ThickSpace;</div>
-    </div>
-    
-  </section>
+  <div class="stack-1-4">
+    <slot/>
+    <div class="block my-96">&ThickSpace;</div>
+  </div>
   
 </section>

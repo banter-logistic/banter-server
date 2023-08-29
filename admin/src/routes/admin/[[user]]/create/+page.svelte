@@ -8,16 +8,19 @@
   
 </script>
 
-<AdminInput cls="card">
-  <div class="grid grid-cols-2">
-    <h2 class="font-bold text-2xl">Input {data.route}</h2>
+<AdminInput class="card">
+  <div class="stack-2">
+    <h2>Input {data.route}</h2>
     <div class="flex justify-end">
       <a class="btn primary" href="./">Kembali</a>
     </div>
   </div>
   
   <div class="my-6"></div>
-  <form method="post" action="/admin?/{data.route}" use:enhance class="grid grid-cols-1 gap-4">
+  <form method="post" action="/admin?/{data.route}" use:enhance class="stack-1-4">
     <svelte:component this={data.page} {data}/>
+    <div class="flex justify-end">
+      <button class="btn primary">Tambah</button>
+    </div>    
   </form>
 </AdminInput>

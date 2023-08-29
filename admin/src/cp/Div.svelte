@@ -1,7 +1,8 @@
 <script lang=ts>
   export let props: Record<string,any> = {}
-  export let cls = ''
+  let cls = ''
   export let style = ''
+  export { cls as class }
 </script>
 
 <div {...props} class={cls} {style}>

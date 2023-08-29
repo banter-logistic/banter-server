@@ -129,6 +129,3 @@
 {:else}
 <input class="input primary" type="text" name="alamat_kodepos" bind:value={kodepos} placeholder="kodepos" required>
 {/if}
-
-<button class="btn primary">Tambah</button>
-
