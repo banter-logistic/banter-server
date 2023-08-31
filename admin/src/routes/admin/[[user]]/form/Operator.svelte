@@ -1,21 +1,34 @@
 
 <script lang=ts>
-  import type { load } from "../create/+page.server";
-  import { Text, Passwd, Number } from "cp/input";
+  import type { out } from "../create/+server";
+  import { onMount } from "svelte";
+  import { json } from "lib";
+  import User from "./cp/User.svelte";
+  import Select from "./input/Select.svelte";
   
-  export let data: load['sales']
+  let display: any[] = ['loading...']
+  let values: any[] = ['']
+  
+  // fetch list pos
+  onMount(async () => {
+    const res = await json('')
+    values = res.map((e:any)=>e.pos_id)
+    display = res.map((e:any)=>e.pos_nama)
+  })
 </script>
 
-<Text name="username" />
-<Text name="nama" label="display nama" />
-<Passwd name="passwd"/>
+<User/>
 
-<!-- <input class="input primary" type="text" name="username" placeholder="username" required>
-<input class="input primary" type="text" name="nama" placeholder="display nama" required>
-<input class="input primary" type="password" name="passwd" placeholder="password" required> -->
+<Select name="pos_id" label="pilih pos" {values} {display} />
 
-<select class="input primary" name="pos_id" required>
-  {#each data.data as pos}
-  <option value={pos.id}>{pos.nama}</option>
+<!-- <select class="input primary" name="pos_id" required>
+  {#await promise}
+    <option value="">loading...</option>
+  {:then data} 
+  
+  {#each data ?? [] as pos}
+    <option value={pos.pos_id}>{pos.pos_nama}</option>
   {/each}
-</select>
+  
+  {/await}
+</select> -->

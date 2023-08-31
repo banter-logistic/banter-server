@@ -4,11 +4,12 @@
   export let placeholder = ''
   export let required = true
   export let label = name
+  export let value: string | number = ''
   
   export { className as class }
 </script>
 
 <label class="stack">
-  {label}
-  <input type="text" class={className} {name} {placeholder} {required}>
+  <span class="pl-2">{label}</span>
+  <input type="text" class={className} {name} {placeholder} {required} bind:value>
 </label>

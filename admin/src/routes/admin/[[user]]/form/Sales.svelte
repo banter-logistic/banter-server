@@ -1,20 +1,30 @@
 <script lang=ts>
-  import type { load } from "../create/+page.server";
-  import { Text, Passwd, Number } from "cp/input";
+  import { onMount } from "svelte";
+  import type { out } from "../create/+server";
+  import { json, log } from "lib";
+  import User from "./cp/User.svelte";
   
-  export let data: load['sales']
+  let data: Promise<out[]>
+  
+  onMount(() => {
+    data = json('').then(e=>{log(e);return e})
+  })
 </script>
 
-<Text name="username" />
-<Text name="nama" label="display nama" />
-<Passwd name="passwd"/>
+<User/>
 
-<!-- <input class="input primary" type="text" name="username" placeholder="username" required>
-<input class="input primary" type="text" name="nama" placeholder="display nama" required>
-<input class="input primary" type="password" name="passwd" placeholder="password" required> -->
-
-<select class="input primary" name="pos_id" required>
-  {#each data.data as pos}
-  <option value={pos.id}>{pos.nama}</option>
-  {/each}
-</select>
+<label class="stack">
+  Pos
+  <select class="input primary" name="pos_id" required>
+    {#await data}
+      <option value="">loading...</option>
+    {:then data} 
+    
+    <option value="">--Pilih Pos--</option>
+    {#each data ?? [] as pos}
+      <option value={pos.pos_id}>{pos.pos_nama}</option>
+    {/each}
+    
+    {/await}
+  </select>
+</label>

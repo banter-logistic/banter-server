@@ -1,131 +1,124 @@
 
 <script lang=ts>
-  import type { load } from "../create/+page.server";
+  import { getContext, onMount } from "svelte";
   import { cache } from "lib/util/fetch";
+  import Text from "./input/Text.svelte";
+  import type { Writable } from "svelte/store";
+  import Select from "./input/Select.svelte";
+  import type { alamat } from "lib/database/schema";
+  import { Number } from "cp/input";
+  import { log } from "lib";
   
-  const posTipe = [
-    { tipe: 'WHS', display: 'warehouse | WHS' },
-    { tipe: 'DSC', display: 'distribution center | DSC' },
-    { tipe: 'CTR', display: 'counter | CTR' },
+  const posValues = [
+    'WHS',
+    'DSC',
+    'CTR',
+  ]
+  const posDisplay = [
+    'warehouse | WHS',
+    'distribution center | DSC',
+    'counter | CTR',
   ]
   
-  export let data: load['pos']
+  let data = { data: [] }
+  let { form } = getContext<{ form: Writable<alamat> }>('form')
+  
+  onMount(() => {
+    cache('/api/kodepos').then(e=>data=e)
+  })
   
   const dash = (s: string) => s.replaceAll(' ','-')
   
-  let beforeProv: string
-  let beforeKab: string
-  let beforeKec: string
+  let selectedKodepos: string = 'null'
+  $: form.update(e=>{
+    e.alamat_kodepos = selectedKodepos;
+    return e
+  })
   
-  let selectedProv: string
-  let selectedKab: string
-  let selectedKec: string
-  let selectedKel: string
-  let selectedKodepos: string | null = null
-  let kodepos: string | null = null
+  // RESET, WHEN VALUE CHANGE, ANY DEPENDANT RESET
+  $: prov = $form.alamat_provinsi
+  $: {prov;reset()}
   
-  let provinsiList = data.data.provinsi
+  function reset() {
+    $form.alamat_kabupaten = ''
+    $form.alamat_kecamatan = ''
+    $form.alamat_kelurahan = ''
+    $form.alamat_kodepos = ''
+  }
+  
+  $: kabs = $form.alamat_kabupaten
+  $: {kabs;reset2()}
+  
+  function reset2() {
+    $form.alamat_kecamatan = ''
+    $form.alamat_kelurahan = ''
+    $form.alamat_kodepos = ''
+  }
+  // END RESET
+  
+  $: provinsiList = data.data
   let kabupatenList: any[] = []
-  let kecamatanList: any | null
-  let kelurahanList: any | null
+  let kecamatanList: any[]
+  let kelurahanList: any[]
+  let kodeposList: any[]
   
   $: {
-    if (selectedProv != beforeProv){
-      selectedKab = selectedKec = beforeKab = beforeKec = selectedKel = ''
-      beforeProv = selectedProv
-    }  else
-    if (selectedKab != beforeKab){
-      selectedKec = beforeKec = ''
-      beforeKab = selectedKab
-    }
-    
-    if (selectedProv) {
+    if ($form.alamat_provinsi) {
       // if prov change, change kabupaten list
-      cache(`/api/kodepos/${dash(selectedProv)}`)
-        .then( res => kabupatenList = res.data)
+      cache(`/api/kodepos/${dash($form.alamat_provinsi)}`)
+        .then( res => kabupatenList = res.data);
     } else {
       kabupatenList = []
-      selectedKab = selectedKec = selectedKel = ''
+      $form.alamat_kabupaten = ''
     }
     
-    if (selectedKab) {
+    if ($form.alamat_kabupaten) {
       // if kab change, change kecamatan list
-      cache(`/api/kodepos/${dash(selectedProv)}/${dash(selectedKab)}`)
+      cache(`/api/kodepos/${dash($form.alamat_provinsi)}/${dash($form.alamat_kabupaten)}`)
         .then( res => kecamatanList = res.data)
     } else {
-      kecamatanList = null
-      selectedKec = selectedKel = ''
+      kecamatanList = []
+      $form.alamat_kecamatan = ''
     }
     
-    if (selectedKec) {
+    if ($form.alamat_kecamatan) {
       // if kec change, change kelurahan list
-      cache(`/api/kodepos/${dash(selectedProv)}/${dash(selectedKab)}/${dash(selectedKec)}`)
+      cache(`/api/kodepos/${dash($form.alamat_provinsi)}/${dash($form.alamat_kabupaten)}/${dash($form.alamat_kecamatan)}`)
         .then( res => kelurahanList = res.data)
     } else {
-      kelurahanList = null
-      selectedKel = ''
+      kelurahanList = []
+      $form.alamat_kelurahan = ''
     }
     
-    if (selectedKel) {
+    if ($form.alamat_kelurahan) {
       // if kec change, change kelurahan list
-      cache(`/api/kodepos/${dash(selectedProv)}/${dash(selectedKab)}/${dash(selectedKec)}/${dash(selectedKel)}`)
+      cache(`/api/kodepos/${dash($form.alamat_provinsi)}/${dash($form.alamat_kabupaten)}/${dash($form.alamat_kecamatan)}/${dash($form.alamat_kelurahan)}`)
         .then( res => selectedKodepos = res.data)
     } else {
-      selectedKodepos = null
+      kodeposList = []
+      // $form.alamat_kodepos = ''
     }
   }
   
   
 </script>
 
-<input class="input primary" type="text" name="pos_nama" placeholder="nama pos" required>
+<Text name="pos_nama" label="nama pos" />
 
-<select class="input primary" name="pos_tipe" required>
-  {#each posTipe as { tipe, display }}
-  <option value={tipe}>{display}</option>
-  {/each}
-</select>
+<Select name="pos_tipe" label="tipe" values={posValues} display={posDisplay} />
+<Select name="alamat_provinsi" label="provinsi" values={provinsiList} />
+<Select name="alamat_kabupaten" label="kabupaten" values={kabupatenList} />
+<Select name="alamat_kecamatan" label="kecamatan" values={kecamatanList} />
+<Select name="alamat_kelurahan" label="kelurahan" values={kelurahanList} />
+<Text name="alamat_detail" label="alamat detail" />
 
-<select class="input primary" name="alamat_provinsi" required bind:value={selectedProv}>
-  <option value="">--Provinsi--</option>
-  {#each provinsiList as prov}
-  <option value={prov}>{prov}</option>
-  {/each}
-</select>
 
-<select class="input primary" name="alamat_kabupaten" required bind:value={selectedKab}>
-  <option value="">--Kabupaten--</option>
-  {#each kabupatenList as kab}
-  <option value={kab}>{kab}</option>
-  {/each}
-</select>
+{#if selectedKodepos}
 
-{#if kecamatanList}
-<select class="input primary" name="alamat_kecamatan" required bind:value={selectedKec}>
-  <option value="">--Kecamatan--</option>
-  {#each kecamatanList as kec}
-  <option value={kec}>{kec}</option>
-  {/each}
-</select>
-{:else}  
-<input class="input primary" type="text" name="alamat_kecamatan" placeholder="kecamatan" required>
-{/if}
+<Number name="alamat_kodepos" label="kodepos" value={selectedKodepos} readonly={true} />
 
-{#if kelurahanList}
-<select class="input primary" name="alamat_kelurahan" required bind:value={selectedKel}>
-  <option value="">--Kelurahan--</option>
-  {#each kelurahanList as kel}
-  <option value={kel}>{kel}</option>
-  {/each}
-</select>
-{:else}  
-<input class="input primary" type="text" name="alamat_kelurahan" placeholder="kelurahan" required>
-{/if}
-
-<input class="input primary" type="text" name="alamat_detail" placeholder="alamat detail" required>
-
-{#if Boolean(selectedKodepos)}
-<input class="input primary" type="text" name="alamat_kodepos" bind:value={selectedKodepos} placeholder="kodepos" required readonly={true}>
 {:else}
-<input class="input primary" type="text" name="alamat_kodepos" bind:value={kodepos} placeholder="kodepos" required>
+
+<Number name="alamat_kodepos" label="kodepos" bind:value={selectedKodepos} />
+
 {/if}

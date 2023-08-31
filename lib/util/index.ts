@@ -4,3 +4,7 @@ export function capital(str: string) {
 }
 
 export const prop = new Proxy({},{get: (_,key) => key})
+
+export const log = <T>(data:T) => {console.log(data);return data}
+
+export type loader<T extends (...i:any[]) => Promise<any>> = Awaited<ReturnType<T>>

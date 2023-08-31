@@ -63,10 +63,10 @@ async function export_schema() {
   }
 
   let content = `/** auto generated */
-import { z } from 'zod'
-const o = z.object
-const s = z.string()
-const i = z.number()
+import { z } from 'zod';
+const o = z.object;
+const s = z.string();
+const i = z.number();
 `
 
   for (const table of describes) {
@@ -76,14 +76,14 @@ const i = z.number()
     for (const field of table.fields) {
       content += `${field.Field}: ${parse(field.Type)},`
     }
-    content += `}`
+    content += `};`
     
     // ZOD
     content += `export const ${table.name} = o({`
     for (const field of table.fields) {
       content += `${field.Field}: ${parseZod(field.Type)},`
     }
-    content += `})`
+    content += `});`
   }
   
   content += `export type Schema = { ${describes.map( e => `${e.name}: ${e.name}` ).join(',')} };`

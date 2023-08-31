@@ -1,157 +1,10 @@
-import type { Actions } from "@sveltejs/kit";
-import { hash } from "bcrypt";
-import { i, o, s, saltRounds } from "lib/const";
 import type { PageServerLoad } from "./$types";
 import type * as schema from "lib/database/schema";
 import { select, displayAlamat, table as t } from "lib/database/util";
 import { error } from "@sveltejs/kit";
 import type { Pooling } from "lib/util/pooling";
 import { date } from "lib/util/date";
-import { userId, idToRoute, nameToId } from "lib/database";
-
-const userInput = {
-  username: s,
-  nama: s,
-  passwd: s,
-}
-
-const adminInput = o({
-  ...userInput,
-  level: i
-})
-
-const salesInput = o({
-  ...userInput,
-  pos_id: i,
-})
-
-const driverInput = o({
-  ...userInput,
-  jenis_kendaraan: s,
-  kubikase: i,
-  nohp: s,
-  plat_nomor: s,
-})
-
-const alamatInput = {
-  alamat_detail: s,
-  alamat_kabupaten: s,
-  alamat_kecamatan: s,
-  alamat_kelurahan: s,
-  alamat_kodepos: s,
-  alamat_provinsi: s
-}
-
-const posInput = o({
-  ...alamatInput,
-  pos_nama: s,
-  pos_tipe: s,
-})
-
-const pelangganInput = o({
-  ...alamatInput,
-  ...userInput,
-  nohp: s,
-})
-
-const insertUser = async (
-  pool: Pooling, insertId: number, kode: keyof typeof userId,
-  i: { nama: string, username: string, passwd: string }
-) => {
-  await pool.insertFormat<schema.user>(t.user,{
-    user_id: insertId,
-    user_kode: kode,
-    user_nama: i.nama,
-    user_username: i.username,
-    user_passwd: await hash(i.passwd,saltRounds)
-  });
-}
-
-const insertDriver = (tipe: 'DRV'|'KUR'): typeof actions[''] => 
-  async ({ locals: { pool, formData } }) => {
-    const {
-      jenis_kendaraan, kubikase, nohp, plat_nomor, ...user
-    } = await formData(driverInput)
-    
-    const { insertId } = await pool.insertFormat<schema.driver>(t.driver,{
-      driver_jenis_kendaraan: jenis_kendaraan,
-      driver_kubikase: kubikase,
-      driver_nohp: nohp,
-      driver_plat_nomor: plat_nomor,
-      driver_tipe: tipe
-    })
-
-    await insertUser(pool, insertId, tipe, user)
-    
-    return { success: true }
-  }
-
-export const actions: Actions = {
-  admin: async ({ locals: { pool, formData } }) => {
-    
-    const { level, ...user } = await formData(adminInput)
-    
-    const { insertId } = await pool.insertFormat<schema.admin>(t.admin,{
-      admin_level: level
-    });
-    
-    await insertUser(pool, insertId, userId.ADM, user)
-    
-    return { success: true }
-  }, 
-  sales: async ({ locals: { pool, formData } }) => {
-    const { pos_id, ...user } = await formData(salesInput)
-    
-    const { insertId } = await pool.insertFormat<schema.sales>(t.sales,{
-      sales_pos_id: pos_id,
-    })
-    
-    await insertUser(pool, insertId, userId.SLS, user)
-    
-    return { success: true }
-  },
-  driver: insertDriver(userId.DRV),
-  kurir: insertDriver(userId.KUR),
-  operator: async ({ locals: { pool, formData }}) => {
-    const { pos_id, ...user } = await formData(salesInput)
-    
-    const { insertId } = await pool.insertFormat<schema.operator>(t.operator,{
-      operator_pos_id: pos_id
-    })
-    
-    await insertUser(pool, insertId, userId.OPR, user)
-    
-    return { success: true }
-  },
-  pelanggan: async ({ locals: { pool, formData } }) => {
-    const { nohp: pelanggan_nohp, nama, passwd, username, ...alamat } = await formData(pelangganInput)
-    
-    const { insertId: alamatId } = await pool.insertFormat<schema.alamat>(t.alamat,alamat)
-    
-    const { insertId } = await pool.insertFormat<schema.pelanggan>(t.pelanggan,{
-      pelanggan_alamat_id: alamatId,
-      pelanggan_nohp,
-    })
-    
-    await insertUser(pool, insertId, userId.PLG, { nama, passwd, username })
-    
-  },
-  pos: async ({ locals: { pool, formData } }) => {
-    const { pos_nama, pos_tipe, ...alamat } = await formData(posInput)
-    
-    const { insertId: alamatId } = await pool.insertFormat<schema.alamat>(t.alamat,alamat)
-    
-    await pool.insertFormat<schema.pos>(t.pos,{
-      pos_alamat_id: alamatId,
-      pos_nama,
-      pos_tipe,
-    })
-    
-    return { success: true }
-  }
-};
-
-
+import { userId, nameToId } from "lib/database";
 
 /// LOAD
 const clamp0 = (i: number) => i < 0 ? 0 : i
@@ -224,13 +77,22 @@ const driver = async (pool: Pooling) => {
   const data = await pool.query<schema.driver & schema.user>(`
   select
     ${user('user_id','user_username','user_nama','user_dibuat')},
-    ${driver('driver_nohp','driver_jenis_kendaraan','driver_kubikase',
-      'driver_plat_nomor')
-    }
+    ${driver('driver_jenis_kendaraan','driver_kubikase','driver_plat_nomor')}
   from ${t.driver}
   left join ${t.user} on ${user('user_id')} = ${driver('driver_id')} and ${user('user_kode')} = '${userId.DRV}'
   where ${driver('driver_tipe')} = '${userId.DRV}'
   limit 10`)
+  
+  data.map( (e,i) => {
+    for (const key in data[i]) {
+      if (key.startsWith('driver_')) {
+        // @ts-ignore
+        data[i][key.replace('driver_','')] = data[i][key]
+        // @ts-ignore
+        delete data[i][key]
+      }
+    }
+  })
   
   return data
 }
@@ -242,13 +104,22 @@ const kurir = async (pool: Pooling) => {
   const data = await pool.query<schema.driver & schema.user>(`
   select
     ${user('user_id','user_username','user_nama','user_dibuat')},
-    ${driver('driver_nohp','driver_jenis_kendaraan','driver_kubikase',
-      'driver_plat_nomor')
-    }
+    ${driver('driver_jenis_kendaraan','driver_kubikase','driver_plat_nomor')}
   from ${t.driver}
   left join ${t.user} on ${user('user_id')} = ${driver('driver_id')} and ${user('user_kode')} = '${userId.KUR}'
   where ${driver('driver_tipe')} = '${userId.KUR}'
   limit 10`)
+  
+  data.map( (e,i) => {
+    for (const key in data[i]) {
+      if (key.startsWith('driver_')) {
+        // @ts-ignore
+        data[i][key.replace('driver_','')] = data[i][key]
+        // @ts-ignore
+        delete data[i][key]
+      }
+    }
+  })
   
   return data
 };
@@ -307,7 +178,6 @@ const pelanggan = async (pool: Pooling) => {
   const data = await pool.query(`
   select
     ${user('user_id','user_username','user_nama','user_dibuat')},
-    ${plg('pelanggan_nohp')},
     ${alamat()}
   from ${t.pelanggan}
   left join ${t.user} on ${user('user_id')} = ${plg('pelanggan_id')} and ${user('user_kode')} = '${userId.PLG}'

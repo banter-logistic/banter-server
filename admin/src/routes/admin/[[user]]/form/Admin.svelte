@@ -1,9 +1,9 @@
 
 <script lang=ts>
-  import { Text, Passwd, Number } from "cp/input";
+  import { Number } from "./input";
+  import User from "./cp/User.svelte";
 </script>
 
-<Text name="username" />
-<Text name="nama" label="display nama" />
-<Passwd name="passwd"/>
-<Number name="level" value={1} />
+<User/>
+
+<Number name="level"/>
