@@ -12,7 +12,7 @@
         class="w-[11rem] h-[9rem] -left-10 absolute bg-[#F7EB83] blur-[40px] object-cover -z-10"
       />
       <p class="text-[#14EBDE] text-xl">Our Service</p>
-      <h1 class="text-[#2C3E50] text-4xl font-bold">Product Service</h1>
+      <h1 class="text-[#2C3E50] text-4xl font-bold" >Product Service</h1>
     </div>
     <div class="grid grid-cols-4">
       <Productser/>

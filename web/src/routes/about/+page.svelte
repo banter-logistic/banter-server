@@ -45,7 +45,7 @@
         class="w-[56rem] h-[20rem] rounded-xl"
       />
     </div>
-    <p class="text-[#79797C] text-xl">
+    <p class="text-[#79797C] text-xl" >
       Di Banter, kami didukung oleh tim yang berpengalaman dan berdedikasi dalam
       bidang logistik. Dari perencanaan rute yang cerdas hingga penanganan
       barang yang cermat, tim kami berusaha memberikan layanan terbaik kepada

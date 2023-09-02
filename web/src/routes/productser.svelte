@@ -51,8 +51,8 @@
 <style>
   .card {
     position: relative;
-    width: 17.05406rem;
-    height: 24.08606rem;
+    width: 15rem;
+    height: 19rem;
     background: #131313;
     overflow: hidden;
     border-radius: 20px;
@@ -96,7 +96,7 @@
     position: absolute;
     top: -47px;
     right: -45px;
-    width: 100px;
+    width: 0px;
     height: 100px;
     transform: rotate(-175deg);
     border-radius: 50%;

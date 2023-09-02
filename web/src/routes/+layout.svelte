@@ -84,7 +84,7 @@
 <slot />
 
 <footer class="bg-[#3C5E7A] mt-[10%]">
-  <div class="flex gap-56 justify-center w-full py-24">
+  <div class="md:flex grid justify-between gap-8 w-full p-24">
     <div class="grid gap-2 w-60">
       <!-- <img src="../Banter-image/Logo.png" alt="" class="bg-white rounded-full "/> -->
       <h1>Logo</h1>

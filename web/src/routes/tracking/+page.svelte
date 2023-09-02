@@ -28,21 +28,21 @@
       <div
         class="bg-[#F0F4F4] w-[64rem] h-[10rem] items-center flex justify-start gap-4 rounded-2xl drop-shadow-md"
       >
-        <form action="" class="flex flex-col px-20 gap-1">
-          <label for="tracking" class="font-bold">No Resi : </label>
-          <div class="flex gap-8">
+        <form action="" class="flex px-20 gap-1">
+          <label for="tracking" class="block">
+            <span
+              class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700 pb-1"
+              >No Resi
+            </span>
             <input
               type="text"
               id="tracking"
               placeholder="Masukkan 13 Digit "
               class="input input-info w-[20rem]"
             />
-
-            <button class="btn btn-info"> Search </button>
-          </div>
+            <button class="btn btn-info ml-8 text-white/80"> Track </button>
+          </label>
         </form>
-
-        <div />
       </div>
     </div>
   {/if}
@@ -53,65 +53,80 @@
         class="bg-[#F0F4F4] w-[64rem] h-[18rem] items-center flex justify-center gap-4 rounded-2xl drop-shadow-md"
       >
         <form action="" class="flex flex-wrap px-20 gap-8">
-          <div class="flex flex-col">
-            <label for="asal" class="font-bold">Asal : </label>
+          <label for="asal" class="block">
+            <span class=" block text-sm font-medium text-slate-700 pb-1">
+              Asal
+            </span>
             <input
               type="text"
               id="asal"
               placeholder="Masukkan Asal Pengiriman"
               class="input input-info w-[20rem]"
             />
-          </div>
-          <div class="flex flex-col">
-            <label for="tujuan" class="font-bold">Tujuan : </label>
+          </label>
+          <label for="tujuan" class="block">
+            <span class="block text-sm font-medium text-slate-700 pb-1"
+              >Tujuan
+            </span>
             <input
               type="text"
               id="tujuan"
               placeholder="Masukkan Tujuan Pengiriman "
               class="input input-info w-[20rem]"
             />
-          </div>
-          <div class="flex flex-col">
-            <label for="berat" class="font-bold">Berat : </label>
+          </label>
+          <label for="berat" class="block">
+            <span class="block text-sm font-medium text-slate-700 pb-1"
+              >Berat
+            </span>
             <input
               type="number"
               id="berat"
               placeholder="Masukkan Berat barang "
               class="input input-info w-[8rem]"
             />
-          </div>
-          <div class="flex flex-col">
-            <label for="panjang" class="font-bold"> Panjang :</label>
-
+          </label>
+          <label for="berat" class="block">
+            <span
+              class=" after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700 pb-1"
+            >
+              Panjang
+            </span>
             <input
               type="number"
               id="berat"
               placeholder="Masukkan Berat barang "
               class="input input-info w-[8rem]"
             />
-          </div>
-          <div class="flex flex-col">
-            <label for="lebar" class="font-bold"> lebar :</label>
+          </label>
 
+          <label for="lebar" class="block">
+            <span
+              class=" after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700 pb-1"
+            >
+              lebar
+            </span>
             <input
               type="number"
-              id="berat"
+              id="lebar"
               placeholder="Masukkan Berat barang "
               class="input input-info w-[8rem]"
             />
-          </div>
-          <div class="flex flex-col">
-            <label for="tinggi" class="font-bold">Tinggi :</label>
-
+          </label>
+          <label for="tinggi" class="block">
+            <span
+              class=" after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700 pb-1"
+            >
+              tinggi
+            </span>
             <input
               type="number"
-              id="berat"
+              id="tinggi"
               placeholder="Masukkan Berat barang "
               class="input input-info w-[8rem]"
             />
-          </div>
-
-          <button class="btn btn-info mt-6"> Search </button>
+            <button class="btn btn-info ml-8 text-white/80"> Search </button>
+          </label>
         </form>
 
         <div />
@@ -119,14 +134,13 @@
     </div>
   {/if}
   <div class=" relative flex justify-center mt-16">
-    <div class="bg-[#F0F4F4] w-[64rem] h-full pl-20 py-4 flex  gap-4 rounded-2xl drop-shadow-md">
+    <div
+      class="bg-[#F0F4F4] w-[64rem] h-full pl-20 py-4 flex gap-4 rounded-2xl drop-shadow-md"
+    >
       {#if aktif === "tracking"}
         <div>
           <h1 class="font-bold text-2xl">Hasil Pencarian :</h1>
-          <div class="flex flex-col  justify-start items-start">
-           
-
-          </div>
+          <div class="flex flex-col justify-start items-start" />
         </div>
       {/if}
       {#if aktif === "checkOngkir"}
