@@ -15,7 +15,7 @@
 </script>
 
 <body class=" w-full min-h-screen mt-4">
-  <section class=" relative flex w-[85%] h-[55vh] mx-auto  shrink-0">
+  <section class=" relative flex w-[85%] md:h-[27rem] h-[23rem] mx-auto  ">
     <img
       src={bgtrack}
       alt=""
@@ -34,16 +34,16 @@
     
     
   </section>
-  <div class=" w-[80%] mx-auto h-full  flex-col flex  items-start ">
+  <div class="relative w-full mx-auto h-full -mt-14 flex flex-col justify-center sm:items-start items-center ">
       <div
-        class="flex flex-row justify-center items-center gap-[1rem] w-[18.60638rem] h-[3.5rem] bg-white/30 backdrop-blur-md shadow-md ml-16 rounded-t-xl"
+        class="flex  justify-center  items-center  gap-[1rem] w-[18rem] h-[3.5rem] bg-white/30 backdrop-blur-md shadow-md sm:ml-[15%] ml-0  rounded-t-xl"
       >
-        <button on:click={()=>toogleform('tracking')} class="btn btn-info text-white/80">Tracking</button>
+        <button on:click={()=>toogleform('tracking')} class="btn btn-info text-white/80 ">Tracking</button>
         <button on:click={()=>toogleform('checkongkir')} class="btn btn-info text-white/80">Check Ongkir</button>
       </div>
       {#if active==='tracking'}
          <div
-        class="w-[80%] h-[8.375rem]  ml-16 flex items-center bg-white/30 backdrop-blur-md shadow-md px-16 rounded-tl-[0rem] rounded-tr-[0.625rem] rounded-br-[0.625rem] rounded-bl-[0.625rem]"
+        class=" h-[8.375rem] flex items-center bg-white/30 backdrop-blur-md shadow-md px-8 rounded-tl-[0rem] sm:ml-[15%] ml-0 rounded-tr-[0.625rem] rounded-br-[0.625rem] rounded-bl-[0.625rem]"
       >
       <form action=" " >
         <label for="tracking" class="block">
@@ -52,7 +52,7 @@
           type="text"
           id="tracking"
           placeholder="Type here"
-          class="input input-bordered input-info w-[15rem]"
+          class="input input-bordered input-info sm:w-[15rem] w-[10rem]"
         />
         <button class="btn btn-info ml-5 text-white/80"> tracking </button>
         </label>
@@ -62,7 +62,7 @@
       {/if}
       {#if active === 'checkongkir'}
          <div
-        class="w-[80%]  ml-16 bg-white/30 backdrop-blur-md shadow-md flex  items-center px-16 py-8 rounded-tl-[0rem] rounded-tr-[0.625rem] rounded-br-[0.625rem] rounded-bl-[0.625rem]"
+        class="  sm:ml-[15%] ml-2   bg-white/30 backdrop-blur-md shadow-md flex justify-center  sm:items-start items-center px-16 py-8 rounded-tl-[0rem] rounded-tr-[0.625rem] rounded-br-[0.625rem] rounded-bl-[0.625rem]"
       >
       <form action=""  class="flex gap-4 flex-wrap ">
         <label for="asal" class="block">

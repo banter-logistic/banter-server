@@ -42,11 +42,13 @@
       </ul>
     </div>
     <div>
-      <button
+      
+      <a
         class="bg-[#a6c1ee] rounded-full text-white px-5 py-2 hover:bg-[#87acec]"
+        href="/login"
       >
         Sign in
-      </button>
+    </a>
     </div>
     <div class="md:hidden sticky">
       <Hambuger {open} {onClick} />
