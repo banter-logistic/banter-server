@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* width */
+::-webkit-scrollbar {
+  width: 1px;
+}
+
+/* Background */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  /* @apply bg-state-40 */
+}
+
+/* Handle */
+.sike:has(:hover) ::-webkit-scrollbar-thumb {
+  @apply bg-state-40
+}

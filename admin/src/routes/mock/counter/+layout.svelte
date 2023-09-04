@@ -1,20 +1,30 @@
 <script lang=ts>
   import { page } from "$app/stores";
-  import Navbar from "lib/cp/Navbar.svelte";
   import Sidebar from "lib/cp/Sidebar.svelte";
   import { setContext } from "svelte";
   import { writable } from "svelte/store";
   const routes = [
-    ["Home", "/mock/counter"],
-    ["Insert", "/mock/counter/insert"],
-    ["Trace", "/mock/counter/trace"],
-    ["Gate out", "/mock/counter/gateout"],
-    ["Gate in", "/mock/counter/gatein"],
+    [
+      "Counter",[
+        ["Home", "/mock/counter"],
+        ["Insert", "/mock/counter/insert"],
+        ["Trace", "/mock/counter/trace"],
+        ["Gate out", "/mock/counter/gateout"],
+        ["Gate in", "/mock/counter/gatein"],
+      ]
+    ],
+    [
+      "Accountan",[
+        ["Discount", "/mock/counter"],
+        ["Currency", "/mock/counter/insert"],
+        ["Method", "/mock/counter/trace"],
+      ]
+    ],
   ]
   
   $: selected = $page.url.pathname
   
-  const username = '"username"'
+  const username = 'Aria Putra Andika'
   const title = writable('Title')
   setContext('title',title)
 </script>
@@ -22,7 +32,7 @@
 <section class="h-screen relative grid [grid-template-columns:240px_1fr]">
   
   <!-- SIDEBAR -->
-  <Sidebar  />
+  <Sidebar sideContent={routes} {username} />
   
   <!-- CONTENT -->
   <div class="overflow-auto max-h-screen">
