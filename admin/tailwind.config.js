@@ -2,20 +2,24 @@ import plugin from "tailwindcss/plugin";
 import * as tw from "./tailwind.js";
 import form from "@tailwindcss/forms";
 
-const { colors, padding, base, util, ...cp } = tw
+const { colors, padding, base, util, width, lerp, invLerp, remap, ...cp } = tw
+
+const arr = (len,each) => Array(len).fill(0).map((_,i) => each(i));
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["src/**/*.svelte"],
+  content: ["src/**/*.svelte","../lib/cp/**/*.svelte"],
   theme: {
     extend: {
       colors,
-      padding
+      padding,
+      width
     },
   },
   plugins: [
     form({ strategy: 'class' }),
     plugin(function({ addComponents, addUtilities, addBase, matchUtilities, theme }) {
+      
       matchUtilities({
         stack:(cn)=>{
           const ob = {
@@ -33,6 +37,34 @@ export default {
           }).flat()
         )}
       })
+      
+      matchUtilities({
+        "text-state": (col) => {
+          const offset = 100
+          const val = remap(10, 90, offset, 255, col)
+          return {
+            color: `rgb(${val},${val},${val})`
+          }
+        }
+      }, { values: {
+        ...Object.fromEntries(
+          arr(9,i=>[(i+1)*10,(i+1)*10])
+        )
+      }})
+      
+      matchUtilities({
+        "bg-state": (col) => {
+          const offset = 100
+          const val = remap(10, 90, offset, 255, col)
+          return {
+            background: `rgb(${val},${val},${val})`
+          }
+        }
+      }, { values: {
+        ...Object.fromEntries(
+          arr(9,i=>[(i+1)*10,(i+1)*10])
+        )
+      }})
       
       addUtilities(Object.fromEntries(Object.entries(util).map( ([k,v]) => ['.' + k,v] )))
       addComponents(Object.fromEntries(Object.entries(cp).map( ([k,v]) => ['.' + k,v] )))

@@ -10,6 +10,13 @@ import {
   spacing
 } from "tailwindcss/defaultTheme.js";
 
+export const lerp = (a, b, t) => a + (b - a) * t 
+
+export const invLerp = (from, to, value) => (value - from) / (to - from)
+
+export const remap = (origFrom, origTo, targetFrom, targetTo, value) => lerp(targetFrom, targetTo, invLerp(origFrom, origTo, value))
+
+
 function resolveColor(color, opacityVariableName) {
   return color.replace('<alpha-value>', `var(${opacityVariableName}, 1)`)
 }
@@ -29,16 +36,33 @@ export const colors = {
 }
 
 export const padding = {
-  "input": '.7rem 1.2rem',
+  "input": '.4rem .7rem',
   "input-md": '1rem 0.75rem',
+  "btn": '.7rem 1.2rem',
+}
+
+// const widthBreak = [
+//   340,
+//   640,
+//   768,
+//   1024,
+//   1280,
+//   1536,
+// ]
+
+export const width = {
+  "main": "min(840px,100%)",
+  ...Object.fromEntries(Array(10).fill(0).map((_,i)=>[`break-${i+1}`,`min(${(i+1)*120}px,100%)`]))
 }
 
 export const util = {
   
 }
 
+// COMPONENT
+
 export const btn = {
-  padding: padding.input,
+  padding: padding["btn"],
   borderRadius: '0.25rem',
   fontWeight: '700',
   '&.primary': {
@@ -57,19 +81,18 @@ export const btn = {
 
 
 export const card = {
-  borderRadius: borderRadius.xl,
+  borderRadius: borderRadius.sm,
   boxShadow: boxShadow.md,
-  padding: '2rem',
+  padding: '1.5rem',
   background: 'white',
 }
 
 
 export const input = {
-  borderRadius: borderRadius.xl,
+  borderRadius: borderRadius.sm,
   padding: padding.input,
   borderWidth: borderWidth.DEFAULT,
-  borderColor: slate[300],
-  // "&:hover": {},
+  borderColor: slate[400],
   "&:focus": {
     outlineWidth: outlineWidth[1],
     outlineStyle: 'solid',
