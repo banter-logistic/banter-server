@@ -10,6 +10,6 @@
 </script>
 
 <label class="stack">
-  <span class="pl-2">{label}</span>
+  <span>{label}</span>
   <input type="password" class={className} {name} {placeholder} {required} data-cross-reset bind:value>
 </label>
