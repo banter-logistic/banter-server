@@ -1,6 +1,6 @@
 import { blue, gray, indigo, neutral, red, slate, white } from "tailwindcss/colors";
 import svgToDataUri from "mini-svg-data-uri";
-import {
+import theme, {
   outlineWidth,
   borderWidth,
   boxShadow,
@@ -10,18 +10,27 @@ import {
   spacing
 } from "tailwindcss/defaultTheme.js";
 
-export const lerp = (a, b, t) => a + (b - a) * t 
-
-export const invLerp = (from, to, value) => (value - from) / (to - from)
-
-export const remap = (origFrom, origTo, targetFrom, targetTo, value) => lerp(targetFrom, targetTo, invLerp(origFrom, origTo, value))
+const lerp = (a, b, t) => a + (b - a) * t 
+const invLerp = (a, b, v) => (v - a) / (b - a)
+const remap = (o1, o2, i1, i2, v) => lerp(o1, o2, invLerp(i1, i2, v))
+const arr = (len,each) => Array(len).fill(0).map((_,i) => each(i+1));
+const arrz = (len,each) => Array(len).fill(0).map((_,i) => each(i));
+const s = (any,val) => any ? '' : val
+const isInt = val => /\D/.test(val)
+const pair = val => [val,val]
+export const objArr = (len,each) => Object.fromEntries(arr(len,each))
+export const objArrz = (len,each) => Object.fromEntries(arrz(len,each))
+export const objMap = (ob,cb) => Object.fromEntries(Object.entries(ob).map(([k,v])=>cb(k,v)))
 
 
 function resolveColor(color, opacityVariableName) {
   return color.replace('<alpha-value>', `var(${opacityVariableName}, 1)`)
 }
 
-export const colors = {
+// THEME
+
+const vars = /** @type {typeof light} */(new Proxy({},{get(_,key){return `var(--${/**@type {string}*/(key)})`}}))
+const light = {
   "primary": indigo[600],
   "primary-active": indigo[700],
   "primary-content": white,
@@ -35,33 +44,92 @@ export const colors = {
   "error": "#f87272",
 }
 
+// ATOM
+
+export const colors = light
+
 export const padding = {
   "input": '.4rem .7rem',
   "input-md": '1rem 0.75rem',
   "btn": '.7rem 1.2rem',
 }
 
-// const widthBreak = [
-//   340,
-//   640,
-//   768,
-//   1024,
-//   1280,
-//   1536,
-// ]
-
 export const width = {
   "main": "min(840px,100%)",
-  ...Object.fromEntries(Array(10).fill(0).map((_,i)=>[`break-${i+1}`,`min(${(i+1)*120}px,100%)`]))
+  ...objArr(10,i => [`break-${i}`,`min(${i*120}px, 100%)`])
 }
 
-export const util = {
+// UTIL
+
+const colorUtil = (prop) => [
+  (col) => {
+    const val = remap(100, 255, 10, 90, col)
+    return {
+      [prop]: `rgb(${val},${val},${val})`
+    }
+  },
+  objArr(9,i => [i*10,i*10])
+]
+
+const dynamicShading = (prop) => [
+  (stat)=>{
+    
+    const [wh,bl] = stat.split('-')
+    
+    return {
+      "--col": `color-mix(in oklab, ${vars.primary} 100%, white ${wh||0}%)`,
+      [prop]: `color-mix(in oklab, var(--col) 100%, black ${bl||0}%)`
+    }
+  },
+  {
+    DEFAULT: '',
+    ...Object.fromEntries(arr(9, i => 
+      arr(9, j => pair(`${i*10}-${j*10}`))
+    ).flat()),
+    ...objArr(9,i => pair(`-${i*10}`)),
+    ...objArr(9,i => pair(`${i*10}`)),
+  }
+]
+
+export const util = [
+  // text-state-10 => text-state-90
+  ["text-state",...colorUtil('color')],
   
-}
+  // bg-state-10 => bg-state-90
+  ["bg-state",...colorUtil('background')],
+  
+  // text-primary-1/2
+  ["text-primary",...dynamicShading('color')],
+  
+  // text-primary-1/2
+  ["bgs-primary",...dynamicShading('background')],
+  
+  // stack => stack-1 => stack-2-4 => stack-[1fr_1rem-4]
+  ["stack",(cn) => {
+    const [cols,gap] = cn.split('-')
+    
+    const ob = {
+      display: "grid",
+      gridTemplateColumns: isInt(cols) ? cols : `repeat(${parseInt(cols)}, minmax(0, 1fr))`,
+    }
+    
+    gap && (ob.gap = `${ parseInt(gap) * .25 }rem`);
+    
+    return ob
+  },{
+    DEFAULT: '1-0',
+    ...objArr(6, i => [i,i+''] ),
+    ...Object.fromEntries(
+      arr(6, i => arr(14, 
+        j => pair(`${i}-${j}`) )
+      ).flat()
+    )
+  }],
+]
 
 // COMPONENT
 
-export const btn = {
+const btn = {
   padding: padding["btn"],
   borderRadius: '0.25rem',
   fontWeight: '700',
@@ -80,7 +148,7 @@ export const btn = {
 }
 
 
-export const card = {
+const card = {
   borderRadius: borderRadius.sm,
   boxShadow: boxShadow.md,
   padding: '1.5rem',
@@ -88,7 +156,7 @@ export const card = {
 }
 
 
-export const input = {
+const input = {
   borderRadius: borderRadius.sm,
   padding: padding.input,
   borderWidth: borderWidth.DEFAULT,
@@ -103,6 +171,8 @@ export const input = {
     background: neutral['300']
   }
 }
+
+export const component = { btn, card, input }
 
 export const base = (theme) => ({
   h1: {
@@ -129,6 +199,8 @@ export const base = (theme) => ({
     background: 'transparent',
     'padding-right': spacing[10],
     'print-color-adjust': `exact`,
-  }
+  },
+  ":root": objMap(light,(k,v)=>['--'+k,v])
+  
 })
 
