@@ -9,7 +9,7 @@
   
   const data = listBarang
   
-  getContext<any>('title').set('Gateway Out')
+  getContext<any>('title').set('Gateway In')
   
 </script>
 
@@ -18,9 +18,9 @@
   
   <section class="w-break-4 overflow-auto">
     
-    <Text label="Driver ID" />
+    <Text label="Manifest ID"/>
     
-    <button class="btn primary my-2">Pilih Kota</button>
+    <button class="btn primary my-2">Pilih Semua</button>
     <button class="btn primary my-2">Submit</button>
     
   </section>
@@ -28,8 +28,8 @@
   
   
   <section class="w-break-4 overflow-auto bg-white shadow-md p-4 rounded-md">
-    <h2 class="mb-3">Driver</h2>
-    <Dump data={{driver: 'John Doe',vehicle: 'Truck'}} />
+    <h2 class="mb-3">Manifest</h2>
+    <Dump data={{id: 'JKT-4-6-0389', provinsi: 'Jakarta', kabupaten: 'Jakarta Tengah'  }} />
     
   </section>
   
