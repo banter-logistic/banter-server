@@ -4,7 +4,8 @@
 
 /* width */
 ::-webkit-scrollbar {
-  width: 1px;
+  width: 2px;
+  height: 2px;
 }
 
 /* Background */
@@ -20,5 +21,9 @@
 
 /* Handle */
 .sike:has(:hover) ::-webkit-scrollbar-thumb {
+  @apply bg-state-40
+}
+
+.sike:hover::-webkit-scrollbar-thumb {
   @apply bg-state-40
 }

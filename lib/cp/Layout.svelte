@@ -6,7 +6,7 @@
   
   export let routes: (string | string[][])[][]
   
-  $: selected = $page.url.pathname
+  // $: selected = $page.url.pathname
   
   export let username = 'Aria Putra Andika'
   const title = writable('Title')
@@ -19,15 +19,14 @@
   <Sidebar sideContent={routes} {username} />
   
   <!-- CONTENT -->
-  <div class="overflow-auto max-h-screen">
+  <div class="sike overflow-auto max-h-screen">
       
-      <h1 class="ml-3 p-4 text-6xl text-primary-10-10">{$title}</h1>
-      
-      <div class="ml-4 p-4">
-        <slot/>
-      </div>
-      <div class="block my-96">&ThickSpace;</div>
-      
+    <h1 class="ml-3 p-4 text-6xl text-primary-10-10">{$title}</h1>
+    
+    <div class="ml-4 p-4">
+      <slot/>
+    </div>
+    <div class="block my-[30rem]">&ThickSpace;</div>
       
   </div>
   
