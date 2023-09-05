@@ -14,7 +14,7 @@
 
 <!-- full height, tight to left -->
 
-<aside class="p-4 grid max-h-screen w-break-2 sike  bg-[rgb(68_71_85)] text-state-80" style="grid-template-rows: 80px 1fr 60px;">
+<aside class="p-4 grid max-h-screen w-break-2 sike bgs-primary-40-40 text-state-80" style="grid-template-rows: 80px 1fr 60px;">
   
   <Title>
     <h1 class="">BANTER</h1>

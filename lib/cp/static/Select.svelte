@@ -1,5 +1,5 @@
 <script lang=ts>
-  let className = 'input'
+  let className = 'input bg-white cursor-pointer'
   export let name = ''
   export let required = true
   export let label = name
