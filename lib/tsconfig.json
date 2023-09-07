@@ -115,6 +115,9 @@
   "include": [
     "./**/*.ts",
     "./**/*.svelte",
+    "../admin/src/app.d.ts",
+    "../admin/.svelte-kit/ambient.d.ts",
+    "../temp/name.js"
   ],
   "exclude": [
     "../node_modules/**"
