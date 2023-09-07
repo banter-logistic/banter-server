@@ -1,5 +1,5 @@
 <script lang=ts>
-  import { page } from "$app/stores";
+  // import { page } from "$app/stores";
   import Sidebar from "lib/cp/Sidebar.svelte";
   import { setContext } from "svelte";
   import { writable } from "svelte/store";
@@ -26,7 +26,7 @@
     <div class="ml-4 p-4">
       <slot/>
     </div>
-    <div class="block my-[30rem]">&ThickSpace;</div>
+    <div class="block mt-[50rem]">&ThickSpace;</div>
       
   </div>
   
