@@ -3,10 +3,11 @@
 
   function toogleform(formName: string): void {
     aktif = formName;
+    
   }
 </script>
 
-<section class=" relative -mb-4 mt-12 flex flex-col">
+<section class=" relative -mb-4 mt-12 flex flex-col mx-2">
   <div
     class="h-full object-cover absolute inset-0 -z-10 bg-gradient-to-r from-[#AAEEF4] from-10% via-[#DBF2DC] via-30% to-[#A2C7FA] to-90% ... blur-[100px]"
   />
@@ -17,7 +18,7 @@
       <button on:click={() => toogleform("tracking")} class="btn btn-info">
         Tracking
       </button>
-      <button on:click={() => toogleform("checkOngkir")} class="btn btn-info">
+      <button on:click={() => toogleform("checkOngkir")}  class="btn btn-info">
         CheckOngkir
       </button>
     </div>
@@ -28,7 +29,7 @@
       <div
         class="bg-[#F0F4F4] w-[64rem] h-[10rem] items-center flex justify-start gap-4 rounded-2xl drop-shadow-md"
       >
-        <form action="" class="flex px-20 gap-1">
+        <form action="" class="flex pl-20 gap-1">
           <label for="tracking" class="block">
             <span
               class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700 pb-1"
@@ -38,7 +39,7 @@
               type="text"
               id="tracking"
               placeholder="Masukkan 13 Digit "
-              class="input input-info w-[20rem]"
+              class="input input-info max-w-3xl"
             />
             <button class="btn btn-info ml-8 text-white/80"> Track </button>
           </label>
@@ -50,9 +51,9 @@
   {#if aktif === "checkOngkir"}
     <div class=" relative flex justify-center">
       <div
-        class="bg-[#F0F4F4] w-[64rem] h-[18rem] items-center flex justify-center gap-4 rounded-2xl drop-shadow-md"
+        class="bg-[#F0F4F4] w-[64rem]  items-center flex justify-center gap-4 rounded-2xl drop-shadow-md"
       >
-        <form action="" class="flex flex-wrap px-20 gap-8">
+        <form action="" class="flex flex-wrap py-8 pl-8 gap-8">
           <label for="asal" class="block">
             <span class=" block text-sm font-medium text-slate-700 pb-1">
               Asal
@@ -61,7 +62,7 @@
               type="text"
               id="asal"
               placeholder="Masukkan Asal Pengiriman"
-              class="input input-info w-[20rem]"
+              class="input input-info w-[15rem]"
             />
           </label>
           <label for="tujuan" class="block">
@@ -72,7 +73,7 @@
               type="text"
               id="tujuan"
               placeholder="Masukkan Tujuan Pengiriman "
-              class="input input-info w-[20rem]"
+              class="input input-info w-[15rem]"
             />
           </label>
           <label for="berat" class="block">

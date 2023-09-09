@@ -14,7 +14,7 @@
 />
 <header class=" sticky top-0 bg-white font-[Poppins] z-10">
   <nav class="flex justify-between items-center w-[85%] mx-auto py-3">
-    <div>logo</div>
+    <img src="../Banter-image/logo.png" alt="" class="w-[4rem]">
 
     <div
       class=" static bg-white min-h-fit left-0 w-auto md:flex hidden items-center px-5"
@@ -29,7 +29,7 @@
         </li>
 
         <li>
-          <a class="hover:text-blue-300" href="/tracking">Check Ongkir</a>
+          <a class="hover:text-blue-300" href="/tracking/#check">Check Ongkir</a>
         </li>
 
         <li>
@@ -50,13 +50,13 @@
         Sign in
     </a>
     </div>
-    <div class="md:hidden sticky">
+    <div class="md:hidden sticky ">
       <Hambuger {open} {onClick} />
     </div>
     {#if open}
       <div
         transition:fly={{ y: -200, duration: 400 }}
-        class=" absolute bg-red-500 min-h-[50vh] left-0 top-[100%] w-full flex items-center px-5 uppercase"
+        class=" absolute bg-white  min-h-[50vh] left-0 top-[100%] w-full flex items-center px-5 "
       >
         <ul class="flex flex-col gap-10 text-center mx-auto">
           <li>
@@ -86,7 +86,7 @@
 <slot />
 
 <footer class="bg-[#3C5E7A] mt-[10%]">
-  <div class="md:flex grid justify-between gap-8 w-full p-24">
+  <div class="md:flex grid md:justify-between justify-start gap-8 w-full md:p-24 p-12">
     <div class="grid gap-2 w-60">
       <!-- <img src="../Banter-image/Logo.png" alt="" class="bg-white rounded-full "/> -->
       <h1>Logo</h1>

@@ -8,7 +8,7 @@
 
 
 {#each blog  as bg (bg.id) }
-    <div class="w-[21rem] h-[26rem] shadow-2xl  rounded-2xl flex flex-col gap-4 justify-center items-center">
+    <div class="w-[19rem] h-[26rem] p-2 shadow-2xl  rounded-2xl flex flex-col gap-4 justify-center items-center">
         <img src={bg.img} alt="" class="w-[17rem] h-[11rem] rounded-xl">
         <div class="flex gap-4">
         <img src="../Banter-image/profile-user.png" alt="" class="w-[1.5rem] h-[1.5rem]">

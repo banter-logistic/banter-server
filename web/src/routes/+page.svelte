@@ -21,48 +21,53 @@
       alt=""
       class="absolute w-full h-full  object-cover z-[-10] rounded-2xl"
     />
-    <div class=" flex flex-col w-full pt-12 px-8 text-center ">
-      <h1 class="sm:text-4xl  font-bold text-[#F0F4F4] text-2xl">
+    <div class=" flex flex-col w-full  px-8  text-center  justify-center items-center  ">
+      <h1 class="sm:text-4xl  font-bold text-[#F0F4F4] text-2xl ">
         <span class="text-[#14EBDE] "> Pelacakan </span> Pengiriman yang  mudah dan
         akurat!
       </h1>
-      <p class="sm:text-xl text-md text-[#F0F4F4] my-[1.13rem] ">
-        Pantau status pengiriman Anda secara real-time <br/> dengan BanterLogistics
+      <p class="sm:text-xl max-w-lg text-md text-[#F0F4F4] my-[1.13rem] ">
+        Pantau status pengiriman Anda secara real-time dengan BanterLogistics
         menggunakan kode  pelacakan  unik untuk setiap pengiriman.
       </p>
+
+      
     </div>
     
     
   </section>
-  <div class="relative w-full mx-auto h-full -mt-14 flex flex-col justify-center sm:items-start items-center ">
+  
+<div class="relative -mt-12 flex flex-col justify-center sm:items-start items-center ">
       <div
-        class="flex  justify-center  items-center  gap-[1rem] w-[18rem] h-[3.5rem] bg-white/30 backdrop-blur-md shadow-md sm:ml-[15%] ml-0  rounded-t-xl"
+        class="flex  justify-center  items-center  gap-[1rem] w-[18rem] h-[3.5rem] bg-white/30 backdrop-blur-md shadow-md sm:ml-[18%] ml-0  rounded-t-xl"
       >
         <button on:click={()=>toogleform('tracking')} class="btn btn-info text-white/80 ">Tracking</button>
-        <button on:click={()=>toogleform('checkongkir')} class="btn btn-info text-white/80">Check Ongkir</button>
+        <button on:click={()=>toogleform('checkongkir')}  class="btn btn-info text-white/80">Check Ongkir</button>
       </div>
       {#if active==='tracking'}
          <div
-        class=" h-[8.375rem] flex items-center bg-white/30 backdrop-blur-md shadow-md px-8 rounded-tl-[0rem] sm:ml-[15%] ml-0 rounded-tr-[0.625rem] rounded-br-[0.625rem] rounded-bl-[0.625rem]"
+        class="   h-[8.375rem] flex items-center justify-center bg-white/30 backdrop-blur-md shadow-md px-8 sm:rounded-tl-[0rem] rounded-tl-[0.625rem]  sm:ml-[18%] ml-0 rounded-tr-[0.625rem] rounded-br-[0.625rem] rounded-bl-[0.625rem]  "
       >
-      <form action=" " >
-        <label for="tracking" class="block">
-          <span class="font-medium text-slate-700 text-md block"> Tracking</span>
+      <form action=" " class="">
+        <label for="tracking" class="">
+          <span class="font-medium text-slate-700 text-md block mb-1"> Tracking</span>
+          </label>
         <input
           type="text"
           id="tracking"
           placeholder="Type here"
           class="input input-bordered input-info sm:w-[15rem] w-[10rem]"
         />
-        <button class="btn btn-info ml-5 text-white/80"> tracking </button>
-        </label>
+         
         
+        <button class="btn btn-info  text-white/80"> tracking </button>
+
         </form>
       </div>
       {/if}
       {#if active === 'checkongkir'}
          <div
-        class="  sm:ml-[15%] ml-2   bg-white/30 backdrop-blur-md shadow-md flex justify-center  sm:items-start items-center px-16 py-8 rounded-tl-[0rem] rounded-tr-[0.625rem] rounded-br-[0.625rem] rounded-bl-[0.625rem]"
+        class="   sm:ml-[18%] ml-2   bg-white/30 backdrop-blur-md shadow-md flex justify-center mx-2   items-center px-16 py-8 rounded-tl-[0rem] rounded-tr-[0.625rem] rounded-br-[0.625rem] rounded-bl-[0.625rem]"
       >
       <form action=""  class="flex gap-4 flex-wrap ">
         <label for="asal" class="block">
@@ -98,7 +103,6 @@
       {/if}
      
     </div>
-
   <!-- section about us  -->
   <section class="md:flex-row flex-col  flex  flex-shrink-0 mt-[10%] w-[85%] gap-[3rem] mx-auto  ">
     <div class="w-full ">
