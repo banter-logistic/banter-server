@@ -17,8 +17,9 @@
 />
 <header class=" sticky top-0 bg-white font-[Poppins] z-10">
   <nav class="flex justify-between items-center w-[85%] mx-auto py-3">
+    <a href="/">
     <img src="../Banter-image/logo.png" alt="" class="w-[4rem]">
-
+    </a>
     <div
       class=" static bg-white min-h-fit left-0 w-auto md:flex hidden items-center px-5"
     >
@@ -32,7 +33,7 @@
         </li>
 
         <li>
-          <a class="hover:text-blue-300" href="/tracking/#check">Check Ongkir</a>
+          <a class="hover:text-blue-300" href="/tracking/check">Check Ongkir</a>
         </li>
 
         <li>

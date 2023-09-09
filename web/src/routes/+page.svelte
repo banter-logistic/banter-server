@@ -118,7 +118,7 @@
 
     <div class=" relative flex flex-col  items-start gap-[1rem]">
       <p class="text-[#14EBDE] text-xl">About Us</p>
-      <h1 class="text-4xl max-sm:texst-left text-center font-bold text-[#2C3E50] mr-16">
+      <h1 class="text-4xl text-left font-bold text-[#2C3E50] mr-16">
         Pengiriman Lebih Lancar, Lebih Aman, dan Lebih Cepat Bersama BANTER !
       </h1>
       <div
