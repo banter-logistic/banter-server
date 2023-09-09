@@ -6,6 +6,9 @@
   export let onClick = () => {
     open = !open;
   };
+  const autoClose = (/** @type {any}*/e) => {
+    if (e.target.tagName == 'A') open = false;
+  } 
 </script>
 
 <link
@@ -54,7 +57,9 @@
       <Hambuger {open} {onClick} />
     </div>
     {#if open}
-      <div
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <div on:click={autoClose}
         transition:fly={{ y: -200, duration: 400 }}
         class=" absolute bg-white  min-h-[50vh] left-0 top-[100%] w-full flex items-center px-5 "
       >
@@ -126,15 +131,15 @@
       <h1 class="font-bold text-xl">contact Info</h1>
       <div class="flex gap-4  text-lg">
         <img src="../Banter-image/location.png" alt=""  class="w-8 h-8 flex items-center "/>
-        <p>Candi Kalasan no 5</p>
+        <p>Candi Kalasan Timur 7a no. 4, Semarang</p>
       </div>
       <div class="flex gap-4  text-lg">
         <img src="../Banter-image/old-typical-phone.png" alt=""  class="w-8 h-8 flex items-center " />
-        <p>087782889383</p>
+        <p>0247613372</p>
       </div>
       <div class="flex gap-4  text-lg">
         <img src="../Banter-image/email.png" alt=""  class="w-8 h-8 flex items-center " />
-        <p>Banterlogistik@gmail.com</p>
+        <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&to=office@banter.id" target="_blank">office@banter.id</a>
       </div>
     </div>
   </div>

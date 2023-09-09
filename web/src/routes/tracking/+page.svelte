@@ -2,7 +2,22 @@
   
 
   let aktif: string = "tracking";
-
+  
+  let result = ''
+  
+  let no_resi = ''
+  $: console.log(no_resi)
+  
+  const resi_dummy = 'JTG-1-1-0003'
+  
+  function trackResi() {
+    if (no_resi == resi_dummy) {
+      result = 'Semarang'
+    } else {
+      result = 'No Resi Tidak Ditemukan'
+    }
+  }
+  
   function toogleform(formName: string): void {
     aktif = formName;
 
@@ -43,8 +58,9 @@
               id="tracking"
               placeholder="Masukkan 13 Digit "
               class="input input-info max-w-3xl"
+              bind:value={no_resi}
             />
-            <button class="btn btn-info ml-8 text-white/80"> Track </button>
+            <button class="btn btn-info ml-8 text-white/80" on:click={trackResi}> Track </button>
           </label>
         </form>
       </div>
@@ -151,7 +167,7 @@
       {#if aktif === "tracking"}
         <div>
           <h1 class="font-bold text-2xl">Hasil Pencarian :</h1>
-          <div class="flex flex-col justify-start items-start" />
+          <div class="flex flex-col justify-start items-start">{result}</div>
         </div>
       {/if}
       {#if aktif === "checkOngkir"}
