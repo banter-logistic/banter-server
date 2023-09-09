@@ -1,9 +1,12 @@
 <script lang="ts">
+  
+
   let aktif: string = "tracking";
 
   function toogleform(formName: string): void {
     aktif = formName;
-    
+
+
   }
 </script>
 
@@ -48,6 +51,13 @@
     </div>
   {/if}
 
+  <!-- {#await fetch("https://dog.ceo/api/breeds/image/random") .then(e=>e.json())}
+    loading 
+  {:then rest } 
+    <img src={rest.message} alt="">
+    {:catch}
+    error
+  {/await} -->
   {#if aktif === "checkOngkir"}
     <div class=" relative flex justify-center">
       <div

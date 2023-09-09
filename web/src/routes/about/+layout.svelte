@@ -7,11 +7,11 @@
     />
 
     <div class="w-[50%] h-full flex flex-col gap-4 justify-center pl-28">
-      <h1 class="text-2xl font-bold text-[#F0F4F4]">TRACKING / CHECK ONGKIR</h1>
+      <h1 class="text-2xl font-bold text-[#F0F4F4]">Information</h1>
       <p class="text-xl text-[#F0F4F4]">
-        Pantau status pengiriman secara real-time dan cek perkiraan biaya
-        pengiriman dengan fitur kami. Masukkan nomor pelacakan untuk pelacakan
-        dan detail pengiriman untuk estimasi biaya. Lebih mudah dan lebih cepat!
+        <a href="Home">Home</a>
+        <span>->></span>
+        <a href="/about">About</a>
       </p>
     </div>
   </div>

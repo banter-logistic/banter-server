@@ -3,7 +3,7 @@
   import Productser from "./productser.svelte";
   import Valued from "./valued.svelte";
 
-  let bgtrack = "../Banter-image/bghero1.jpg";
+  let bgtrack = "../Banter-image/bgnewhome.jpg";
   let bgabout = "../Banter-image/kirim.jpg";
 
   let active : string = 'tracking'
@@ -19,7 +19,7 @@
     <img
       src={bgtrack}
       alt=""
-      class="absolute w-full h-full  object-cover z-[-10] rounded-2xl"
+      class="absolute w-full h-full  object-cover z-[-10] rounded-2xl brightness-75"
     />
     <div class=" flex flex-col w-full  px-8  text-center  justify-center items-center  ">
       <h1 class="sm:text-4xl  font-bold text-[#F0F4F4] text-2xl ">
