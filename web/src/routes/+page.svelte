@@ -1,5 +1,6 @@
 <script lang="ts">
   import Blog from "./blog.svelte";
+  import Cek from "./cek.svelte";
   import Productser from "./productser.svelte";
   import Valued from "./valued.svelte";
 
@@ -12,32 +13,56 @@
     active = formName
   }
 
+  let result = ''
+  
+  let no_resi = ''
+  
+  const resi_dummy = 'JTG-1-1-0003'
+  
+  function trackResi() {
+    if (no_resi == resi_dummy) {
+      result = 'Semarang'
+    } else {
+      result = 'No Resi Tidak Ditemukan'
+    }
+  }
+  
+  
+
+
+  
 </script>
 
-<body class=" w-full min-h-screen mt-4">
-  <section class=" relative flex w-[85%] md:h-[27rem] h-[23rem] mx-auto  ">
-    <img
+<body class=" w-full min-h-screen ">
+  <section class=" relative flex w-[85%]   mx-auto  ">
+    
+
+    <div class="relative w-full h-full object-cover ">
+      <Cek/>
+    </div>
+    <!-- <img
       src={bgtrack}
       alt=""
-      class="absolute w-full h-full  object-cover z-[-10] rounded-2xl brightness-75"
+      class="absolute w-full  h-full object-cover z-[-10] rounded-2xl brightness-75"
     />
-    <div class=" flex flex-col w-full  px-8  text-center  justify-center items-center  ">
-      <h1 class="sm:text-4xl  font-bold text-[#F0F4F4] text-2xl ">
-        <span class="text-[#14EBDE] "> Pelacakan </span> Pengiriman yang  mudah dan
+    <div class=" flex flex-col gap-4 py-16 pl-8  text-left  border ">
+      <h1 class="text-4xl max-md:text-2xl font-bold text-[#F0F4F4] border  ">
+        <span class="text-[#14EBDE] ">Pelacakan </span> Pengiriman yang <br/>mudah dan
         akurat!
       </h1>
-      <p class="sm:text-xl max-w-lg text-md text-[#F0F4F4] my-[1.13rem] ">
+      <p class="sm:text-xl max-w-lg text-md text-[#F0F4F4]  ">
         Pantau status pengiriman Anda secara real-time dengan BanterLogistics
         menggunakan kode  pelacakan  unik untuk setiap pengiriman.
       </p>
 
       
-    </div>
+    </div> -->
+    
     
     
   </section>
   
-<div class="relative -mt-12 flex flex-col justify-center sm:items-start items-center ">
+<div class="relative -mt-8 flex flex-col justify-center sm:items-start items-center ">
       <div
         class="flex  justify-center  items-center  gap-[1rem] w-[18rem] h-[3.5rem] bg-white/30 backdrop-blur-md shadow-md sm:ml-[18%] ml-0  rounded-t-xl"
       >
@@ -48,21 +73,23 @@
          <div
         class="   h-[8.375rem] flex items-center justify-center bg-white/30 backdrop-blur-md shadow-md px-8 sm:rounded-tl-[0rem] rounded-tl-[0.625rem]  sm:ml-[18%] ml-0 rounded-tr-[0.625rem] rounded-br-[0.625rem] rounded-bl-[0.625rem]  "
       >
-      <form action=" " class="">
-        <label for="tracking" class="">
-          <span class="font-medium text-slate-700 text-md block mb-1"> Tracking</span>
+      
+        <label for="tracking" class="block">
+            <span
+              class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700 pb-1"
+              >No Resi
+            </span>
+            <input
+              type="text"
+              id="tracking"
+              placeholder="13 Digit "
+              class="input input-info sm:w-[20rem] w-[10rem]"
+              bind:value={no_resi}
+            />
+            <button class="btn btn-info ml-8 text-white/80" on:click={trackResi} > Track </button> 
           </label>
-        <input
-          type="text"
-          id="tracking"
-          placeholder="Type here"
-          class="input input-bordered input-info sm:w-[15rem] w-[10rem]"
-        />
-         
-        
-        <button class="btn btn-info  text-white/80"> tracking </button>
 
-        </form>
+        
       </div>
       {/if}
       {#if active === 'checkongkir'}
@@ -121,9 +148,9 @@
       <h1 class="text-4xl text-left font-bold text-[#2C3E50] mr-16">
         Pengiriman Lebih Lancar, Lebih Aman, dan Lebih Cepat Bersama BANTER !
       </h1>
-      <div
+      <!-- <div
         class="w-[19rem] h-[15rem] right-0 absolute bg-[#8CCCFE] rotate-12 blur-[37px] object-cover -z-10"
-      />
+      /> -->
       <p class="text-xl text-[#79797C] text-justify">
         Kami adalah BANTER penyedia layanan logistik yang berdedikasi untuk
         menghadirkan solusi logistics yang aman dan cepat.
@@ -149,14 +176,16 @@
   </section>
 
   <!-- valued Service  -->
-  <section class="mt-[10%] ">
-    <img
-      src="../Banter-image/bgval.png"
+  <section class="mt-[10%] md:h-[42rem] h-[30rem]">
+    <div class="h-full w-full bg-cover bg-left " style="background-image: url('../Banter-image/bg-valued.jpg');">
+    <!-- <img
+      src="../Banter-image/bg-valued.jpg"
       alt="valuedService"
-      class=" absolute object-cover w-full h-[35rem] blur-[21px] -z-10"
-    />
-    <div class=" w-[85%] mx-auto flex md:flex-row flex-col  gap-[2rem] justify-center pt-[8%]">
-      <div class="  flex flex-col gap-4">
+      class=" absolute object-cover  w-full h-full -z-10"
+    /> -->
+     <div class=" flex  flex-col  gap-[4rem]  pt-[8%]">
+
+      <div class=" w-[85%] mx-auto flex  flex-col gap-4  ">
         <p class="text-[#14EBDE] text-xl">Valued Service</p>
         <h1 class="text-[#F0F4F4] text-4xl font-bold">Why Choose Us</h1>
         <p class="text-lg text-[#F0F4F4]">
@@ -164,10 +193,14 @@
           fitur-fitur unggulan kami .
         </p>
       </div>
-      <div class="flex flex-wrap justify-center items-center gap-8">
-        <Valued />
+
+      <div class=" ">
+        
+        <Valued/>
       </div>
+
     </div>
+    
   </section>
 
   <section class="mt-[15%]">

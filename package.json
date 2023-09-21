@@ -4,8 +4,7 @@
     "admin",
     "web"
   ],
-  "scripts":{
+  "scripts": {
     "dev": "npm run dev -w web"
   }
-
 }

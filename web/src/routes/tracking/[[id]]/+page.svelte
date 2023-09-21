@@ -39,7 +39,7 @@
       <button on:click={() => toogleform("tracking")} class="btn btn-info">
         Tracking
       </button>
-      <button on:click={() => toogleform("checkOngkir")}  class="btn btn-info">
+      <button on:click={() => toogleform("check")}  class="btn btn-info">
         CheckOngkir
       </button>
     </div>
@@ -50,7 +50,7 @@
       <div
         class="bg-[#F0F4F4] w-[64rem] h-[10rem] items-center flex justify-start gap-4 rounded-2xl drop-shadow-md"
       >
-        <form action="" class="flex pl-20 gap-1">
+        <div class="flex sm:pl-20 pl-4 gap-1">
           <label for="tracking" class="block">
             <span
               class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700 pb-1"
@@ -59,13 +59,13 @@
             <input
               type="text"
               id="tracking"
-              placeholder="Masukkan 13 Digit "
-              class="input input-info max-w-3xl"
+              placeholder="13 Digit "
+              class="input input-info sm:w-[20rem] w-[10rem]"
               bind:value={no_resi}
             />
             <button class="btn btn-info ml-8 text-white/80" on:click={trackResi}> Track </button>
           </label>
-        </form>
+        </div>
       </div>
     </div>
   {/if}
