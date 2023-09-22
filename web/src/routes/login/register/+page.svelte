@@ -1,3 +1,11 @@
+<script lang="ts">
+  import { error } from '@sveltejs/kit';
+
+
+  export let form
+</script>
+
+
 <section class="flex justify-center items-center h-full">
   <form class="  bg-[#f4f4f4] grid items-center mt-16 p-16 gap-4 rounded-2xl" method="POST">
     <!-- <label
@@ -43,8 +51,13 @@
     >
 
     <button class="btn btn-info text-white">Sign In</button>
+    {#if form && form.error}
+      <div class="text-red-600">{form.error}</div>
+      
+    {/if}
     <p class="p">
       already have an account? <a href="/login" class="text-blue-400">Sign in</a>
     </p>
+    
   </form>
 </section>

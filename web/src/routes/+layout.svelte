@@ -4,6 +4,9 @@
   import Hambuger from "./hambuger.svelte";
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
+  import { enhance } from "$app/forms";
+  export let data 
+  
 
  
 
@@ -51,12 +54,21 @@
       </ul>
     </div>
     <div>
-      <a
-        class="bg-[#a6c1ee] rounded-full text-white px-5 py-2 hover:bg-[#87acec]"
+      {#if data.auth.isLoggedin}
+      <form action="/auth?/logout" method="post" use:enhance data-sveltekit-preload-data="off">
+    <button class="bg-[#a6c1ee] rounded-full text-white px-5 py-2 hover:bg-[#87acec]">Logout</button>
+</form>
+
+        {:else}
+        <button class="bg-[#a6c1ee] rounded-full text-white px-5 py-2 hover:bg-[#87acec]"><a
+        
         href="/login"
       >
         Sign in
       </a>
+      </button>
+      {/if}
+      
     </div>
     <div class="lg:hidden sticky">
       <Hambuger {open} {onClick} />

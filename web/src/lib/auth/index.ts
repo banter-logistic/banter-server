@@ -56,12 +56,13 @@ export async function register(event: RequestEvent) {
     
     if (password !== confirmPassword) {
       return { error: 'konfirmasi password tidak sama' }
+    } else {
+      
     }
     
     await setDb(email,{
       password
     })
-    
     return { error: null }
   } catch (error: any) {
     console.error(error)
