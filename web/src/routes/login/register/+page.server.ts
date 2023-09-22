@@ -30,6 +30,6 @@ export const actions: Actions = {
       return { error }
     }
     
-    throw redirect(303, '/')
+    throw redirect(303, '/login')
   }
 }
