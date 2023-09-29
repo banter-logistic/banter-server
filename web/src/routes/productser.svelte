@@ -28,7 +28,9 @@
       subtitle: "Solusi Logistik Skala Besar",
       desc: "Solusi logistik khusus untuk pengiriman barang dengan ukuran dan berat yang signifikan, membantu Anda mengatasi tantangan logistik skala besar dengan efisien.",
     },
+    
   ];
+
 </script>
 
 {#each product as pd (pd.id)}
@@ -36,7 +38,11 @@
     <div class="temporary_text">
       <img src={pd.img} alt=""  />
     </div>
+    <img src="../Banter-image/logo.png" alt="" class="absolute w-12 right-2 mt-2 z-10   ">
+    <div class="w-full h-10 -mt-5 -ml-2 mx-auto absolute bg-[#148CEB]  z-1 rounded-full -rotate-12"></div>
+    <div class="w-20 h-20 mx-auto -right-3 -top-3 absolute bg-white  rounded-full"></div>
     <div class="card_content">
+      
       <span class="card_title">{pd.title}</span>
       <span class="card_subtitle"
         >{pd.subtitle}</span
@@ -53,7 +59,7 @@
     position: relative;
     width: 15rem;
     height: 19rem;
-    background: #131313;
+   
     overflow: hidden;
     border-radius: 20px;
      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -61,10 +67,11 @@
    .temporary_text {
   position: relative;
   width: 100%;
+  
 }
 
 .temporary_text img {
-  
+  aspect-ratio: 7/9;
   display: block;
   object-fit: cover; 
 }
@@ -80,32 +87,34 @@
     bottom: 0;
     /* edit the width to fit card */
     width: 100%;
-    height: 280px;
+    height: 200px;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.30);
+     background: rgba(20, 140, 235, 0.9);
     backdrop-filter: blur(20px);
     border-top-left-radius: 20px;
     /* edit here to change the height of the content box */
-    transform: translateY(150px);
+    transform: translateY(90px);
     transition: transform 0.25s;
+    color: white;
   }
 
-  .card_content::before {
+  /* .card_content::before {
     content: "";
     position: absolute;
-    top: -47px;
-    right: -45px;
-    width: 0px;
+    top: -77px;
+    left: 0;
+    width: 100px;
     height: 100px;
     transform: rotate(-175deg);
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.30);
-  backdrop-filter: blur(20px);
+    border-top-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    background: rgba(255, 255, 255,100);
+    backdrop-filter: blur(20px);
  
-  }
+  } */
 
   .card_title {
-    color: #131313;
+    
     font-size: 1.25rem;
   }
 

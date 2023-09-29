@@ -8,17 +8,13 @@
 
 <section class="w-[85%] mx-auto mt-[10%] flex flex-col gap-[4rem]">
     <div class="flex flex-col gap-[1rem]">
-      <div
-        class="w-[11rem] h-[9rem] -left-10 absolute bg-[#F7EB83] blur-[40px] object-cover -z-10"
-      />
+      
       <p class="text-[#14EBDE] text-xl">Our Service</p>
       <h1 class="text-[#2C3E50] text-4xl font-bold" >Product Service</h1>
     </div>
-    <div class="flex flex-wrap gap-8">
+    <div class="flex flex-wrap gap-8 justify-center items-center">
       <Productser/>
-      <div
-        class="w-[11rem] h-[9rem] right-0 mt-[17rem] absolute bg-[#94FBF5] blur-[37px] object-cover -z-10"
-      />
+      
     </div>
   </section>
 

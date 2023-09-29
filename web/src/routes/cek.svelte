@@ -4,11 +4,11 @@
   let currentIndex = 0;
   let isAutoplay = true;
   /**
-   * @type {number | undefined}
+   * @type {string | number | NodeJS.Timeout | undefined}
    */
   let autoplayInterval;
   /**
-   * @type {number | undefined}
+   * @type {string | number | NodeJS.Timeout | undefined}
    */
   let manualSlideInterval;
   let manualSlideDelay = 0; // Interval 5 detik untuk gambar yang diklik
@@ -80,15 +80,7 @@
 </script>
 
 <div class="relative">
-  <!-- Tombol manual -->
-  <!-- <button class="absolute inset-y-0 left-0 z-10 p-4 text-white bg-gray-800 bg-opacity-50" on:click={prevImage}>
-    &#8592;
-  </button>
-  <button class="absolute inset-y-0 right-0 z-10 p-4 text-white bg-gray-800 bg-opacity-50" on:click={nextImage}>
-    &#8594;
-  </button> -->
-
-  <!-- Tombol navigasi -->
+ 
   <div class="absolute grid bottom-1/2 right-4 transform -translate-x-1/2 z-1 gap-4">
     {#each images as image, i (image)}
       <button
@@ -98,17 +90,7 @@
     {/each}
   </div>
 
-  <!-- Tombol autoplay -->
-  <!-- <button
-    class="absolute bottom-0 left-0 z-10 p-2 m-2 text-white bg-gray-800 bg-opacity-50 rounded-full"
-    on:click={toggleAutoplay}
-  >
-    {#if isAutoplay}
-      Stop Autoplay
-    {:else}
-      Start Autoplay
-    {/if}
-  </button> -->
+  
 
   {#each images as image, i (image)}
     <img

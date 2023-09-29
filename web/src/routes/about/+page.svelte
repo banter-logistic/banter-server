@@ -1,4 +1,4 @@
-<section>
+<section class="text-justify">
   <div
     class=" w-[85%] h-full gap-8 flex flex-col rounded-2xl shadow-2xl mx-auto md:p-20 p-10"
   >

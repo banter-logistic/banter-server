@@ -136,17 +136,17 @@
       <div
         class="relative w-full h-[24rem] justify-center flex items-center mx-auto"
       >
-        <div
+        <!-- <div
           class="absolute inset-0 bg-[#94FBF5] rotate-12 blur-[50px] object-cover -z-10"
-        />
-        <img src={bgabout} alt="" class=" w-full rounded-3xl" />
+        /> -->
+        <img src={bgabout} alt="" class=" w-full aspect-[2/1.4] rounded-3xl" />
       </div>
     </div>
 
     <div class=" relative flex flex-col  items-start gap-[1rem]">
-      <p class="text-[#14EBDE] text-xl">About Us</p>
-      <h1 class="text-4xl text-left font-bold text-[#2C3E50] mr-16">
-        Pengiriman Lebih Lancar, Lebih Aman, dan Lebih Cepat Bersama BANTER !
+      <p class="text-[#14EBDE] text-xl ">About Us</p>
+      <h1 class=" lg:text-4xl text-3xl text-left font-bold text-[#2C3E50] mr-16">
+        Pengiriman  Lebih Cepat Bersama BANTER !
       </h1>
       <!-- <div
         class="w-[19rem] h-[15rem] right-0 absolute bg-[#8CCCFE] rotate-12 blur-[37px] object-cover -z-10"
@@ -161,17 +161,12 @@
 
   <section class="w-[85%] mx-auto mt-[10%] flex flex-col gap-[4rem]">
     <div class="flex flex-col gap-[1rem]">
-      <div
-        class="w-[11rem] h-[9rem] -left-10 absolute bg-[#F7EB83] blur-[40px] object-cover -z-10"
-      />
       <p class="text-[#14EBDE] text-xl">Our Service</p>
       <h1 class="text-[#2C3E50] text-4xl font-bold">Product Service</h1>
     </div>
     <div class="flex flex-wrap gap-8 justify-center">
       <Productser />
-      <div
-        class="w-[11rem] h-[9rem] right-0 mt-[17rem] absolute bg-[#94FBF5] blur-[37px] object-cover -z-10"
-      />
+     
     </div>
   </section>
 
@@ -204,9 +199,7 @@
   </section>
 
   <section class="mt-[15%]">
-    <div
-      class="w-[18rem] h-[15rem] flex-shrink-0 right-0 absolute bg-[#94FBF5] blur-[37px] object-cover -z-10"
-    />
+    
     <div class=" w-[75%] mx-auto flex flex-col gap-8 justify-center">
       <p class="text-[#14EBDE] text-xl">Latest News</p>
       <div class="flex justify-between">
@@ -215,7 +208,7 @@
       </div>
     </div>
 
-    <div class="flex flex-wrap  justify-center items-center gap-8 mt-16">
+    <div >
       <Blog />
     </div>
   </section>

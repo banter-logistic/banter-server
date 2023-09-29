@@ -23,7 +23,7 @@
   href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,200&display=swap"
   rel="stylesheet"
 />
-<header class=" sticky top-0 bg-white font-[Poppins] z-10">
+<header class=" sticky top-0 bg-white font-[Poppins] z-50">
   <nav class="flex justify-between items-center w-[85%] mx-auto py-3">
     <a href="/">
       <img src="../Banter-image/logo.png" alt="" class="w-[4rem]" />
@@ -56,11 +56,11 @@
     <div>
       {#if data.auth.isLoggedin}
       <form action="/auth?/logout" method="post" use:enhance data-sveltekit-preload-data="off">
-    <button class="bg-[#a6c1ee] rounded-full text-white px-5 py-2 hover:bg-[#87acec]">Logout</button>
+    <button class="bg-[#148CEB] rounded-full text-white px-5 py-2 hover:bg-[#1A71B8]">Logout</button>
 </form>
 
         {:else}
-        <button class="bg-[#a6c1ee] rounded-full text-white px-5 py-2 hover:bg-[#87acec]"><a
+        <button class="bg-[#148CEB] rounded-full text-white px-5 py-2 hover:bg-[#1A71B8]"><a
         
         href="/login"
       >

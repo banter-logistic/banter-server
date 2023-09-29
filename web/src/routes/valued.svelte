@@ -1,4 +1,22 @@
 <script>
+  //    import Swiper from 'swiper';
+
+  // let mySwiper;
+
+  // import { onMount } from 'svelte';
+
+  // onMount(() => {
+  //   mySwiper = new Swiper('.swiper-container', {
+  //     slidesPerView: 'auto',
+  //     spaceBetween: 8, // Sesuaikan dengan jarak antara item
+  //     grabCursor: true, // Mengubah kursor saat digeser
+  //     // Optional: Jika Anda ingin menggunakan elemen ul li, gunakan wrapperClass
+  //     wrapperClass: 'swiper-wrapper',
+  //     slideClass: 'swiper-slide',
+  //   });
+  // });
+
+
   let value = [
     {
       id: 1,
@@ -22,16 +40,17 @@
       id: 4,
       title: "Layanan Pelanggan 24/7 ",
       img: "/3.svg",
-      desc: " Kami Tersedia Setiap Saat untuk Menjawab Pertanyaan dan Menangani Kebutuhan Anda. ",
+      desc: "Tersedia Setiap Saat untuk Menjawab Pertanyaan dan Menangani Kebutuhan Anda.",
     },
   ];
+  
 </script>
-<ul class="flex gap-8 overflow-x-auto snap-x snap-mandatory before:shrink-0 before:w-4 md:before:w-36  after:shrink-0 after:w-4">
+<ul class="flex gap-8 overflow-x-auto snap-x snap-mandatory before:shrink-0 before:w-4 md:before:w-36  after:shrink-0 after:w-4  ">
 {#each value as vl (vl.id)}
 <li class="shrink-0 snap-center ">
   <div class="flex gap-8  bg-white/30 shadow-md backdrop-blur-xl rounded-xl w-[23rem] h-[10rem] px-4">
     <div class="flex items-center justify-center  ">
-      <img src={vl.img} alt="" class="w- h-full" />
+      <img src={vl.img} alt="" class=" h-full" />
     </div>
     <div class="flex flex-col gap-4  justify-center ">
       <h1 class="text-[#2C3E50]  text-xl font-bold">{vl.title}</h1>
