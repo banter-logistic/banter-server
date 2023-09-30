@@ -1,16 +1,7 @@
 <script>
   import { onMount } from "svelte";
-
-    let blog =[
-        {id:1 , img:"../Banter-image/barang.jpg" , user:"Admin" , date:"24 Agustus 2023" , title:"Lomba 17 Agustus" , desc:"lomba yang diadakan oleh banter di dalam panti asuhan untuk menghibur adek-adek panti dengan berbagai lomba "},
-        {id:2 , img:"../Banter-image/bgtracking.jpg" , user:"Admin" , date:"24 Agustus 2023", title:"Lomba 17 Agustus" , desc:"lomba yang diadakan oleh banter di dalam panti asuhan untuk menghibur adek-adek panti dengan berbagai lomba "},
-        {id:3 , img:"../Banter-image/warehouse.jpg" , user:"Admin" , date:"24 Agustus 2023",title:"Lomba 17 Agustus" , desc:"lomba yang diadakan oleh banter di dalam panti asuhan untuk menghibur adek-adek panti dengan berbagai lomba "},
-         {id:4 , img:"../Banter-image/bgnewhome.jpg" , user:"Admin" , date:"24 Agustus 2023",title:"Lomba 17 Agustus" , desc:"lomba yang diadakan oleh banter di dalam panti asuhan untuk menghibur adek-adek panti dengan berbagai lomba "},
-          {id:5 , img:"../Banter-image/bg-valued.jpg" , user:"Admin" , date:"24 Agustus 2023",title:"Lomba 17 Agustus" , desc:"lomba yang diadakan oleh banter di dalam panti asuhan untuk menghibur adek-adek panti dengan berbagai lomba "},
-           {id:6 , img:"../Banter-image/barang.jpg" , user:"Admin" , date:"24 Agustus 2023",title:"Lomba 17 Agustus" , desc:"lomba yang diadakan oleh banter di dalam panti asuhan untuk menghibur adek-adek panti dengan berbagai lomba "},
-           {id:7 , img:"../Banter-image/barang.jpg" , user:"Admin" , date:"24 Agustus 2023",title:"Lomba 17 Agustus" , desc:"lomba yang diadakan oleh banter di dalam panti asuhan untuk menghibur adek-adek panti dengan berbagai lomba "},
-
-    ]
+  import { blog } from "$lib/data/dataBlog";
+    
     let colom = 3 
     let index = 0 ;
 
@@ -47,8 +38,11 @@
     }
     
 
-    onMount(updateColom);
-    window.addEventListener( "resize" , updateColom)
+    onMount(()=> {
+      updateColom()
+      window.addEventListener( "resize" , updateColom)
+    });
+    
     
  
 </script>
