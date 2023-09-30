@@ -146,7 +146,7 @@
     <div class=" relative flex flex-col  items-start gap-[1rem]">
       <p class="text-[#14EBDE] text-xl ">About Us</p>
       <h1 class=" lg:text-4xl text-3xl text-left font-bold text-[#2C3E50] mr-16">
-        Pengiriman  Lebih Cepat Bersama BANTER !
+        Selangkah Menuju Indonesia
       </h1>
       <!-- <div
         class="w-[19rem] h-[15rem] right-0 absolute bg-[#8CCCFE] rotate-12 blur-[37px] object-cover -z-10"
@@ -155,7 +155,7 @@
         Kami adalah BANTER penyedia layanan logistik yang berdedikasi untuk
         menghadirkan solusi logistics yang aman dan cepat.
       </p>
-      <button class="btn btn-info">More Info </button>
+      <a href="/about" class="bg-[#148CEB] rounded-full text-white px-5 py-2 hover:bg-[#1A71B8]">More Info </a>
     </div>
   </section>
 
@@ -204,7 +204,7 @@
       <p class="text-[#14EBDE] text-xl">Latest News</p>
       <div class="flex justify-between">
         <h1 class="text-4xl font-bold text-[#2C3E50]">Latest Update</h1>
-        <button class="btn btn-info"> View More </button>
+        <a href="/blog" class="bg-[#148CEB] rounded-full text-white px-5 py-2 hover:bg-[#1A71B8]"> View More </a>
       </div>
     </div>
 

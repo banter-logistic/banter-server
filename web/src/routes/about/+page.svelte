@@ -11,7 +11,7 @@
       />
     </div>
     <p class="text-[#79797C] md:text-xl text-sm sm:text-lg">
-      Kami adalah BanterLogistics, penyedia layanan logistik yang berdedikasi
+      Kami adalah BANTER, penyedia layanan logistik yang berdedikasi
       untuk menghadirkan solusi logistik yang lebih canggih, lebih lancar, dan
       lebih menyenangkan bagi bisnis Anda. Dengan komitmen kami dan pelayanan
       pelanggan yang unggul pada inovasi, teknologi mutakhir, , kami bertekad
